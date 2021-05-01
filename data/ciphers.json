@@ -1,0 +1,42 @@
+[
+    {
+        "name":"Ceaser",
+        "object":"CeaserCipher"
+    },
+    {
+        "name":"Numerical Alphabet",
+        "object":"NumericalAlphabet"
+    },
+    {
+        "name":"Crab",
+        "object":"CrabCipher"
+    },
+    {
+        "name":"Two Meters",
+        "object":"TwoMetersCipher"
+    },
+    {
+        "name":"Vertical",
+        "object":"VerticalCipher"
+    },
+    {
+        "name":"SMS",
+        "object":"SMSCipher"
+    },
+    {
+        "name":"Braille",
+        "object":"BrailleCipher"
+    },
+    {
+        "name":"Data",
+        "object":"DataCipher"
+    },
+    {
+        "name":"Homographer",
+        "object":"HomographerCipher"
+    },
+    {
+        "name":"Morse Pikes",
+        "object":"MorsePikesCipher"
+    }
+]

@@ -51,4 +51,4 @@ export class CesarCipher {
         }
         return output;
     }
-}
+};
