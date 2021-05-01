@@ -1,4 +1,4 @@
-import {CesarCipher} from '../ciphers/ceasarCipher.js';
+import {CesarCipher} from '../ciphers/cesarCipher.js';
 import {NumericalAlphabetCipher} from '../ciphers/numericalAlphabet.js';
 
 class Main {
@@ -19,6 +19,7 @@ class Main {
         .then(data => {
            this.ciphers = data;
            this.buildSelector();
+           this.buildButtonListeners();
         })
         .catch(error => console.log(error));
     }
@@ -28,9 +29,22 @@ class Main {
             this.ciphersSelector.insertAdjacentHTML("beforeend",`<option>${cipher.name}</option>`)
         });
     }
+    ///BUILD BUTTONS LISTENERS
+    buildButtonListeners(){
+        this.encryptButton = document.querySelector("#encryptButton");
+        this.decryptButton = document.querySelector("#decryptButton");
+        this.encryptButton.addEventListener("click", this.encrypt.bind(this));
+        this.decryptButton.addEventListener("click", this.decrypt.bind(this));
+    }
     ///ENCRYPT MESSAGE
     encrypt(){
-
+        const cipher = this.ciphers[this.ciphers.findIndex(cipher => cipher.name == selectedCipher)];
+        const message = this.messageInput.value;
+        const selectedCipher = this.ciphersSelector.value;
+        const key = this.msgKeyInput.value;
+        if(selectedCipher !== "" || selectedCipher !== null){
+            const cipherObj = eval(`new ${this.ciphers[this.ciphers.findIndex(cipher => cipher.name == selectedCipher)].object}();`);
+        }
     }
     ///DECRYPT MESSAGE
     decrypt(){
