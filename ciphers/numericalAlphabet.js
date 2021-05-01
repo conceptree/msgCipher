@@ -1,4 +1,4 @@
-class NumericalAlphabetCipher {
+export class NumericalAlphabetCipher {
     constructor() { };
 
     encrypt(str, key) {
@@ -35,10 +35,3 @@ class NumericalAlphabetCipher {
         }
     }
 }
-
-
-
-
-
-const numericalAlhapet = new NumericalAlphabetCipher;
-console.log(numericalAlhapet.encrypt("alerta", 12));
