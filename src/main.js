@@ -33,22 +33,20 @@ class Main {
     buildButtonListeners(){
         this.encryptButton = document.querySelector("#encryptButton");
         this.decryptButton = document.querySelector("#decryptButton");
-        this.encryptButton.addEventListener("click", this.encrypt.bind(this));
-        this.decryptButton.addEventListener("click", this.decrypt.bind(this));
+        this.encryptButton.addEventListener("click", this.runCipher.bind(this));
+        this.decryptButton.addEventListener("click", this.runCipher.bind(this));
     }
     ///ENCRYPT MESSAGE
-    encrypt(){
-        const cipher = this.ciphers[this.ciphers.findIndex(cipher => cipher.name == selectedCipher)];
+    runCipher(event){
+        const action = event.target.id === "encryptButton" ? "encrypt" : "decrypt";
         const message = this.messageInput.value;
         const selectedCipher = this.ciphersSelector.value;
-        const key = this.msgKeyInput.value;
+        const cipher = this.ciphers[this.ciphers.findIndex(cipher => cipher.name == selectedCipher)];
+        const key = cipher.key ? this.msgKeyInput.value : null;
         if(selectedCipher !== "" || selectedCipher !== null){
-            const cipherObj = eval(`new ${this.ciphers[this.ciphers.findIndex(cipher => cipher.name == selectedCipher)].object}();`);
+            const cipherObj = eval(`new ${cipher.object}();`);
+            this.messageInput.value = cipherObj[action](message, key);
         }
-    }
-    ///DECRYPT MESSAGE
-    decrypt(){
-
     }
 }
 
