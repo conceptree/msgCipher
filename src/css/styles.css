@@ -1,0 +1,35 @@
+html, body{
+    padding: 0;
+    margin: 0;
+}
+
+*{
+    clear: both;
+    padding: 0;
+    margin: 0;
+    outline: none;
+    box-shadow: none;
+    box-sizing: border-box;
+}
+
+.background-container{
+    background: url("../../assets/bg.jpg") no-repeat;
+    background-size: cover;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+
+    height: 100vh;
+}
+
+.form-container{
+    flex: 1;
+    opacity: 0.9;
+}
+
+/* Dotted border */
+hr.dotted {
+    border-top: 3px dotted #bbb;
+  }
