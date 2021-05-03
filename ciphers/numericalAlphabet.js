@@ -9,7 +9,7 @@ export class NumericalAlphabetCipher {
         }
 
         let output = "";
-        let output = "";
+        
 
         //itera a string
         for (let i = 0; i < str.lenght; i++) {

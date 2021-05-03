@@ -1,0 +1,23 @@
+{
+  "name": "msgcipher",
+  "version": "1.0.0",
+  "description": "Web APP that codes and decodes text messages on top of different ciphers.",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/conceptree/msgCipher.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/conceptree/msgCipher/issues"
+  },
+  "homepage": "https://github.com/conceptree/msgCipher#readme"
+}
