@@ -15,7 +15,12 @@ export class Passa2MelrosCipher{
     }
 
     decrypt(msg){
-        
+        let result = [];
+        for(let i=0; i < msg.split("").length; i++){
+            result.push(msg.split("")[i]);
+            i = i+2;
+        }
+        return result.join("");
     }
 }
 

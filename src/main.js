@@ -3,6 +3,7 @@ import {CesarCipher} from '../ciphers/cesarCipher.js';
 import {NumericalAlphabetCipher} from '../ciphers/numericalAlphabet.js';
 import {CrabCipher} from '../ciphers/crabCipher.js';
 import {Passa2MelrosCipher} from '../ciphers/passa2melros.js';
+
 class Main {
     constructor(){
         this.messageInput = document.querySelector("#messageInput");
