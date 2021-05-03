@@ -1,5 +1,5 @@
 export class CesarCipher {
-    constructor() { };
+    constructor() {};
 
     encrypt(str, key) {
         let num = key % 26;
@@ -39,14 +39,13 @@ export class CesarCipher {
             //fazer o match do range e passar retirar código ASCII - .charCodeAt(i), retirar -65
             if (charDecript.match(/[a-z]/i)) {
                 let code = str.charCodeAt(i);
-            //fazer as maiscu .fromChartCode retirar -65
-            if (code >= 65 && code <= 90) {
-                charDecript = String.fromCharCode(((code + 65 - num) % 26) + 65);
+                //fazer as maiscu .fromChartCode retirar -65
+                if (code >= 65 && code <= 90) {
+                    charDecript = String.fromCharCode(((code + 65 - num) % 26) + 65);
+                } else if (code >= 97 && code <= 122) {
+                    charDecript = String.fromCharCode(((code + 96 - num) % 26) + 65);
+                }
             }
-            else if (code >= 97 && code <= 122) {
-                charDecript = String.fromCharCode(((code + 96 - num) % 26) + 65);
-            }
-        }
             output += charDecript;
         }
         return output;

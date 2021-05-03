@@ -1,52 +1,56 @@
-[
-    {
-        "name":"Cesar",
-        "object":"CesarCipher",
-        "key":true
+[{
+        "name": "Cesar",
+        "object": "CesarCipher",
+        "key": true
     },
     {
-        "name":"Numerical Alphabet",
-        "object":"NumericalAlphabetCipher",
-        "key":true
+        "name": "Numerical Alphabet",
+        "object": "NumericalAlphabetCipher",
+        "key": true
     },
     {
-        "name":"Crab",
-        "object":"CrabCipher",
-        "key":true
+        "name": "Crab",
+        "object": "CrabCipher",
+        "key": true
     },
     {
-        "name":"Passa 2 Melros",
-        "object":"Passa2MelrosCipher",
-        "key":false
+        "name": "Two Meters",
+        "object": "TwoMetersCipher",
+        "key": true
     },
     {
-        "name":"Vertical",
-        "object":"VerticalCipher",
-        "key":true
+        "name": "Vertical",
+        "object": "VerticalCipher",
+        "key": true
     },
     {
-        "name":"SMS",
-        "object":"SMSCipher",
-        "key":true
+        "name": "SMS",
+        "object": "SMSCipher",
+        "key": true
     },
     {
-        "name":"Braille",
-        "object":"BrailleCipher",
-        "key":true
+        "name": "Braille",
+        "object": "BrailleCipher",
+        "key": true
     },
     {
-        "name":"Data",
-        "object":"DataCipher",
-        "key":true
+        "name": "Data",
+        "object": "DataCipher",
+        "key": true
     },
     {
-        "name":"Homographer",
-        "object":"HomographerCipher",
-        "key":true
+        "name": "Homographer",
+        "object": "HomographerCipher",
+        "key": true
     },
     {
-        "name":"Morse Pikes",
-        "object":"MorsePikesCipher",
-        "key":true
+        "name": "Morse Pikes",
+        "object": "MorsePikesCipher",
+        "key": true
+    },
+    {
+        "name": "Inverted Alphabet",
+        "object": "InvertedAlphabetCipher",
+        "key": false
     }
 ]
