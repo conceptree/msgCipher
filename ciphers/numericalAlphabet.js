@@ -2,12 +2,13 @@ export class NumericalAlphabetCipher {
     constructor() { };
 
     encrypt(str, key) {
-        let num = key
+        
 
         if (num < 0) {
             console.log("Introduza um nº maior ou igual a 0");
         }
 
+        let output = "";
         let output = "";
 
         //itera a string
@@ -31,7 +32,7 @@ export class NumericalAlphabetCipher {
                 
                 output+= charEncript;
             }
-            return output
+              return output
         }
     }
 };
