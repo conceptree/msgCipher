@@ -1,8 +1,9 @@
-export class NumericalAlphabetCipher {
+class NumericalAlphabetCipher {
     constructor() { };
 
     encrypt(str, key) {
         
+        let num = key;
 
         if (num < 0) {
             console.log("Introduza um nº maior ou igual a 0");
@@ -24,10 +25,10 @@ export class NumericalAlphabetCipher {
 
                 //minusculas
                 if (code >= 65 && code <= 90) {
-                    charEncript = parseInt(code);
+                    charEncript = str.fromCharCode(((code - 65 + num)));
                 }
                 else if (code >= 97 && code <= 122) {
-                    charEncript = parseInt(code);               
+                    charEncript = str.fromCharCode(((code - 97 + num)));             
                 }
                 
                 output+= charEncript;
@@ -36,3 +37,6 @@ export class NumericalAlphabetCipher {
         }
     }
 };
+
+const numerical = new NumericalAlphabetCipher();
+console.log(numerical.encrypt("olá", 2));
