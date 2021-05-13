@@ -1,4 +1,4 @@
-class NumericalAlphabetCipher {
+export class NumericalAlphabetCipher {
     constructor() { };
 
     encrypt(str, key) {
