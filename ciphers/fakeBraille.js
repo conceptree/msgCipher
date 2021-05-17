@@ -16,16 +16,31 @@ export class FakeBrailleCipher{
             ["V","W","X"],
             ["Y","Z", ""]
         ];
-        this.squares = [this.square1, this.square2, this.square3];
-        this.specialChars = ["•","••","•••"];
+
+        this.squareA = [
+            ["⠇", "⠇⠄", "⠇⠄⠄"],
+            ["⠇⠂", "⠇⠆", "⠇⠆⠄"],
+            ["⠇⠂⠂", "⠇⠆⠂", "⠇⠆⠆"],
+        ];
+
+        this.squareB = [
+            ["⠇⠁", "⠇⠅", "⠇⠅⠄"],
+            ["⠇⠃", "⠇⠇", "⠇⠇⠄"],
+            ["⠇⠃⠂", "⠇⠇⠂", "⠇⠇⠆"],
+        ];
+
+        this.squareC = [
+            ["⠇⠁⠁", "⠇⠅⠁", "⠇⠅⠅"],
+            ["⠇⠃⠁", "⠇⠇⠁", "⠇⠇⠅"],
+            ["⠇⠃⠃", "⠇⠇⠃", "⠇⠇⠇"],
+        ];
+
+        this.letters = [this.square1, this.square2, this.square3];
+        this.brailles = [this.squareA, this.squareB, this.squareC];
     }
 
     encrypt(msg){
-        const splitedMessage = msg.split("");
-        let result = [];
-        for(let i=0; i < this.squares.length; i++){
-            
-        }
+        
     }
 
     decrypt(msg){
