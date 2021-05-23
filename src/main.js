@@ -4,6 +4,7 @@ import { NumericalAlphabetCipher } from '../ciphers/numericalAlphabet.js';
 import { CrabCipher } from '../ciphers/crabCipher.js';
 import { Passa2MelrosCipher } from '../ciphers/passa2melros.js';
 import { InvertedAlphabetCipher } from '../ciphers/invertedAlphabet.js';
+import { SnailCipher } from '../ciphers/snailCipher.js';
 
 class Main {
     constructor() {
@@ -57,12 +58,11 @@ class Main {
 const main = new Main();
 firebase.initializeApp(firebaseConfig);
 if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/sw.js').then(function(registration) {
+    navigator.serviceWorker.register('/sw.js').then(function(registration) {
         // Registration was successful
         console.log('ServiceWorker registration successful with scope: ', registration.scope);
-      }, function(err) {
+    }, function(err) {
         // registration failed :(
         console.log('ServiceWorker registration failed: ', err);
-      });
-  }
-  
+    });
+}

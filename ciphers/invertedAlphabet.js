@@ -26,4 +26,8 @@ export class InvertedAlphabetCipher {
         }
         return decoded_string;
     }
+
+    decrypt(str) {
+        return this.encrypt(str);
+    }
 }

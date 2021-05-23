@@ -52,5 +52,10 @@
         "name": "Inverted Alphabet",
         "object": "InvertedAlphabetCipher",
         "key": false
+    },
+    {
+        "name": "Snail Cipher",
+        "object": "SnailCipher",
+        "key": true
     }
 ]
