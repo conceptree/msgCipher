@@ -5,6 +5,7 @@ import { CrabCipher } from '../ciphers/crabCipher.js';
 import { Passa2MelrosCipher } from '../ciphers/passa2melros.js';
 import { InvertedAlphabetCipher } from '../ciphers/invertedAlphabet.js';
 import { SnailCipher } from '../ciphers/snailCipher.js';
+import { FakeBrailleCipher } from '../ciphers/fakeBraille.js';
 
 class Main {
     constructor() {

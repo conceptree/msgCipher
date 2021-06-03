@@ -29,8 +29,8 @@
         "key": true
     },
     {
-        "name": "Braille",
-        "object": "BrailleCipher",
+        "name": "Fake Braille",
+        "object": "FakeBrailleCipher",
         "key": true
     },
     {
