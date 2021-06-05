@@ -1,42 +1,48 @@
-export class NumericalAlphabetCipher {
-    constructor() { };
+class NumericalAlphabetCipher {
+    constructor() {
+        this.alphabet = ["a", "b", "c", "d", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
+        this.nums = [];
+    };
+
+    splitToDigit = function(numbers){
+        return (numbers + '').split('').map((i) => {
+            return Number(i);
+        })
+    }
 
     encrypt(str, key) {
-        
-        let num = key;
+        let result = [];
 
-        if (num < 0) {
-            console.log("Introduza um nº maior ou igual a 0");
+
+        for (let i = key; i < key + 25; i++) {
+            this.nums.push(i);
         }
 
-        let output = "";
         
+        str.split("").forEach(char => {
+            result.push(this.nums[this.alphabet.indexOf(char.toLowerCase())]);
+        });
 
-        //itera a string
-        for (let i = 0; i < str.lenght; i++) {
-            let charEncript = str[i];
-            console.log("cenas1");
-            //.match, transforma a correspondência entre uma str e expressão regular
-            //Exp. Regular -> padrões usados p/ selecionar combinações de chars numa string
-            if (charEncript.match(/[a-z]/i)) {
-                //.charCodeAt(), encontra index ascii code
-                let code = str.charCodeAt(i);
-                console.log("cenas");
+        return result.join("");
 
-                //minusculas
-                if (code >= 65 && code <= 90) {
-                    charEncript = str.fromCharCode(((code - 65 + num)));
-                }
-                else if (code >= 97 && code <= 122) {
-                    charEncript = str.fromCharCode(((code - 97 + num)));             
-                }
-                
-                output+= charEncript;
-            }
-              return output
-        }
     }
-};
 
-const numerical = new NumericalAlphabetCipher();
-console.log(numerical.encrypt("olá", 2));
+    decryp(numbers,key){
+        let result = [];
+
+        for(let i = key; i < key + 25; i++){
+            this.nums.push(i);
+        }
+
+        this.splitToDigit(numbers).forEach(num => {
+            result.push(this.nums[this.alphabet.valueOf(num)]);
+        });
+
+        return result.join("");
+    }
+}
+
+const numerical = new NumericalAlphabetCipher;
+console.log(numerical.encrypt("ABC", 2));
+console.log(numerical.decryp(234,2));
+console.log(numerical.splitToDigit(100));
