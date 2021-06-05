@@ -1,14 +1,15 @@
-class NumericalAlphabetCipher {
+export class NumericalAlphabetCipher {
     constructor() {
         this.alphabet = ["a", "b", "c", "d", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
-        this.nums = [];
+        this.nums = []
+        this.splitToDigit = function(numbers){
+            return (numbers + '').split('').map((i) => {
+                return Number(i);
+            })
+        }
     };
 
-    splitToDigit = function(numbers){
-        return (numbers + '').split('').map((i) => {
-            return Number(i);
-        })
-    }
+  
 
     encrypt(str, key) {
         let result = [];
@@ -34,15 +35,11 @@ class NumericalAlphabetCipher {
             this.nums.push(i);
         }
 
-        this.splitToDigit(numbers).forEach(num => {
-            result.push(this.nums[this.alphabet.valueOf(num)]);
+        this.splitToDigit(numbers).forEach(numbers => {
+            result.push(this.nums[this.alphabet.valueOf(numbers)]);
         });
 
         return result.join("");
     }
 }
 
-const numerical = new NumericalAlphabetCipher;
-console.log(numerical.encrypt("ABC", 2));
-console.log(numerical.decryp(234,2));
-console.log(numerical.splitToDigit(100));
