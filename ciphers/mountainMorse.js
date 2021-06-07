@@ -24,7 +24,7 @@ export class MountainMorse {
         }
     }
 
-    encryp(msg) {
+    encrypt(msg) {
         return msg.toLowerCase().split('').map(char => char.split('').map(morse => this.alphabetEncode[morse]).join('')).join(' ');
     }
 
