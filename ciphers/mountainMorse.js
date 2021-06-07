@@ -9,7 +9,7 @@ export class MountainMorse {
             "p": "▴▲▲▴", "q": "▲▲▴▲", "r": "▴▲▴",
             "s": "▴▴▴", "t": "▲", "u": "▴▴▲",
             "v": "▴▴▴▲", "w": "▴▲▲", "y": "▲▴▲▲",
-            "z": "▲▲▴▴",
+            "z": "▲▲▴▴"
         }
         this.alphabetDecode = {
             "▴▲": "a", "▲▴▴▴": "b", "▲▴▲▴": "c",
@@ -20,15 +20,17 @@ export class MountainMorse {
             "▴▲▲▴": "p", "▲▲▴▲": "q", "▴▲▴": "r",
             "▴▴▴": "s", "▲": "t", "▴▴▲": "u",
             "▴▴▴▲": "v", "▴▲▲": "w", "▲▴▲▲": "y",
-            "▲▲▴▴": "z",
+            "▲▲▴▴": "z"
         }
     }
 
     encryp(msg) {
-        return msg.split('').map(char => char.split('').map(morse => this.alphabetEncode[morse]).join('')).join(' ');
+        return msg.toLowerCase().split('').map(char => char.split('').map(morse => this.alphabetEncode[morse]).join('')).join(' ');
     }
 
-    decrypt(msg){
+    decrypt(msg) {
         return msg.split('   ').map(morse => morse.split(' ').map(char => this.alphabetDecode[char]).join('')).join(' ');
     }
 }
+
+
