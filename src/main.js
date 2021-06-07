@@ -8,6 +8,7 @@ import { SnailCipher } from '../ciphers/snailCipher.js';
 import { FakeBrailleCipher } from '../ciphers/fakeBraille.js';
 import { Passa1Melro } from '../ciphers/passa1melro.js';
 import { MorseNodes } from '../ciphers/morseNodes.js';
+import { MountainMorse } from '../ciphers/mountainMorse.js';
 
 class Main {
     constructor() {

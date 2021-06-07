@@ -62,5 +62,10 @@
         "name": "Passa1Melro",
         "object": "Passa1Melro",
         "key": false
+    },
+    {
+        "name": "Mountain Morse",
+        "object": "MountainMorse",
+        "key": false
     }
 ]
