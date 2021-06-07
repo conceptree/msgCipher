@@ -44,9 +44,9 @@
         "key": true
     },
     {
-        "name": "Morse Pikes",
-        "object": "MorsePikesCipher",
-        "key": true
+        "name": "Morse Nodes",
+        "object": "MorseNodes",
+        "key": false
     },
     {
         "name": "Inverted Alphabet",
@@ -57,5 +57,10 @@
         "name": "Snail Cipher",
         "object": "SnailCipher",
         "key": true
+    },
+    {
+        "name": "Passa1Melro",
+        "object": "Passa1Melro",
+        "key": false
     }
 ]
