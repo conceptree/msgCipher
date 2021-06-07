@@ -4,7 +4,6 @@ export class Passa1Melro {
     }
 
     encrypt(str) {
-
         let result = str.split("").map(char => {
             let random = this.alphabet[Math.floor(Math.random() * this.alphabet.length)];
             return char + random;
