@@ -9,6 +9,7 @@ import { FakeBrailleCipher } from '../ciphers/fakeBraille.js';
 import { Passa1Melro } from '../ciphers/passa1melro.js';
 import { MorseNodes } from '../ciphers/morseNodes.js';
 import { MountainMorse } from '../ciphers/mountainMorse.js';
+import { HorizontalCipher } from '../ciphers/horizontalCipher.js';
 
 class Main {
     constructor() {
@@ -61,3 +62,15 @@ class Main {
 
 const main = new Main();
 firebase.initializeApp(firebaseConfig);
+
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function() {
+      navigator.serviceWorker.register('/sw.js').then(function(registration) {
+        // Registration was successful
+        console.log('ServiceWorker registration successful with scope: ', registration.scope);
+      }, function(err) {
+        // registration failed :(
+        console.log('ServiceWorker registration failed: ', err);
+      });
+    });
+  }

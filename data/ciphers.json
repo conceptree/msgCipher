@@ -67,5 +67,10 @@
         "name": "Mountain Morse",
         "object": "MountainMorse",
         "key": false
+    },
+    {
+        "name": "Horizontal",
+        "object": "HorizontalCipher",
+        "key": false
     }
 ]
