@@ -1,21 +1,2 @@
-self.addEventListener('install', function (event) {
-    const CACHE_NAME = 'my-site-cache-v1';
-    const urlsToCache = [
-        '../assets/*',
-        '../data/ciphers.json',
-        '/css/style.css',
-        '/main.js',
-        '../cyphers/*'
-    ];
-
-    self.addEventListener('install', function (event) {
-        // Perform install steps
-        event.waitUntil(
-            caches.open(CACHE_NAME)
-                .then(function (cache) {
-                    console.log('Opened cache');
-                    return cache.addAll(urlsToCache);
-                })
-        );
-    });
-});
+if(!self.define){const e=e=>{"require"!==e&&(e+=".js");let r=Promise.resolve();return s[e]||(r=new Promise((async r=>{if("document"in self){const s=document.createElement("script");s.src=e,document.head.appendChild(s),s.onload=r}else importScripts(e),r()}))),r.then((()=>{if(!s[e])throw new Error(`Module ${e} didn’t register its module`);return s[e]}))},r=(r,s)=>{Promise.all(r.map(e)).then((e=>s(1===e.length?e[0]:e)))},s={require:Promise.resolve(r)};self.define=(r,i,t)=>{s[r]||(s[r]=Promise.resolve().then((()=>{let s={};const n={uri:location.origin+r.slice(1)};return Promise.all(i.map((r=>{switch(r){case"exports":return s;case"module":return n;default:return e(r)}}))).then((e=>{const r=t(...e);return s.default||(s.default=r),s}))})))}}define("./sw.js",["./workbox-a9938592"],(function(e){"use strict";self.addEventListener("message",(e=>{e.data&&"SKIP_WAITING"===e.data.type&&self.skipWaiting()})),e.precacheAndRoute([{url:"css/styles.css",revision:"785418f55651b348ff73535ea47724e7"},{url:"index.html",revision:"7a24e50d96b518ca2693fa88ca3e537d"},{url:"main.js",revision:"d2af762f593dac0a607b34fdc01d55e5"},{url:"manifest.json",revision:"e2fd41c0c683a41ef665c30e2b3ed727"}],{ignoreURLParametersMatching:[/^utm_/,/^fbclid$/]})}));
+//# sourceMappingURL=sw.js.map

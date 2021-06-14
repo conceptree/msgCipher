@@ -1,23 +1,36 @@
 {
-    "short_name": "MsgCipher",
-    "name": "Message Ciphers",
-    "icons": [{
-            "src": "../assets/chrome-extensionmanagementpage-48-48.png",
-            "type": "image/png",
-            "sizes": "48x48"
-        },
-        {
-            "src": "../assets/chrome-favicon-16-16.png",
-            "type": "image/png",
-            "sizes": "16x16"
-        }
-    ],
-    "start_url": "/?source=pwa",
-    "background_color": "#3367D6",
+    "name": "MsgCiphers",
     "display": "standalone",
-    "scope": "/",
-    "theme_color": "#3367D6",
-    "shortcuts": [],
-    "description": "Encrypt or decrypt any message or text source with a list of our available ciphers!",
-    "screenshots": []
-}
+    "start_url": "./src/",
+    "short_name": "MsgCiphers",
+    "theme_color": "#E1477E",
+    "description": "This is a PWA for the msg cipher app.",
+    "orientation": "any",
+    "background_color": "#E1477E",
+    "related_applications": [],
+    "prefer_related_applications": false,
+    "icons": [
+      {
+        "src": "../assets/icons/icon-512-512.png",
+        "sizes": "512x512"
+      },
+      {
+        "src": "../assets/icons/icon-192-192.png",
+        "sizes": "192x192"
+      },
+      {
+        "src": "../assets/icons/icon-48-48.png",
+        "sizes": "48x48"
+      }
+    ],
+    "screenshots": [],
+    "features": [
+      "Cross Platform",
+      "fast",
+      "simple",
+      "secure"
+    ],
+    "categories": [
+      "utility"
+    ]
+  }

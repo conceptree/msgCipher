@@ -13,40 +13,40 @@ import { HorizontalCipher } from '../ciphers/horizontalCipher.js';
 
 class Main {
     constructor() {
-            this.messageInput = document.querySelector("#messageInput");
-            this.msgKeyInput = document.querySelector("#msgKeyInput");
-            this.encryptButton = document.querySelector("#encryptButton");
-            this.decryptButton = document.querySelector("#decryptButton");
-            this.ciphersSelector = document.querySelector("#ciphers");
-            this.getCiphers();
-        }
-        /// GET LIST OF AVAILABLE CIPHERS
+        this.messageInput = document.querySelector("#messageInput");
+        this.msgKeyInput = document.querySelector("#msgKeyInput");
+        this.encryptButton = document.querySelector("#encryptButton");
+        this.decryptButton = document.querySelector("#decryptButton");
+        this.ciphersSelector = document.querySelector("#ciphers");
+        this.getCiphers();
+    }
+    /// GET LIST OF AVAILABLE CIPHERS
     getCiphers() {
-            fetch("../data/ciphers.json")
-                .then(resp => {
-                    return resp.json();
-                })
-                .then(data => {
-                    this.ciphers = data;
-                    this.buildSelector();
-                    this.buildButtonListeners();
-                })
-                .catch(error => console.log(error));
-        }
-        ///BUILD CIPHERS SELECTOR
+        fetch("../data/ciphers.json")
+            .then(resp => {
+                return resp.json();
+            })
+            .then(data => {
+                this.ciphers = data;
+                this.buildSelector();
+                this.buildButtonListeners();
+            })
+            .catch(error => console.log(error));
+    }
+    ///BUILD CIPHERS SELECTOR
     buildSelector() {
-            this.ciphers.forEach(cipher => {
-                this.ciphersSelector.insertAdjacentHTML("beforeend", `<option>${cipher.name}</option>`)
-            });
-        }
-        ///BUILD BUTTONS LISTENERS
+        this.ciphers.forEach(cipher => {
+            this.ciphersSelector.insertAdjacentHTML("beforeend", `<option>${cipher.name}</option>`)
+        });
+    }
+    ///BUILD BUTTONS LISTENERS
     buildButtonListeners() {
-            this.encryptButton = document.querySelector("#encryptButton");
-            this.decryptButton = document.querySelector("#decryptButton");
-            this.encryptButton.addEventListener("click", this.runCipher.bind(this));
-            this.decryptButton.addEventListener("click", this.runCipher.bind(this));
-        }
-        ///ENCRYPT MESSAGE
+        this.encryptButton = document.querySelector("#encryptButton");
+        this.decryptButton = document.querySelector("#decryptButton");
+        this.encryptButton.addEventListener("click", this.runCipher.bind(this));
+        this.decryptButton.addEventListener("click", this.runCipher.bind(this));
+    }
+    ///ENCRYPT MESSAGE
     runCipher(event) {
         const action = event.target.id === "encryptButton" ? "encrypt" : "decrypt";
         const message = this.messageInput.value;
@@ -64,13 +64,7 @@ const main = new Main();
 firebase.initializeApp(firebaseConfig);
 
 if ('serviceWorker' in navigator) {
-    window.addEventListener('load', function() {
-      navigator.serviceWorker.register('/sw.js').then(function(registration) {
-        // Registration was successful
-        console.log('ServiceWorker registration successful with scope: ', registration.scope);
-      }, function(err) {
-        // registration failed :(
-        console.log('ServiceWorker registration failed: ', err);
-      });
-    });
-  }
+    navigator.serviceWorker.register('./sw.js');
+}else{
+    console.warn("Your browser does not support service workers!");
+}
