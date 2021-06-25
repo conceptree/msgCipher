@@ -18,6 +18,9 @@ class Main {
         this.encryptButton = document.querySelector("#encryptButton");
         this.decryptButton = document.querySelector("#decryptButton");
         this.ciphersSelector = document.querySelector("#ciphers");
+        this.sendWhatsAppBtn = document.querySelector("#sendWhatsappBtn");
+        this.sendWhatsAppBtn.addEventListener("click", this.sendWhatsAppMsg.bind(this), true);
+        this.ciphersSelector.addEventListener("change", this.keySelectorToggle.bind(this),true);
         this.getCiphers();
     }
     /// GET LIST OF AVAILABLE CIPHERS
@@ -57,6 +60,22 @@ class Main {
             const cipherObj = eval(`new ${cipher.object}();`);
             this.messageInput.value = cipherObj[action](message, key);
         }
+    }
+    ///KEY SELECTOR TOGGLE
+    keySelectorToggle(evt){
+        const selectedCipher = this.ciphersSelector.value;
+        const cipher = this.ciphers[this.ciphers.findIndex(cipher => cipher.name == selectedCipher)];
+        if(!cipher.key){
+            document.querySelector("#keySelector").classList.add("hidden");
+        }else{
+            document.querySelector("#keySelector").classList.remove("hidden");
+        }
+    }
+    ///SEND THE MESSAGE THROUGH WHATSAPP
+    sendWhatsAppMsg(){
+        const phone = document.querySelector("#whatsappInput").value;
+        const message = document.querySelector("#messageInput").value;
+        window.open(`https://api.whatsapp.com/send/?phone=${phone}&text=${message}`)
     }
 }
 

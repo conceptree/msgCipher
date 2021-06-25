@@ -1,9 +1,10 @@
-html, body{
+html,
+body {
     padding: 0;
     margin: 0;
 }
 
-*{
+* {
     clear: both;
     padding: 0;
     margin: 0;
@@ -12,7 +13,7 @@ html, body{
     box-sizing: border-box;
 }
 
-.background-container{
+.background-container {
     background: url("../../assets/bg.jpg") no-repeat;
     background-size: cover;
 
@@ -24,7 +25,7 @@ html, body{
     height: 100vh;
 }
 
-.form-container{
+.form-container {
     flex: 1;
     opacity: 0.9;
 }
@@ -32,4 +33,22 @@ html, body{
 /* Dotted border */
 hr.dotted {
     border-top: 3px dotted #bbb;
-  }
+}
+
+.hidden {
+    display: none;
+}
+
+.whatsapp-container{
+    display: flex;
+    align-items: center;
+}
+
+.whatsapp-container>input{
+    flex: 1;
+}
+
+.whatsapp-container>button{
+    width: 80px;
+    margin: 10px;
+}
