@@ -13,6 +13,8 @@ import { HorizontalCipher } from '../ciphers/horizontalCipher.js';
 
 class Main {
     constructor() {
+        this.key = null;
+        this.cipher = null;
         this.messageInput = document.querySelector("#messageInput");
         this.msgKeyInput = document.querySelector("#msgKeyInput");
         this.encryptButton = document.querySelector("#encryptButton");
@@ -20,8 +22,12 @@ class Main {
         this.ciphersSelector = document.querySelector("#ciphers");
         this.sendWhatsAppBtn = document.querySelector("#sendWhatsappBtn");
         this.sendWhatsAppBtn.addEventListener("click", this.sendWhatsAppMsg.bind(this), true);
-        this.ciphersSelector.addEventListener("change", this.keySelectorToggle.bind(this),true);
+        this.ciphersSelector.addEventListener("change", this.keySelectorToggle.bind(this), true);
+        this.msgKeyInput.addEventListener("change", (evt) => {
+            this.key = evt.target.value;
+        });
         this.getCiphers();
+        this.readUrl();
     }
     /// GET LIST OF AVAILABLE CIPHERS
     getCiphers() {
@@ -39,7 +45,7 @@ class Main {
     ///BUILD CIPHERS SELECTOR
     buildSelector() {
         this.ciphers.forEach(cipher => {
-            this.ciphersSelector.insertAdjacentHTML("beforeend", `<option>${cipher.name}</option>`)
+            this.ciphersSelector.insertAdjacentHTML("beforeend", `<option>${cipher.name}</option>`);
         });
     }
     ///BUILD BUTTONS LISTENERS
@@ -53,37 +59,37 @@ class Main {
     runCipher(event) {
         const action = event.target.id === "encryptButton" ? "encrypt" : "decrypt";
         const message = this.messageInput.value;
-        const selectedCipher = this.ciphersSelector.value;
-        const cipher = this.ciphers[this.ciphers.findIndex(cipher => cipher.name == selectedCipher)];
-        const key = cipher.key ? this.msgKeyInput.value : null;
-        if (selectedCipher !== "" || selectedCipher !== null) {
-            const cipherObj = eval(`new ${cipher.object}();`);
-            this.messageInput.value = cipherObj[action](message, key);
-        }
+        const cipherObj = eval(`new ${this.cipher.object}();`);
+        this.messageInput.value = cipherObj[action](message, this.key);
     }
     ///KEY SELECTOR TOGGLE
-    keySelectorToggle(evt){
-        const selectedCipher = this.ciphersSelector.value;
-        const cipher = this.ciphers[this.ciphers.findIndex(cipher => cipher.name == selectedCipher)];
-        if(!cipher.key){
-            document.querySelector("#keySelector").classList.add("hidden");
-        }else{
-            document.querySelector("#keySelector").classList.remove("hidden");
-        }
+    keySelectorToggle(evt) {
+        this.cipher = this.ciphers[this.ciphers.findIndex(cipher => cipher.name == this.ciphersSelector.value)];
+        this.key = this.cipher.key ? this.cipher.key : null;
+        this.msgKeyInput.parentElement.classList[!this.key ? "add" : "remove"]("hidden");
     }
     ///SEND THE MESSAGE THROUGH WHATSAPP
-    sendWhatsAppMsg(){
+    sendWhatsAppMsg() {
         const phone = document.querySelector("#whatsappInput").value;
         const message = document.querySelector("#messageInput").value;
-        window.open(`https://api.whatsapp.com/send/?phone=${phone}&text=${message}`)
+        const cipher = btoa(this.ciphersSelector.value);
+        const msgCipherLink = `https://conceptree.github.io/msgCipher/src/index.html?cipher=${cipher}&key=${this.key}&message=${message}`;
+        window.open(`https://api.whatsapp.com/send/?phone=${phone}&text=${message + " DECRYPT IN " + msgCipherLink}&cipher=${cipher}`);
+    }
+    ///READ URL
+    readUrl() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const myParam = urlParams.get('masterkey');
+        console.log(myParam);
     }
 }
 
 const main = new Main();
+
 firebase.initializeApp(firebaseConfig);
 
 if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('./sw.js');
-}else{
+} else {
     console.warn("Your browser does not support service workers!");
 }
