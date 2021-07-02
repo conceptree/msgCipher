@@ -83,7 +83,7 @@ export class Main {
     readUrl() {
         const urlParams = new URLSearchParams(window.location.search);
         const myParam = urlParams.get('content');
-        if(myParam !== "" || myParam !== undefined || myParam !== null){
+        if(myParam !== "" && myParam !== undefined && myParam !== null){
             const cipherParam =  myParam.split("&")[0];
             const key = myParam.split("key=")[1].split("&")[0];
             const message = myParam.split("message=")[1];
