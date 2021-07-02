@@ -67,7 +67,7 @@ export class Main {
     ///KEY SELECTOR TOGGLE
     keySelectorToggle(evt) {
         this.cipher = this.ciphers[this.ciphers.findIndex(cipher => cipher.name == this.ciphersSelector.value)];
-        this.msgKeyInput.parentElement.classList[this.cipher.key ? "add" : "remove"]("hidden");
+        this.msgKeyInput.parentElement.classList[this.cipher.key ? "remove" : "add"]("hidden");
     }
     ///SEND THE MESSAGE THROUGH WHATSAPP
     sendWhatsAppMsg() {
