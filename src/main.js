@@ -82,7 +82,7 @@ export class Main {
     ///READ URL
     readUrl() {
         const urlParams = new URLSearchParams(window.location.search);
-        const myParam = atob(urlParams.get('content'));
+        const myParam = urlParams.get('content');
         if(myParam !== "" || myParam !== undefined){
             const cipherParam =  myParam.split("&")[0];
             const key = myParam.split("key=")[1].split("&")[0];
