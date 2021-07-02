@@ -84,10 +84,10 @@ export class Main {
         const urlParams = new URLSearchParams(window.location.search);
         const myParam = urlParams.get('content');
         if(myParam !== "" && myParam !== undefined && myParam !== null){
-            myParam = atob(myParam);
-            const cipherParam =  myParam.split("&")[0];
-            const key = myParam.split("key=")[1].split("&")[0];
-            const message = myParam.split("message=")[1];
+            
+            const cipherParam =  atob(myParam).split("&")[0];
+            const key = atob(myParam).split("key=")[1].split("&")[0];
+            const message = atob(myParam).split("message=")[1];
             const cipherIndex = this.ciphers.findIndex(el => el.name === cipherParam)+1;
 
             this.key = key;
