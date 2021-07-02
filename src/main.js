@@ -1,4 +1,5 @@
 import { firebaseConfig } from '../data/firebaseConfig.js';
+import { BitlyService } from '../data/bitlyService.js';
 import { CesarCipher } from '../ciphers/cesarCipher.js';
 import { NumericalAlphabetCipher } from '../ciphers/numericalAlphabet.js';
 import { CrabCipher } from '../ciphers/crabCipher.js';
@@ -11,8 +12,9 @@ import { MorseNodes } from '../ciphers/morseNodes.js';
 import { MountainMorse } from '../ciphers/mountainMorse.js';
 import { HorizontalCipher } from '../ciphers/horizontalCipher.js';
 
-class Main {
+export class Main {
     constructor() {
+        this.bitlyService = new BitlyService();
         this.key = null;
         this.cipher = null;
         this.messageInput = document.querySelector("#messageInput");
@@ -27,11 +29,10 @@ class Main {
             this.key = evt.target.value;
         });
         this.getCiphers();
-        this.readUrl();
     }
     /// GET LIST OF AVAILABLE CIPHERS
     getCiphers() {
-        fetch("../data/ciphers.json")
+        fetch("./data/ciphers.json")
             .then(resp => {
                 return resp.json();
             })
@@ -39,6 +40,7 @@ class Main {
                 this.ciphers = data;
                 this.buildSelector();
                 this.buildButtonListeners();
+                this.readUrl();
             })
             .catch(error => console.log(error));
     }
@@ -65,22 +67,38 @@ class Main {
     ///KEY SELECTOR TOGGLE
     keySelectorToggle(evt) {
         this.cipher = this.ciphers[this.ciphers.findIndex(cipher => cipher.name == this.ciphersSelector.value)];
-        this.key = this.cipher.key ? this.cipher.key : null;
         this.msgKeyInput.parentElement.classList[!this.key ? "add" : "remove"]("hidden");
     }
     ///SEND THE MESSAGE THROUGH WHATSAPP
     sendWhatsAppMsg() {
         const phone = document.querySelector("#whatsappInput").value;
         const message = document.querySelector("#messageInput").value;
-        const cipher = btoa(this.ciphersSelector.value);
-        const msgCipherLink = `https://conceptree.github.io/msgCipher/src/index.html?cipher=${cipher}&key=${this.key}&message=${message}`;
-        window.open(`https://api.whatsapp.com/send/?phone=${phone}&text=${message + " DECRYPT IN " + msgCipherLink}&cipher=${cipher}`);
+        const cipher = this.ciphersSelector.value;
+        const content = btoa(`${cipher}&key=${this.key}&message=${message}`);
+        this.bitlyService.getShortenLink(`https://conceptree.github.io/msgCipher/?content=${content}`).then(resp => {
+            window.open(`https://api.whatsapp.com/send/?phone=${phone}&text=${message + " DECRYPT IN " + resp.link}`);
+        });
     }
     ///READ URL
     readUrl() {
         const urlParams = new URLSearchParams(window.location.search);
-        const myParam = urlParams.get('masterkey');
-        console.log(myParam);
+        const myParam = atob(urlParams.get('content'));
+        if(myParam !== "" || myParam !== undefined){
+            const cipherParam =  myParam.split("&")[0];
+            const key = myParam.split("key=")[1].split("&")[0];
+            const message = myParam.split("message=")[1];
+            const cipherIndex = this.ciphers.findIndex(el => el.name === cipherParam)+1;
+
+            this.key = key;
+            this.cipher = this.ciphers[this.ciphers.findIndex(cipher => cipher.name == cipherParam)];
+
+            this.msgKeyInput.parentElement.classList[!key ? "add" : "remove"]("hidden");
+            this.ciphersSelector.selectedIndex = cipherIndex;            
+            this.messageInput.value = String(message);
+            this.msgKeyInput.value = String(this.key);
+
+            this.decryptButton.click();
+        }
     }
 }
 

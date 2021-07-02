@@ -4,6 +4,8 @@
   "description": "Web APP that codes and decodes text messages on top of different ciphers.",
   "main": "index.js",
   "devDependencies": {
+    "browser-sync": "^2.27.4",
+    "gulp": "^4.0.2",
     "nodemon": "^2.0.7",
     "workbox": "^0.0.0",
     "workbox-cli": "^6.1.5"
