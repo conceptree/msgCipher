@@ -42,6 +42,7 @@ hr.dotted {
 .whatsapp-container{
     display: flex;
     align-items: center;
+    gap:10px;
 }
 
 .whatsapp-container>input{
@@ -50,5 +51,4 @@ hr.dotted {
 
 .whatsapp-container>button{
     width: 80px;
-    margin: 10px;
 }
