@@ -19,12 +19,14 @@ export class Main {
         this.cipher = null;
         this.messageInput = document.querySelector("#messageInput");
         this.msgKeyInput = document.querySelector("#msgKeyInput");
+        this.sendWhatsAppBtn = document.querySelector("#sendWhatsappBtn");
+        this.sendEmailBtn = document.querySelector("#sendEmailBtn");
         this.encryptButton = document.querySelector("#encryptButton");
         this.decryptButton = document.querySelector("#decryptButton");
-        this.ciphersSelector = document.querySelector("#ciphers");
-        this.sendWhatsAppBtn = document.querySelector("#sendWhatsappBtn");
+        this.encryptButton.addEventListener("click", this.runCipher.bind(this));
+        this.decryptButton.addEventListener("click", this.runCipher.bind(this));
         this.sendWhatsAppBtn.addEventListener("click", this.sendWhatsAppMsg.bind(this), true);
-        this.ciphersSelector.addEventListener("change", this.keySelectorToggle.bind(this), true);
+        this.sendEmailBtn.addEventListener("click", this.sendMailMsg.bind(this), true);
         this.msgKeyInput.addEventListener("change", (evt) => {
             this.key = evt.target.value;
         });
@@ -39,23 +41,20 @@ export class Main {
             .then(data => {
                 this.ciphers = data;
                 this.buildSelector();
-                this.buildButtonListeners();
                 this.readUrl();
             })
             .catch(error => console.log(error));
     }
     ///BUILD CIPHERS SELECTOR
     buildSelector() {
+        this.ciphersSelector = document.querySelector("#ciphers");
         this.ciphers.forEach(cipher => {
             this.ciphersSelector.insertAdjacentHTML("beforeend", `<option>${cipher.name}</option>`);
         });
-    }
-    ///BUILD BUTTONS LISTENERS
-    buildButtonListeners() {
-        this.encryptButton = document.querySelector("#encryptButton");
-        this.decryptButton = document.querySelector("#decryptButton");
-        this.encryptButton.addEventListener("click", this.runCipher.bind(this));
-        this.decryptButton.addEventListener("click", this.runCipher.bind(this));
+        this.ciphersSelector.addEventListener("change", (evt)=>{
+            this.cipher = this.ciphers[this.ciphers.findIndex(cipher => cipher.name == evt.target.value)];
+            this.msgKeyInput.parentElement.classList[this.cipher.key ? "remove" : "add"]("hidden");
+        });
     }
     ///ENCRYPT MESSAGE
     runCipher(event) {
@@ -64,11 +63,6 @@ export class Main {
         const cipherObj = eval(`new ${this.cipher.object}();`);
         this.messageInput.value = cipherObj[action](message, this.key);
     }
-    ///KEY SELECTOR TOGGLE
-    keySelectorToggle(evt) {
-        this.cipher = this.ciphers[this.ciphers.findIndex(cipher => cipher.name == this.ciphersSelector.value)];
-        this.msgKeyInput.parentElement.classList[this.cipher.key ? "remove" : "add"]("hidden");
-    }
     ///SEND THE MESSAGE THROUGH WHATSAPP
     sendWhatsAppMsg() {
         const phone = document.querySelector("#whatsappInput").value;
@@ -76,25 +70,35 @@ export class Main {
         const cipher = this.ciphersSelector.value;
         const content = btoa(`${cipher}&key=${this.key}&message=${message}`);
         this.bitlyService.getShortenLink(`https://conceptree.github.io/msgCipher/?content=${content}`).then(resp => {
-            window.open(`https://api.whatsapp.com/send/?phone=${phone}&text=${message + " DECRYPT IN " + resp.link}`);
+            window.open(`https://api.whatsapp.com/send/?phone=${phone}&text=${message + " DECRYPT IN: " + resp.link}`);
+        });
+    }
+    ///SEND THE MESSAGE THROUGH MAIL
+    sendMailMsg() {
+        const email = document.querySelector("#emailInput").value;
+        const message = document.querySelector("#messageInput").value;
+        const cipher = this.ciphersSelector.value;
+        const content = btoa(`${cipher}&key=${this.key}&message=${message}`);
+        this.bitlyService.getShortenLink(`https://conceptree.github.io/msgCipher/?content=${content}`).then(resp => {
+            window.open(`mailto:${email}?subject=MsgCipher Message&body=${message+ " DECRYPT IN " + resp.link}`);
         });
     }
     ///READ URL
     readUrl() {
         const urlParams = new URLSearchParams(window.location.search);
         const myParam = urlParams.get('content');
-        if(myParam !== "" && myParam !== undefined && myParam !== null){
-            
-            const cipherParam =  atob(myParam).split("&")[0];
+        if (myParam !== "" && myParam !== undefined && myParam !== null) {
+
+            const cipherParam = atob(myParam).split("&")[0];
             const key = atob(myParam).split("key=")[1].split("&")[0];
             const message = atob(myParam).split("message=")[1];
-            const cipherIndex = this.ciphers.findIndex(el => el.name === cipherParam)+1;
+            const cipherIndex = this.ciphers.findIndex(el => el.name === cipherParam) + 1;
 
             this.key = key;
             this.cipher = this.ciphers[this.ciphers.findIndex(cipher => cipher.name == cipherParam)];
 
             this.msgKeyInput.parentElement.classList[!key ? "add" : "remove"]("hidden");
-            this.ciphersSelector.selectedIndex = cipherIndex;            
+            this.ciphersSelector.selectedIndex = cipherIndex;
             this.messageInput.value = String(message);
             this.msgKeyInput.value = String(this.key);
 

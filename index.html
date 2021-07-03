@@ -7,12 +7,14 @@
     <link rel="manifest" href="./manifest.json">
     <link rel="shortcut icon" href="./assets/chrome/chrome-favicon-16-16.png" type="image/x-icon">
     <meta name="theme-color" content="#3367D6">
-    <meta name="description" content="Message encryption and decryption system based on a diverse array of different ciphers!">
+    <meta name="description"
+        content="Message encryption and decryption system based on a diverse array of different ciphers!">
     <!-- load jquery, bootstrap CSS, firebase-->
     <script src="https://www.gstatic.com/firebasejs/8.4.2/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.4.2/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.4.2/firebase-database.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+        integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
     <link rel="stylesheet" href="./src/css/styles.css">
     <script type="module" src="./src/main.js" async defer></script>
 
@@ -24,7 +26,7 @@
     <!-- Select cipher form-->
     <div class="container form-container" id="add-text">
         <div class="card card-body bg-dark text-white">
-            <form>
+            <form class="conainer">
                 <div class="form-group">
                     <label for="inputText">Message</label>
                     <textarea type="text" class="form-control" id="messageInput" placeholder="Text"></textarea>
@@ -43,14 +45,23 @@
                     <input type="text" class="form-control" id="msgKeyInput" placeholder="key">
                 </div>
 
-                <button id="encryptButton" type="button" class="btn btn-danger btn-block">Encrypt</button>
-                <button id="decryptButton" type="button" class="btn btn-primary btn-block">Decrypt</button>
+                <div class="d-flex cipher-buttons">
+                    <button id="encryptButton" type="button" class="btn btn-danger flex-fill .mt-1">Encrypt</button>
+                    <button id="decryptButton" type="button" class="btn btn-primary flex-fill .mt-1">Decrypt</button>
+                </div>
             </form>
             <hr class="dotted">
-            <div class="whatsapp-container" id="keySelector">
-                <img src="./assets/WhatsApp.svg" width="50px"/>
-                <input type="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" class="form-control" id="whatsappInput" placeholder="Enter the target phone number (e.g 0359100000000)">
+            <div class="integration-container" id="whatsAppContainer">
+                <img src="./assets/WhatsApp.png" width="80px" />
+                <input type="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" class="form-control" id="whatsappInput"
+                    placeholder="Enter the receiver phone number (e.g 0359100000000)">
                 <button id="sendWhatsappBtn" type="button" class="btn btn-primary btn-block">Send</button>
+            </div>
+            <div class="integration-container" id="mailContainer">
+                <img src="./assets/mail.png" width="80px" />
+                <input type="email" id="emailInput" name="myGeeks" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                    class="form-control" id="mailInput" placeholder="Enter de receiver email...">
+                <button id="sendEmailBtn" type="button" class="btn btn-primary btn-block">Send</button>
             </div>
         </div>
     </div>

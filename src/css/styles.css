@@ -39,16 +39,24 @@ hr.dotted {
     display: none;
 }
 
-.whatsapp-container{
+.integration-container{
     display: flex;
     align-items: center;
     gap:10px;
 }
 
-.whatsapp-container>input{
+.integration-container>input{
     flex: 1;
 }
 
-.whatsapp-container>button{
+.integration-container>button{
     width: 80px;
+}
+
+.integration-container>img{
+    width: 90px;
+}
+
+.cipher-buttons{
+    gap:10px;
 }
