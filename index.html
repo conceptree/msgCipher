@@ -27,22 +27,23 @@
     <div class="container form-container" id="add-text">
         <div class="card card-body bg-dark text-white">
             <form class="conainer">
-                <div class="form-group">
-                    <label for="inputText">Message</label>
-                    <textarea type="text" class="form-control" id="messageInput" placeholder="Text"></textarea>
-                </div>
 
                 <div class="form-group">
                     <label for="ciphers">Ciphers</label>
                     <select class="form-control" id="ciphers">
                         <!--CIPHERS-->
-                        <option>empty</option>
+                        <option>Select a cipher...</option>
                     </select>
                 </div>
 
                 <div class="form-group hidden" id="keySelector">
                     <label for="inputText">Key</label>
                     <input type="text" class="form-control" id="msgKeyInput" placeholder="key">
+                </div>
+
+                <div class="form-group">
+                    <label for="inputText">Message</label>
+                    <textarea type="text" class="form-control message" id="messageInput" placeholder="Your message..."></textarea>
                 </div>
 
                 <div class="d-flex cipher-buttons">
@@ -60,7 +61,7 @@
             <div class="integration-container" id="mailContainer">
                 <img src="./assets/mail.png" width="80px" />
                 <input type="email" id="emailInput" name="myGeeks" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
-                    class="form-control" id="mailInput" placeholder="Enter de receiver email...">
+                    class="form-control" id="mailInput" placeholder="Recipient  email...">
                 <button id="sendEmailBtn" type="button" class="btn btn-primary btn-block">Send</button>
             </div>
         </div>

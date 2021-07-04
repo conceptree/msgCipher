@@ -60,3 +60,9 @@ hr.dotted {
 .cipher-buttons{
     gap:10px;
 }
+
+.message{
+    max-height: 50vh;
+    min-height: 20vh;
+    height:40vh;
+}
