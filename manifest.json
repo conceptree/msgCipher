@@ -20,7 +20,8 @@
       },
       {
         "src": "./assets/icons/icon-48-48.png",
-        "sizes": "48x48"
+        "sizes": "48x48",
+        "purpose":"maskable"
       }
     ],
     "screenshots": [],
