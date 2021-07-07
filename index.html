@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
         integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
     <link rel="stylesheet" href="./src/css/styles.css">
+    <script type="text/javascript" src="./lib/jsencrypt.min.js"></script>
     <script type="module" src="./src/main.js" async defer></script>
 
     <title>MsgCipher</title>
@@ -26,13 +27,19 @@
 
     <!-- Select cipher form-->
     <div class="container form-container" id="add-text">
+        <ul class="nav nav-tabs bg-dark text-light">
+            <li class="nav-item">
+                <p class="nav-link active" id="ciphersbtn">Ciphers</p>
+            </li>
+            <li class="nav-item">
+                <p class="nav-link" id="rsabtn">RSA Keygen</p>
+            </li>
+        </ul>
         <div class="card card-body bg-dark text-white">
-            <form class="conainer">
-
+            <form class="conainer" id="ciphersForm">
                 <div class="form-group">
                     <label for="ciphers">Ciphers</label>
                     <select class="form-control" id="ciphers">
-                        <!--CIPHERS-->
                         <option>Select a cipher...</option>
                     </select>
                 </div>
@@ -44,7 +51,8 @@
 
                 <div class="form-group">
                     <label for="inputText">Message</label>
-                    <textarea type="text" class="form-control message" id="messageInput" placeholder="Your message..."></textarea>
+                    <textarea type="text" class="form-control message" id="messageInput"
+                        placeholder="Your message..."></textarea>
                 </div>
 
                 <div class="d-flex cipher-buttons">
@@ -52,6 +60,42 @@
                     <button id="decryptButton" type="button" class="btn btn-primary flex-fill .mt-1">Decrypt</button>
                 </div>
             </form>
+
+            <form class="conainer hidden" id="rsaForm">
+                <div class="form-group">
+                    <label for="ciphers">Key Sizes</label>
+                    <select class="form-control" id="keySizes">
+                        <option>Select the key size...</option>
+                        <option>512 bit</option>
+                        <option>1024 bit</option>
+                        <option>2048 bit</option>
+                        <option>4096 bit</option>
+                    </select>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="asyncCheck" value="async">
+                    <label class="form-check-label" for="inlineCheckbox1">Async</label>
+                </div>
+                <div class="timer">
+                    <p id="rsaTimer"></p>
+                </div>
+                <div class="d-flex cipher-buttons">
+                    <button id="generateKeyBtn" type="button" class="btn btn-primary flex-fill .mt-1">Generate</button>
+                </div>
+                <hr class="dotted">
+                <div class="form-group" id="keySelector">
+                    <label for="inputText">Private Key</label>
+                    <textarea type="text" class="form-control message" id="privateKeyInput"
+                        placeholder="PRIVATE KEY"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="inputText">Public Key</label>
+                    <textarea type="text" class="form-control message" id="publicKeyInput"
+                        placeholder="PUBLIC KEY"></textarea>
+                </div>
+
+            </form>
+
             <hr class="dotted">
             <div class="integration-container" id="whatsAppContainer">
                 <img src="./assets/WhatsApp.png" width="80px" />

@@ -11,24 +11,39 @@ import { Passa1Melro } from '../ciphers/passa1melro.js';
 import { MorseNodes } from '../ciphers/morseNodes.js';
 import { MountainMorse } from '../ciphers/mountainMorse.js';
 import { HorizontalCipher } from '../ciphers/horizontalCipher.js';
+import { SmsCipher } from '../ciphers/smsCipher.js';
 
 export class Main {
     constructor() {
         this.bitlyService = new BitlyService();
+        this.jsEncrypt = new JSEncrypt();
         this.key = null;
         this.cipher = null;
         this.messageInput = document.querySelector("#messageInput");
         this.msgKeyInput = document.querySelector("#msgKeyInput");
+        this.ciphersButton = document.querySelector("#ciphersbtn");
+        this.rsaButton = document.querySelector("#rsabtn");
+        this.rsaTimer = document.querySelector("#rsaTimer");
+        this.privateKeyInput = document.querySelector("#privateKeyInput");
+        this.publicKeyInput = document.querySelector("#publicKeyInput");
         this.sendWhatsAppBtn = document.querySelector("#sendWhatsappBtn");
         this.sendEmailBtn = document.querySelector("#sendEmailBtn");
         this.encryptButton = document.querySelector("#encryptButton");
         this.decryptButton = document.querySelector("#decryptButton");
+        this.generateKeysButton = document.querySelector("#generateKeyBtn");
+        this.keySizeSelector = document.querySelector("#keySizes");
+        this.generateKeysButton.addEventListener("click", this.generateKeys.bind(this));
         this.encryptButton.addEventListener("click", this.runCipher.bind(this));
         this.decryptButton.addEventListener("click", this.runCipher.bind(this));
+        this.ciphersButton.addEventListener("click", this.toggleViews.bind(this));
+        this.rsaButton.addEventListener("click", this.toggleViews.bind(this));
         this.sendWhatsAppBtn.addEventListener("click", this.sendWhatsAppMsg.bind(this), true);
         this.sendEmailBtn.addEventListener("click", this.sendMailMsg.bind(this), true);
         this.msgKeyInput.addEventListener("change", (evt) => {
             this.key = evt.target.value;
+        });
+        this.keySizeSelector.addEventListener("change", (evt) => {
+            this.keySize = evt.target.value.split("bit")[0].trim();
         });
         this.getCiphers();
     }
@@ -51,7 +66,7 @@ export class Main {
         this.ciphers.forEach(cipher => {
             this.ciphersSelector.insertAdjacentHTML("beforeend", `<option>${cipher.name}</option>`);
         });
-        this.ciphersSelector.addEventListener("change", (evt)=>{
+        this.ciphersSelector.addEventListener("change", (evt) => {
             this.cipher = this.ciphers[this.ciphers.findIndex(cipher => cipher.name == evt.target.value)];
             this.msgKeyInput.parentElement.classList[this.cipher.key ? "remove" : "add"]("hidden");
         });
@@ -80,7 +95,7 @@ export class Main {
         const cipher = this.ciphersSelector.value;
         const content = btoa(`${cipher}&key=${this.key}&message=${message}`);
         this.bitlyService.getShortenLink(`https://conceptree.github.io/msgCipher/?content=${content}`).then(resp => {
-            window.open(`mailto:${email}?subject=MsgCipher Message&body=${message+ " DECRYPT IN " + resp.link}`);
+            window.open(`mailto:${email}?subject=MsgCipher Message&body=${message + " DECRYPT IN " + resp.link}`);
         });
     }
     ///READ URL
@@ -104,6 +119,56 @@ export class Main {
 
             this.decryptButton.click();
         }
+    }
+    ///TOGGLE VIEWS
+    toggleViews(evt) {
+        document.querySelectorAll("form").forEach(form => {
+            form.classList.add("hidden");
+        });
+        document.querySelectorAll(".nav-link").forEach(form => {
+            form.classList.remove("active");
+        });
+        evt.target.classList.add("active");
+        let visible = "";
+        switch (evt.target.id) {
+            case "ciphersbtn":
+                visible = "ciphersForm";
+                break;
+            case "rsabtn":
+                visible = "rsaForm";
+                break;
+        }
+        document.querySelector("#" + visible).classList.remove("hidden");
+    }
+    ///GENERATE KEYS
+    generateKeys() {
+        let keySize = parseInt(this.keySize);
+        let crypt = new JSEncrypt({ default_key_size: keySize });
+        let async = document.querySelector("#asyncCheck").checked;
+        let dt = new Date();
+        let time = -(dt.getTime());
+        if (async) {
+            this.rsaTimer.textContent = '.';
+            let load = setInterval(() => {
+                let text = this.rsaTimer.textContent;
+                this.rsaTimer.textContent = text + '.';
+            }, 500);
+            crypt.getKey(() => {
+                clearInterval(load);
+                dt = new Date();
+                time += (dt.getTime());
+                this.rsaTimer.textContent = 'Generated in ' + time + ' ms';
+                this.privateKeyInput.value = crypt.getPrivateKey();
+                this.publicKeyInput.value = crypt.getPublicKey();
+            });
+            return;
+        }
+        crypt.getKey();
+        dt = new Date();
+        time += (dt.getTime());
+        this.rsaTimer.textContent = 'Generated in ' + time + ' ms';
+        this.privateKeyInput.value = crypt.getPrivateKey();
+        this.publicKeyInput.value = crypt.getPublicKey();
     }
 }
 

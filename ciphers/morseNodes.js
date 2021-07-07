@@ -10,7 +10,7 @@ export class MorseNodes {
             'y': '-.--', 'z': '--..','1': '.----', '2': '..---',
              '3': '...--', '4': '....-','5': '.....', '6': '-....', 
              '7': '--...', '8': '---..','9': '----.', '0': '-----'
-        }
+        };
 
         this.alphabetDecode = {
             '.-': 'a', '-...': 'b', '-.-.': 'c', '-..': 'd',
@@ -22,14 +22,14 @@ export class MorseNodes {
             '-.--': 'y', '--..': 'z', '.----': '1', '..---': '2',
             '...--': '3', '....-': '4', '.....': '5', '-....': '6',
             '--...': '7', '---..': '8', '----.': '9', '-----': '0'
-        }
+        };
     }
 
-    encrypt(msg) {
-        return msg.split('').map(char => char.split('').map(morse => this.alphabetEncode[morse]).join('')).join(' ');
+    encrypt(str) {
+        return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").split('').map(char => char.split('').map(morse => this.alphabetEncode[morse]).join('')).join(' ');
     }
 
-    decrypt(msg) {
-        return msg.split('   ').map(morse => morse.split(' ').map(char => this.alphabetDecode[char]).join('')).join(' ');
+    decrypt(str) {
+        return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").split('   ').map(morse => morse.split(' ').map(char => this.alphabetDecode[char]).join('')).join(' ');
     }
 }

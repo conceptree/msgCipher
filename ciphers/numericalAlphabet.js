@@ -10,6 +10,7 @@ export class NumericalAlphabetCipher {
     }
 
     encrypt(str, key) {
+        str = str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
         let result = [];
 
        this.createNumsArray(Number(key));

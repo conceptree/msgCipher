@@ -4,6 +4,7 @@ export class Passa1Melro {
     }
 
     encrypt(str) {
+        str = str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
         let result = str.split("").map(char => {
             let random = this.alphabet[Math.floor(Math.random() * this.alphabet.length)];
             return char + random;

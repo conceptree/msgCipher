@@ -25,8 +25,8 @@
     },
     {
         "name": "SMS",
-        "object": "SMSCipher",
-        "key": true
+        "object": "SmsCipher",
+        "key": false
     },
     {
         "name": "Fake Braille",

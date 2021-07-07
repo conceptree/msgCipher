@@ -24,12 +24,12 @@ export class MountainMorse {
         }
     }
 
-    encrypt(msg) {
-        return msg.toLowerCase().split('').map(char => char.split('').map(morse => this.alphabetEncode[morse]).join('')).join(' ');
+    encrypt(str) {
+        return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().split('').map(char => char.split('').map(morse => this.alphabetEncode[morse]).join('')).join(' ');
     }
 
-    decrypt(msg) {
-        return msg.split('   ').map(morse => morse.split(' ').map(char => this.alphabetDecode[char]).join('')).join(' ');
+    decrypt(str) {
+        return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").split('   ').map(morse => morse.split(' ').map(char => this.alphabetDecode[char]).join('')).join(' ');
     }
 }
 

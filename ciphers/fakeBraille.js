@@ -33,9 +33,10 @@ export class FakeBrailleCipher {
         ];
     }
 
-    encrypt(msg) {
+    encrypt(str) {
+        str = str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
         let result = [];
-        let splited = msg.split("");
+        let splited = str.split("");
         splited.forEach(char => {
             if(this.square1.indexOf(char.toUpperCase()) >= 0){
                 result.push(this.squareA[this.square1.indexOf(char.toUpperCase())], "|");
@@ -48,9 +49,9 @@ export class FakeBrailleCipher {
         return result.join("");
     }
 
-    decrypt(msg) {
+    decrypt(str) {
         let result = [];
-        let splited = msg.split("|");
+        let splited = str.split("|");
         splited.forEach(char => {
             if(this.squareA.indexOf(char) >= 0){
                 result.push(this.square1[this.squareA.indexOf(char)]);
