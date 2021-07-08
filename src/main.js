@@ -16,7 +16,6 @@ import { SmsCipher } from '../ciphers/smsCipher.js';
 export class Main {
     constructor() {
         this.bitlyService = new BitlyService();
-        this.jsEncrypt = new JSEncrypt();
         this.key = null;
         this.cipher = null;
         this.messageInput = document.querySelector("#messageInput");
@@ -24,17 +23,23 @@ export class Main {
         this.ciphersButton = document.querySelector("#ciphersbtn");
         this.rsaButton = document.querySelector("#rsabtn");
         this.rsaTimer = document.querySelector("#rsaTimer");
+        this.rsaMessageContainer = document.querySelector("#rsaMessageContainer");
+        this.rsaMessageInput = document.querySelector("#rsaMessageInput");
         this.privateKeyInput = document.querySelector("#privateKeyInput");
         this.publicKeyInput = document.querySelector("#publicKeyInput");
         this.sendWhatsAppBtn = document.querySelector("#sendWhatsappBtn");
         this.sendEmailBtn = document.querySelector("#sendEmailBtn");
         this.encryptButton = document.querySelector("#encryptButton");
         this.decryptButton = document.querySelector("#decryptButton");
+        this.rsaEncryptButton = document.querySelector("#rsaEncryptButton");
+        this.rsaDecryptButton = document.querySelector("#rsaDecryptButton");
         this.generateKeysButton = document.querySelector("#generateKeyBtn");
         this.keySizeSelector = document.querySelector("#keySizes");
         this.generateKeysButton.addEventListener("click", this.generateKeys.bind(this));
         this.encryptButton.addEventListener("click", this.runCipher.bind(this));
         this.decryptButton.addEventListener("click", this.runCipher.bind(this));
+        this.rsaEncryptButton.addEventListener("click", this.rsaEncryption.bind(this));
+        this.rsaDecryptButton.addEventListener("click", this.rsaEncryption.bind(this));
         this.ciphersButton.addEventListener("click", this.toggleViews.bind(this));
         this.rsaButton.addEventListener("click", this.toggleViews.bind(this));
         this.sendWhatsAppBtn.addEventListener("click", this.sendWhatsAppMsg.bind(this), true);
@@ -81,21 +86,18 @@ export class Main {
     ///SEND THE MESSAGE THROUGH WHATSAPP
     sendWhatsAppMsg() {
         const phone = document.querySelector("#whatsappInput").value;
-        const message = document.querySelector("#messageInput").value;
-        const cipher = this.ciphersSelector.value;
-        const content = btoa(`${cipher}&key=${this.key}&message=${message}`);
+        let content = this.currentTab === "ciphersForm" ? btoa(`tab=${this.currentTab}&cipher=${this.ciphersSelector.value}&key=${this.key}&message=${this.messageInput.value}`) : btoa(`tab=${this.currentTab}&privKey=${this.privateKeyInput.value}&pubKey=${this.publicKeyInput.value}&message=${this.rsaMessageInput.value}`);
         this.bitlyService.getShortenLink(`https://conceptree.github.io/msgCipher/?content=${content}`).then(resp => {
-            window.open(`https://api.whatsapp.com/send/?phone=${phone}&text=${message + " DECRYPT IN: " + resp.link}`);
+            window.open(`https://api.whatsapp.com/send/?phone=${phone}&text=${this.currentTab === "ciphersForm" ? this.messageInput.value : this.rsaMessageInput.value + " DECRYPT IN: " + resp.link}`);
         });
+        
     }
     ///SEND THE MESSAGE THROUGH MAIL
     sendMailMsg() {
         const email = document.querySelector("#emailInput").value;
-        const message = document.querySelector("#messageInput").value;
-        const cipher = this.ciphersSelector.value;
-        const content = btoa(`${cipher}&key=${this.key}&message=${message}`);
+        let content = this.currentTab === "ciphersForm" ? btoa(`tab=${this.currentTab}&cipher=${this.ciphersSelector.value}&key=${this.key}&message=${this.messageInput.value}`) : btoa(`tab=${this.currentTab}&privKey=${this.privateKeyInput.value}&pubKey=${this.publicKeyInput.value}&message=${this.rsaMessageInput.value}`);
         this.bitlyService.getShortenLink(`https://conceptree.github.io/msgCipher/?content=${content}`).then(resp => {
-            window.open(`mailto:${email}?subject=MsgCipher Message&body=${message + " DECRYPT IN " + resp.link}`);
+            window.open(`mailto:${email}?subject=MsgCipher Message&body=${this.currentTab === "ciphersForm" ? this.messageInput.value : this.rsaMessageInput.value + " DECRYPT IN " + resp.link}`);
         });
     }
     ///READ URL
@@ -104,20 +106,35 @@ export class Main {
         const myParam = urlParams.get('content');
         if (myParam !== "" && myParam !== undefined && myParam !== null) {
 
-            const cipherParam = atob(myParam).split("&")[0];
-            const key = atob(myParam).split("key=")[1].split("&")[0];
-            const message = atob(myParam).split("message=")[1];
-            const cipherIndex = this.ciphers.findIndex(el => el.name === cipherParam) + 1;
+            const tab = atob(myParam).split("tab=")[1].split("&")[0];
 
-            this.key = key;
-            this.cipher = this.ciphers[this.ciphers.findIndex(cipher => cipher.name == cipherParam)];
+            if (tab !== "" && tab !== undefined && tab !== null) {
+                this.toggleViews({target:document.querySelector(`#${tab === "ciphersForm" ? "ciphersbtn" : "rsabtn"}`)});
+            } else {
+                return;
+            }
 
-            this.msgKeyInput.parentElement.classList[!key ? "add" : "remove"]("hidden");
-            this.ciphersSelector.selectedIndex = cipherIndex;
-            this.messageInput.value = String(message);
-            this.msgKeyInput.value = String(this.key);
+            if (this.currentTab === "ciphersForm") {
+                const cipherParam = atob(myParam).split("&cipher=")[1].split("&key")[0];
+                const key = atob(myParam).split("key=")[1].split("&message")[0];
+                const message = atob(myParam).split("message=")[1];
+                const cipherIndex = this.ciphers.findIndex(el => el.name === cipherParam) + 1;
+                this.key = key;
+                this.cipher = this.ciphers[this.ciphers.findIndex(cipher => cipher.name == cipherParam)];
+                this.msgKeyInput.parentElement.classList[!key ? "add" : "remove"]("hidden");
+                this.ciphersSelector.selectedIndex = cipherIndex;
+                this.messageInput.value = String(message);
+                this.msgKeyInput.value = String(this.key);
+                this.decryptButton.click();
+            } else {
+                this.jsEncrypt = new JSEncrypt();
+                this.rsaMessageContainer.classList.remove("hidden");
+                this.privateKeyInput.value = atob(myParam).split("privKey=")[1].split("&")[0];
+                this.publicKeyInput.value = atob(myParam).split("pubKey=")[1].split("&")[0];
+                this.rsaMessageInput.value = atob(myParam).split("message=")[1];
+                this.rsaEncryption({target:{id:"rsaDecryptButton"}});
+            }
 
-            this.decryptButton.click();
         }
     }
     ///TOGGLE VIEWS
@@ -129,21 +146,21 @@ export class Main {
             form.classList.remove("active");
         });
         evt.target.classList.add("active");
-        let visible = "";
+        this.currentTab = "";
         switch (evt.target.id) {
             case "ciphersbtn":
-                visible = "ciphersForm";
+                this.currentTab = "ciphersForm";
                 break;
             case "rsabtn":
-                visible = "rsaForm";
+                this.currentTab = "rsaForm";
                 break;
         }
-        document.querySelector("#" + visible).classList.remove("hidden");
+        document.querySelector("#" + this.currentTab).classList.remove("hidden");
     }
     ///GENERATE KEYS
     generateKeys() {
         let keySize = parseInt(this.keySize);
-        let crypt = new JSEncrypt({ default_key_size: keySize });
+        this.jsEncrypt = new JSEncrypt({ default_key_size: keySize });
         let async = document.querySelector("#asyncCheck").checked;
         let dt = new Date();
         let time = -(dt.getTime());
@@ -153,22 +170,36 @@ export class Main {
                 let text = this.rsaTimer.textContent;
                 this.rsaTimer.textContent = text + '.';
             }, 500);
-            crypt.getKey(() => {
+            this.jsEncrypt.getKey(() => {
                 clearInterval(load);
                 dt = new Date();
                 time += (dt.getTime());
                 this.rsaTimer.textContent = 'Generated in ' + time + ' ms';
-                this.privateKeyInput.value = crypt.getPrivateKey();
-                this.publicKeyInput.value = crypt.getPublicKey();
+                this.privateKeyInput.value = this.jsEncrypt.getPrivateKey();
+                this.publicKeyInput.value = this.jsEncrypt.getPublicKey();
+                this.rsaMessageContainer.classList.remove("hidden");
             });
             return;
         }
-        crypt.getKey();
+        this.jsEncrypt.getKey();
         dt = new Date();
         time += (dt.getTime());
         this.rsaTimer.textContent = 'Generated in ' + time + ' ms';
-        this.privateKeyInput.value = crypt.getPrivateKey();
-        this.publicKeyInput.value = crypt.getPublicKey();
+        this.privateKeyInput.value = this.jsEncrypt.getPrivateKey();
+        this.publicKeyInput.value = this.jsEncrypt.getPublicKey();
+    }
+    ///RSA ENCRYPTION
+    rsaEncryption(evt) {
+        // Set the private.
+        this.jsEncrypt.setPrivateKey(this.privateKeyInput.value);
+        switch (evt.target.id) {
+            case "rsaEncryptButton":
+                this.rsaMessageInput.value = this.jsEncrypt.encrypt(this.rsaMessageInput.value);
+                break;
+            case "rsaDecryptButton":
+                this.rsaMessageInput.value = this.jsEncrypt.decrypt(this.rsaMessageInput.value);
+                break;
+        }
     }
 }
 

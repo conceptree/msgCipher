@@ -36,6 +36,7 @@
             </li>
         </ul>
         <div class="card card-body bg-dark text-white">
+            <!--CIPHERS-->
             <form class="conainer" id="ciphersForm">
                 <div class="form-group">
                     <label for="ciphers">Ciphers</label>
@@ -60,7 +61,7 @@
                     <button id="decryptButton" type="button" class="btn btn-primary flex-fill .mt-1">Decrypt</button>
                 </div>
             </form>
-
+            <!--RSA-->
             <form class="conainer hidden" id="rsaForm">
                 <div class="form-group">
                     <label for="ciphers">Key Sizes</label>
@@ -83,19 +84,35 @@
                     <button id="generateKeyBtn" type="button" class="btn btn-primary flex-fill .mt-1">Generate</button>
                 </div>
                 <hr class="dotted">
-                <div class="form-group" id="keySelector">
-                    <label for="inputText">Private Key</label>
-                    <textarea type="text" class="form-control message" id="privateKeyInput"
-                        placeholder="PRIVATE KEY"></textarea>
+                <div class=" d-flex flex-row">
+                    <div class="form-group flex-grow-1 mr-1" id="keySelector">
+                        <label for="inputText">Private Key</label>
+                        <textarea type="text" class="form-control message" id="privateKeyInput"
+                            placeholder="PRIVATE KEY"></textarea>
+                    </div>
+                    <div class="form-group flex-grow-1 ml-1">
+                        <label for="inputText">Public Key</label>
+                        <textarea type="text" class="form-control message" id="publicKeyInput"
+                            placeholder="PUBLIC KEY"></textarea>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="inputText">Public Key</label>
-                    <textarea type="text" class="form-control message" id="publicKeyInput"
-                        placeholder="PUBLIC KEY"></textarea>
+                <div id="rsaMessageContainer" class="hidden">
+                    <hr class="dotted">
+                    <div class="form-group">
+                        <label for="inputText">Message</label>
+                        <textarea type="text" class="form-control message" id="rsaMessageInput"
+                            placeholder="Your message..."></textarea>
+                    </div>
+                    <div class="d-flex cipher-buttons">
+                        <button id="rsaEncryptButton" type="button"
+                            class="btn btn-danger flex-fill .mt-1">Encrypt</button>
+                        <button id="rsaDecryptButton" type="button"
+                            class="btn btn-primary flex-fill .mt-1">Decrypt</button>
+                    </div>
                 </div>
 
             </form>
-
+            <!--MESSAGE SYSTEMS-->
             <hr class="dotted">
             <div class="integration-container" id="whatsAppContainer">
                 <img src="./assets/WhatsApp.png" width="80px" />
