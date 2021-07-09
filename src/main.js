@@ -119,9 +119,9 @@ export class Main {
     ///SEND THE MESSAGE THROUGH MAIL
     sendMailMsg() {
         const email = document.querySelector("#emailInput").value;
-        let content = this.currentTab === "ciphersForm" ? btoa(`tab=${this.currentTab}&cipher=${this.ciphersSelector.value}&key=${this.key}&message=${this.messageInput.value}`) : btoa(`tab=${this.currentTab}&privKey=${this.privateKeyInput.value}&pubKey=${this.publicKeyInput.value}&message=${this.rsaMessageInput.value}`);
+        let content = this.msgService.whatsApp(this.currentTab, params);
         this.bitlyService.getShortenLink(`https://conceptree.github.io/msgCipher/?content=${content}`).then(resp => {
-            window.open(`mailto:${email}?subject=MsgCipher Message&body=${this.currentTab === "ciphersForm" ? this.messageInput.value : this.rsaMessageInput.value + " DECRYPT IN " + resp.link}`);
+            window.open(`mailto:${email}?subject=MsgCipher Message&body=${this.msgService.getText(this.currentTab, params, resp.link)}`);
         });
     }
     ///READ URL
