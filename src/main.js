@@ -12,10 +12,12 @@ import { MorseNodes } from '../ciphers/morseNodes.js';
 import { MountainMorse } from '../ciphers/mountainMorse.js';
 import { HorizontalCipher } from '../ciphers/horizontalCipher.js';
 import { SmsCipher } from '../ciphers/smsCipher.js';
+import { MsgService } from '../ciphers/util/msgService.js';
 
 export class Main {
     constructor() {
         this.bitlyService = new BitlyService();
+        this.msgService = new MsgService();
         this.key = null;
         this.cipher = null;
         this.messageInput = document.querySelector("#messageInput");
@@ -37,6 +39,11 @@ export class Main {
         this.generateKeysButton = document.querySelector("#generateKeyBtn");
         this.hashMessageInput = document.querySelector("#hashMessageInput");
         this.keySizeSelector = document.querySelector("#keySizes");
+        this.md5MessageInput = document.querySelector("#md5MessageInput");
+        this.sha1MessageInput = document.querySelector("#sha1MessageInput");
+        this.sha256MessageInput = document.querySelector("#sha256MessageInput");
+        this.sha512MessageInput = document.querySelector("#sha512MessageInput");
+        this.sha3MessageInput = document.querySelector("#sha3MessageInput");
         this.generateKeysButton.addEventListener("click", this.generateKeys.bind(this));
         this.encryptButton.addEventListener("click", this.runCipher.bind(this));
         this.decryptButton.addEventListener("click", this.runCipher.bind(this));
@@ -90,11 +97,24 @@ export class Main {
     ///SEND THE MESSAGE THROUGH WHATSAPP
     sendWhatsAppMsg() {
         const phone = document.querySelector("#whatsappInput").value;
-        let content = this.currentTab === "ciphersForm" ? btoa(`tab=${this.currentTab}&cipher=${this.ciphersSelector.value}&key=${this.key}&message=${this.messageInput.value}`) : btoa(`tab=${this.currentTab}&privKey=${this.privateKeyInput.value}&pubKey=${this.publicKeyInput.value}&message=${this.rsaMessageInput.value}`);
+        const params = {
+            cipher: this.cipher,
+            key: this.key,
+            message: this.messageInput.value,
+            rsaMessage: this.rsaMessageInput.value,
+            privateKey: this.privateKeyInput.value,
+            publicKey: this.publicKeyInput.value,
+            hashMessage:this.hashMessageInput.value,
+            md5: this.md5MessageInput.value,
+            sha1: this.sha1MessageInput.value,
+            sha256: this.sha256MessageInput.value,
+            sha512: this.sha512MessageInput.value,
+            sha3: this.sha3MessageInput.value
+        };
+        let content = this.msgService.whatsApp(this.currentTab, params);
         this.bitlyService.getShortenLink(`https://conceptree.github.io/msgCipher/?content=${content}`).then(resp => {
-            window.open(`https://api.whatsapp.com/send/?phone=${phone}&text=${this.currentTab === "ciphersForm" ? this.messageInput.value : this.rsaMessageInput.value + " DECRYPT IN: " + resp.link}`);
+            window.open(`https://api.whatsapp.com/send/?phone=${phone}&text=${this.msgService.getText(this.currentTab, params, resp.link)}`);
         });
-        
     }
     ///SEND THE MESSAGE THROUGH MAIL
     sendMailMsg() {
@@ -113,30 +133,41 @@ export class Main {
             const tab = atob(myParam).split("tab=")[1].split("&")[0];
 
             if (tab !== "" && tab !== undefined && tab !== null) {
-                this.toggleViews({target:document.querySelector(`#${tab === "ciphersForm" ? "ciphersbtn" : "rsabtn"}`)});
+                this.toggleViews({ target: document.querySelector(`#${tab.split("Form")[0]}btn`) });
             } else {
                 return;
             }
 
-            if (this.currentTab === "ciphersForm") {
-                const cipherParam = atob(myParam).split("&cipher=")[1].split("&key")[0];
-                const key = atob(myParam).split("key=")[1].split("&message")[0];
-                const message = atob(myParam).split("message=")[1];
-                const cipherIndex = this.ciphers.findIndex(el => el.name === cipherParam) + 1;
-                this.key = key;
-                this.cipher = this.ciphers[this.ciphers.findIndex(cipher => cipher.name == cipherParam)];
-                this.msgKeyInput.parentElement.classList[!key ? "add" : "remove"]("hidden");
-                this.ciphersSelector.selectedIndex = cipherIndex;
-                this.messageInput.value = String(message);
-                this.msgKeyInput.value = String(this.key);
-                this.decryptButton.click();
-            } else {
-                this.jsEncrypt = new JSEncrypt();
-                this.rsaMessageContainer.classList.remove("hidden");
-                this.privateKeyInput.value = atob(myParam).split("privKey=")[1].split("&")[0];
-                this.publicKeyInput.value = atob(myParam).split("pubKey=")[1].split("&")[0];
-                this.rsaMessageInput.value = atob(myParam).split("message=")[1];
-                this.rsaEncryption({target:{id:"rsaDecryptButton"}});
+            switch (this.currentTab) {
+                case "ciphersForm":
+                    const cipherParam = atob(myParam).split("&cipher=")[1].split("&key")[0];
+                    const key = atob(myParam).split("key=")[1].split("&message")[0];
+                    const message = atob(myParam).split("message=")[1];
+                    const cipherIndex = this.ciphers.findIndex(el => el.name === cipherParam) + 1;
+                    this.key = key;
+                    this.cipher = this.ciphers[this.ciphers.findIndex(cipher => cipher.name == cipherParam)];
+                    this.msgKeyInput.parentElement.classList[!key ? "add" : "remove"]("hidden");
+                    this.ciphersSelector.selectedIndex = cipherIndex;
+                    this.messageInput.value = String(message);
+                    this.msgKeyInput.value = String(this.key);
+                    this.decryptButton.click();
+                    break;
+                case "rsaForm":
+                    this.jsEncrypt = new JSEncrypt();
+                    this.rsaMessageContainer.classList.remove("hidden");
+                    this.privateKeyInput.value = atob(myParam).split("privKey=")[1].split("&")[0];
+                    this.publicKeyInput.value = atob(myParam).split("pubKey=")[1].split("&")[0];
+                    this.rsaMessageInput.value = atob(myParam).split("message=")[1];
+                    this.rsaEncryption({ target: { id: "rsaDecryptButton" } });
+                    break;
+                case "hashForm":
+                    this.hashMessageInput.value = atob(myParam).split("message=")[1]
+                    this.md5MessageInput.value = atob(myParam).split("md5=")[1].split("&")[0];
+                    this.sha1MessageInput.value = atob(myParam).split("sha1=")[1].split("&")[0];
+                    this.sha256MessageInput.value = atob(myParam).split("sha256=")[1].split("&")[0];
+                    this.sha512MessageInput.value = atob(myParam).split("sha512=")[1].split("&")[0];
+                    this.sha3MessageInput.value = atob(myParam).split("sha3=")[1].split("&message")[0];
+                    break;
             }
 
         }
@@ -150,18 +181,7 @@ export class Main {
             form.classList.remove("active");
         });
         evt.target.classList.add("active");
-        this.currentTab = "";
-        switch (evt.target.id) {
-            case "ciphersbtn":
-                this.currentTab = "ciphersForm";
-            break;
-            case "rsabtn":
-                this.currentTab = "rsaForm";
-            break;
-            case "hashbtn":
-                this.currentTab = "hashForm";
-            break;
-        }
+        this.currentTab = evt.target.id.split("btn")[0]+"Form";
         document.querySelector("#" + this.currentTab).classList.remove("hidden");
     }
     ///GENERATE KEYS
@@ -209,12 +229,12 @@ export class Main {
         }
     }
     ///HASHING
-    hashMessage(){
-        document.querySelector("#md5MessageInput").value = CryptoJS.MD5(this.hashMessageInput.value);
-        document.querySelector("#sha1MessageInput").value = CryptoJS.SHA1(this.hashMessageInput.value);
-        document.querySelector("#sha256MessageInput").value = CryptoJS.SHA256(this.hashMessageInput.value);
-        document.querySelector("#sha512MessageInput").value = CryptoJS.SHA512(this.hashMessageInput.value);
-        document.querySelector("#sha3MessageInput").value = CryptoJS.SHA3(this.hashMessageInput.value);
+    hashMessage() {
+        this.md5MessageInput.value = CryptoJS.MD5(this.hashMessageInput.value);
+        this.sha1MessageInput.value = CryptoJS.SHA1(this.hashMessageInput.value);
+        this.sha256MessageInput.value = CryptoJS.SHA256(this.hashMessageInput.value);
+        this.sha512MessageInput.value = CryptoJS.SHA512(this.hashMessageInput.value);
+        this.sha3MessageInput.value = CryptoJS.SHA3(this.hashMessageInput.value);
     }
 }
 
