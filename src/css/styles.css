@@ -62,11 +62,15 @@ hr.dotted {
 }
 
 .message{
-    max-height: 50vh;
-    min-height: 20vh;
+    max-height: 30vh;
+    min-height: 10vh;
     height:40vh;
 }
 
 .nav-link {
     cursor: pointer;
 }
+
+.form-control:disabled {
+    opacity: 0.5;
+  }

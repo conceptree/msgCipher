@@ -12,6 +12,9 @@ export class MsgService{
             case "hashForm":
                 return btoa(`tab=${tab}&md5=${params.md5}&sha1=${params.sha1}&sha256=${params.sha256}&sha512=${params.sha512}&sha3=${params.sha3}&message=${params.hashMessage}`);
             break;
+            case "aesForm":
+                return btoa(`tab=${tab}&passphrase=${params.passphrase}&aes=${params.aes}&des=${params.des}&tripledes=${params.tripledes}`);
+            break;
         }
     }
 
@@ -25,6 +28,9 @@ export class MsgService{
             break;
             case "hashForm":
                 return "An hashed Message was sent. You can check it out at: " + link;
+            break;
+            case "aesForm":
+                return "AES: "+ params.aes + "| Encrypted message, to decrypt it click here: " + link + "|";
             break;
         }
     }

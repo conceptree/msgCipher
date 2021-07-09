@@ -23,6 +23,7 @@ export class Main {
         this.messageInput = document.querySelector("#messageInput");
         this.msgKeyInput = document.querySelector("#msgKeyInput");
         this.ciphersButton = document.querySelector("#ciphersbtn");
+        this.aesButton = document.querySelector("#aesbtn");
         this.rsaButton = document.querySelector("#rsabtn");
         this.hashButton = document.querySelector("#hashbtn");
         this.rsaTimer = document.querySelector("#rsaTimer");
@@ -31,6 +32,11 @@ export class Main {
         this.privateKeyInput = document.querySelector("#privateKeyInput");
         this.publicKeyInput = document.querySelector("#publicKeyInput");
         this.sendWhatsAppBtn = document.querySelector("#sendWhatsappBtn");
+        this.aesDesMessageInput = document.querySelector("#aesDesMessageInput");
+        this.aesMessageInput = document.querySelector("#aesMessageInput");
+        this.desMessageInput = document.querySelector("#desMessageInput");
+        this.tripleDesMessageInput = document.querySelector("#tripleDesMessageInput");
+        this.aesPassphrase = document.querySelector("#aesPassphrase");
         this.sendEmailBtn = document.querySelector("#sendEmailBtn");
         this.encryptButton = document.querySelector("#encryptButton");
         this.decryptButton = document.querySelector("#decryptButton");
@@ -50,11 +56,23 @@ export class Main {
         this.rsaEncryptButton.addEventListener("click", this.rsaEncryption.bind(this));
         this.rsaDecryptButton.addEventListener("click", this.rsaEncryption.bind(this));
         this.ciphersButton.addEventListener("click", this.toggleViews.bind(this));
+        this.aesButton.addEventListener("click", this.toggleViews.bind(this));
         this.rsaButton.addEventListener("click", this.toggleViews.bind(this));
         this.hashButton.addEventListener("click", this.toggleViews.bind(this));
         this.sendWhatsAppBtn.addEventListener("click", this.sendWhatsAppMsg.bind(this), true);
         this.sendEmailBtn.addEventListener("click", this.sendMailMsg.bind(this), true);
+        this.aesDesMessageInput.addEventListener("input", this.aesAndDesEncrypt.bind(this), true);
         this.hashMessageInput.addEventListener("input", this.hashMessage.bind(this), true);
+        this.aesPassphrase.addEventListener("input", (evt) => {
+            document.querySelectorAll("#aesMessageInput, #desMessageInput, #tripleDesMessageInput, #aesDesMessageInput").forEach(input => {
+                if (evt.target.value !== "") {
+                    input.removeAttribute("disabled");
+                } else {
+                    input.setAttribute("disabled", true);
+                    input.value = "";
+                }
+            });
+        });
         this.msgKeyInput.addEventListener("change", (evt) => {
             this.key = evt.target.value;
         });
@@ -104,12 +122,16 @@ export class Main {
             rsaMessage: this.rsaMessageInput.value,
             privateKey: this.privateKeyInput.value,
             publicKey: this.publicKeyInput.value,
-            hashMessage:this.hashMessageInput.value,
+            hashMessage: this.hashMessageInput.value,
             md5: this.md5MessageInput.value,
             sha1: this.sha1MessageInput.value,
             sha256: this.sha256MessageInput.value,
             sha512: this.sha512MessageInput.value,
-            sha3: this.sha3MessageInput.value
+            sha3: this.sha3MessageInput.value,
+            aes: this.aesMessageInput.value,
+            des: this.desMessageInput.value,
+            tripledes: this.tripleDesMessageInput.value,
+            passphrase: this.aesPassphrase.value
         };
         let content = this.msgService.whatsApp(this.currentTab, params);
         this.bitlyService.getShortenLink(`https://conceptree.github.io/msgCipher/?content=${content}`).then(resp => {
@@ -168,6 +190,18 @@ export class Main {
                     this.sha512MessageInput.value = atob(myParam).split("sha512=")[1].split("&")[0];
                     this.sha3MessageInput.value = atob(myParam).split("sha3=")[1].split("&message")[0];
                     break;
+                case "aesForm":
+                    this.aesPassphrase.value = atob(myParam).split("passphrase=")[1].split("&")[0];
+                    this.aesPassphrase.dispatchEvent(new Event('input', {
+                        bubbles: true,
+                        cancelable: true,
+                    }));
+                    this.aesMessageInput.value = atob(myParam).split("aes=")[1].split("&")[0];
+                    this.desMessageInput.value = atob(myParam).split("des=")[1].split("&")[0];
+                    this.tripleDesMessageInput.value = atob(myParam).split("tripledes=")[1];
+                    let result = CryptoJS.AES.decrypt(this.aesMessageInput.value, this.aesPassphrase.value);
+                    this.aesDesMessageInput.value = result.toString();
+                    break;
             }
 
         }
@@ -181,7 +215,7 @@ export class Main {
             form.classList.remove("active");
         });
         evt.target.classList.add("active");
-        this.currentTab = evt.target.id.split("btn")[0]+"Form";
+        this.currentTab = evt.target.id.split("btn")[0] + "Form";
         document.querySelector("#" + this.currentTab).classList.remove("hidden");
     }
     ///GENERATE KEYS
@@ -235,6 +269,14 @@ export class Main {
         this.sha256MessageInput.value = CryptoJS.SHA256(this.hashMessageInput.value);
         this.sha512MessageInput.value = CryptoJS.SHA512(this.hashMessageInput.value);
         this.sha3MessageInput.value = CryptoJS.SHA3(this.hashMessageInput.value);
+    }
+    ///AES & DES
+    aesAndDesEncrypt() {
+        if (this.aesPassphrase.value !== "") {
+            this.aesMessageInput.value = CryptoJS.AES.encrypt(this.aesAndDesEncrypt.value, this.aesPassphrase.value);
+            this.desMessageInput.value = CryptoJS.DES.encrypt(this.aesAndDesEncrypt.value, this.aesPassphrase.value);
+            this.tripleDesMessageInput.value = CryptoJS.TripleDES.encrypt(this.aesAndDesEncrypt.value, this.aesPassphrase.value);
+        }
     }
 }
 

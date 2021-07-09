@@ -9,7 +9,7 @@
     <link rel="apple-touch-icon" href="./assets/touch-icons/apple-touch-icon-ipad-76x76.png">
     <meta name="theme-color" content="#3367D6">
     <meta name="description"
-        content="Message encryption and decryption system based on a diverse array of different ciphers!">
+        content="Message encryption and decryption system based on a diverse array of different ciphers and encoders!">
     <!-- load jquery, bootstrap CSS, firebase-->
     <script src="https://www.gstatic.com/firebasejs/8.4.2/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.4.2/firebase-auth.js"></script>
@@ -34,6 +34,9 @@
             </li>
             <li class="nav-item">
                 <p class="nav-link" id="rsabtn">RSA Keygen</p>
+            </li>
+            <li class="nav-item">
+                <p class="nav-link" id="aesbtn">AES & DES, Triple DES</p>
             </li>
             <li class="nav-item">
                 <p class="nav-link" id="hashbtn">Hashing</p>
@@ -157,6 +160,34 @@
                         placeholder="SHA-3 result..."></textarea>
                 </div>
 
+            </form>
+            <!--AES-->
+            <form class="conainer hidden" id="aesForm">
+                <div class="form-group">
+                    <label for="inputText">Secret Passphrase</label>
+                    <input type="text" class="form-control" pattern="/^[A-Za-z]+$/" min="8" max="16" id="aesPassphrase" placeholder="Min 8, max 16 chars...">
+                </div>
+                <div class="form-group">
+                    <label for="inputText">Message</label>
+                    <textarea disabled type="text" class="form-control message" id="aesDesMessageInput"
+                        placeholder="Passphrase needed..."></textarea>
+                </div>
+                <hr class="dotted">
+                <div class="form-group">
+                    <label for="inputText">AES</label>
+                    <textarea disabled type="text" class="form-control" id="aesMessageInput"
+                        placeholder="Passphrase needed..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="inputText">DES</label>
+                    <textarea disabled type="text" class="form-control" id="desMessageInput"
+                        placeholder="Passphrase needed..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="inputText">Triple DES</label>
+                    <textarea disabled type="text" class="form-control" id="tripleDesMessageInput"
+                        placeholder="Passphrase needed..."></textarea>
+                </div>
             </form>
             <!--MESSAGE SYSTEMS-->
             <hr class="dotted">
