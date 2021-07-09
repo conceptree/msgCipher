@@ -22,6 +22,7 @@ export class Main {
         this.msgKeyInput = document.querySelector("#msgKeyInput");
         this.ciphersButton = document.querySelector("#ciphersbtn");
         this.rsaButton = document.querySelector("#rsabtn");
+        this.hashButton = document.querySelector("#hashbtn");
         this.rsaTimer = document.querySelector("#rsaTimer");
         this.rsaMessageContainer = document.querySelector("#rsaMessageContainer");
         this.rsaMessageInput = document.querySelector("#rsaMessageInput");
@@ -34,6 +35,7 @@ export class Main {
         this.rsaEncryptButton = document.querySelector("#rsaEncryptButton");
         this.rsaDecryptButton = document.querySelector("#rsaDecryptButton");
         this.generateKeysButton = document.querySelector("#generateKeyBtn");
+        this.hashMessageInput = document.querySelector("#hashMessageInput");
         this.keySizeSelector = document.querySelector("#keySizes");
         this.generateKeysButton.addEventListener("click", this.generateKeys.bind(this));
         this.encryptButton.addEventListener("click", this.runCipher.bind(this));
@@ -42,8 +44,10 @@ export class Main {
         this.rsaDecryptButton.addEventListener("click", this.rsaEncryption.bind(this));
         this.ciphersButton.addEventListener("click", this.toggleViews.bind(this));
         this.rsaButton.addEventListener("click", this.toggleViews.bind(this));
+        this.hashButton.addEventListener("click", this.toggleViews.bind(this));
         this.sendWhatsAppBtn.addEventListener("click", this.sendWhatsAppMsg.bind(this), true);
         this.sendEmailBtn.addEventListener("click", this.sendMailMsg.bind(this), true);
+        this.hashMessageInput.addEventListener("input", this.hashMessage.bind(this), true);
         this.msgKeyInput.addEventListener("change", (evt) => {
             this.key = evt.target.value;
         });
@@ -150,10 +154,13 @@ export class Main {
         switch (evt.target.id) {
             case "ciphersbtn":
                 this.currentTab = "ciphersForm";
-                break;
+            break;
             case "rsabtn":
                 this.currentTab = "rsaForm";
-                break;
+            break;
+            case "hashbtn":
+                this.currentTab = "hashForm";
+            break;
         }
         document.querySelector("#" + this.currentTab).classList.remove("hidden");
     }
@@ -200,6 +207,14 @@ export class Main {
                 this.rsaMessageInput.value = this.jsEncrypt.decrypt(this.rsaMessageInput.value);
                 break;
         }
+    }
+    ///HASHING
+    hashMessage(){
+        document.querySelector("#md5MessageInput").value = CryptoJS.MD5(this.hashMessageInput.value);
+        document.querySelector("#sha1MessageInput").value = CryptoJS.SHA1(this.hashMessageInput.value);
+        document.querySelector("#sha256MessageInput").value = CryptoJS.SHA256(this.hashMessageInput.value);
+        document.querySelector("#sha512MessageInput").value = CryptoJS.SHA512(this.hashMessageInput.value);
+        document.querySelector("#sha3MessageInput").value = CryptoJS.SHA3(this.hashMessageInput.value);
     }
 }
 
