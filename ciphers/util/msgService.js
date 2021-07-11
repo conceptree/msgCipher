@@ -15,6 +15,9 @@ export class MsgService{
             case "aesForm":
                 return btoa(`tab=${tab}&passphrase=${params.passphrase}&aes=${params.aes}&des=${params.des}&tripledes=${params.tripledes}`);
             break;
+            case "blowfishForm":
+                return btoa(`tab=${tab}&message=${params.blowfishMessage}`);
+            break;
         }
     }
 
@@ -31,6 +34,9 @@ export class MsgService{
             break;
             case "aesForm":
                 return "AES: "+ params.aes + "| Encrypted message, to decrypt it click here: " + link + "|";
+            break;
+            case "blowfishForm":
+                return "Blowfish : "+ params.blowfishMessage + "| Encrypted message, to decrypt it click here: " + link + "|";
             break;
         }
     }

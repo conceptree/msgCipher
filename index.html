@@ -18,6 +18,7 @@
         integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
     <link rel="stylesheet" href="./src/css/styles.css">
     <script type="text/javascript" src="./lib/jsencrypt.min.js"></script>
+    <script type="text/javascript" src="./lib/Blowfish.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js" integrity="sha512-nOQuvD9nKirvxDdvQ9OMqe2dgapbPB7vYAMrzJihw5m+aNcf0dX53m6YxM4LgA9u8e9eg9QX+/+mPu8kCNpV2A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script type="module" src="./src/main.js" async defer></script>
 
@@ -37,6 +38,9 @@
             </li>
             <li class="nav-item">
                 <p class="nav-link" id="aesbtn">AES & DES, Triple DES</p>
+            </li>
+            <li class="nav-item">
+                <p class="nav-link" id="blowfishbtn">Blowfish</p>
             </li>
             <li class="nav-item">
                 <p class="nav-link" id="hashbtn">Hashing</p>
@@ -188,6 +192,25 @@
                     <textarea disabled type="text" class="form-control" id="tripleDesMessageInput"
                         placeholder="Passphrase needed..."></textarea>
                 </div>
+            </form>
+            <!--BLOWFISH-->
+            <form class="conainer hidden" id="blowfishForm">
+                <div class="form-group">
+                    <label for="inputText">Encryption Password</label>
+                    <input type="text" class="form-control" id="blowfishPassword" placeholder="Password...">
+                </div>
+                <div class="form-group">
+                    <label for="inputText">Message</label>
+                    <textarea disabled type="text" class="form-control message" id="blowfishMessageInput"
+                        placeholder="Password needed..."></textarea>
+                </div>
+                <div class="d-flex cipher-buttons">
+                    <button disabled id="blowfishEncryptButton" type="button"
+                        class="btn btn-danger flex-fill .mt-1">Encrypt</button>
+                    <button disabled id="blowfishDecryptButton" type="button"
+                        class="btn btn-primary flex-fill .mt-1">Decrypt</button>
+                </div>
+                
             </form>
             <!--MESSAGE SYSTEMS-->
             <hr class="dotted">

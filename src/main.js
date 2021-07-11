@@ -22,10 +22,6 @@ export class Main {
         this.cipher = null;
         this.messageInput = document.querySelector("#messageInput");
         this.msgKeyInput = document.querySelector("#msgKeyInput");
-        this.ciphersButton = document.querySelector("#ciphersbtn");
-        this.aesButton = document.querySelector("#aesbtn");
-        this.rsaButton = document.querySelector("#rsabtn");
-        this.hashButton = document.querySelector("#hashbtn");
         this.rsaTimer = document.querySelector("#rsaTimer");
         this.rsaMessageContainer = document.querySelector("#rsaMessageContainer");
         this.rsaMessageInput = document.querySelector("#rsaMessageInput");
@@ -39,6 +35,8 @@ export class Main {
         this.aesPassphrase = document.querySelector("#aesPassphrase");
         this.sendEmailBtn = document.querySelector("#sendEmailBtn");
         this.encryptButton = document.querySelector("#encryptButton");
+        this.blowfishEncryptButton = document.querySelector("#blowfishEncryptButton");
+        this.blowfishDecryptButton = document.querySelector("#blowfishDecryptButton");
         this.decryptButton = document.querySelector("#decryptButton");
         this.rsaEncryptButton = document.querySelector("#rsaEncryptButton");
         this.rsaDecryptButton = document.querySelector("#rsaDecryptButton");
@@ -50,29 +48,47 @@ export class Main {
         this.sha256MessageInput = document.querySelector("#sha256MessageInput");
         this.sha512MessageInput = document.querySelector("#sha512MessageInput");
         this.sha3MessageInput = document.querySelector("#sha3MessageInput");
+        this.blowfishMessageInput = document.querySelector("#blowfishMessageInput");
+        this.blowfishPassword = document.querySelector("#blowfishPassword");
         this.generateKeysButton.addEventListener("click", this.generateKeys.bind(this));
         this.encryptButton.addEventListener("click", this.runCipher.bind(this));
         this.decryptButton.addEventListener("click", this.runCipher.bind(this));
+        this.blowfishEncryptButton.addEventListener("click", this.runBlowfish.bind(this));
+        this.blowfishDecryptButton.addEventListener("click", this.runBlowfish.bind(this));
         this.rsaEncryptButton.addEventListener("click", this.rsaEncryption.bind(this));
         this.rsaDecryptButton.addEventListener("click", this.rsaEncryption.bind(this));
-        this.ciphersButton.addEventListener("click", this.toggleViews.bind(this));
-        this.aesButton.addEventListener("click", this.toggleViews.bind(this));
-        this.rsaButton.addEventListener("click", this.toggleViews.bind(this));
-        this.hashButton.addEventListener("click", this.toggleViews.bind(this));
+
+        document.querySelectorAll(".nav-item").forEach(item => {
+            item.addEventListener("click", this.toggleViews.bind(this));
+        });
+
         this.sendWhatsAppBtn.addEventListener("click", this.sendWhatsAppMsg.bind(this), true);
         this.sendEmailBtn.addEventListener("click", this.sendMailMsg.bind(this), true);
         this.aesDesMessageInput.addEventListener("input", this.aesAndDesEncrypt.bind(this), true);
         this.hashMessageInput.addEventListener("input", this.hashMessage.bind(this), true);
-        this.aesPassphrase.addEventListener("input", (evt) => {
-            document.querySelectorAll("#aesMessageInput, #desMessageInput, #tripleDesMessageInput, #aesDesMessageInput").forEach(input => {
-                if (evt.target.value !== "") {
-                    input.removeAttribute("disabled");
-                } else {
-                    input.setAttribute("disabled", true);
-                    input.value = "";
+        document.querySelectorAll("#aesPassphrase, #blowfishPassword").forEach(input => {
+            input.addEventListener("input", (evt) => {
+                let elements = "";
+                switch (evt.target.id) {
+                    case "aesPassphrase":
+                        elements = "#aesMessageInput, #desMessageInput, #tripleDesMessageInput, #aesDesMessageInput";
+                        break;
+                    case "blowfishPassword":
+                        elements = "#blowfishMessageInput, #blowfishEncryptButton, #blowfishDecryptButton";
+                        document.querySelector("#blowfishMessageInput").setAttribute("placeholder", "Message...");
+                        break;
                 }
+                document.querySelectorAll(elements).forEach(el => {
+                    if (evt.target.value !== "") {
+                        el.removeAttribute("disabled");
+                    } else {
+                        el.setAttribute("disabled", true);
+                        el.value = "";
+                    }
+                });
             });
         });
+
         this.msgKeyInput.addEventListener("change", (evt) => {
             this.key = evt.target.value;
         });
@@ -131,7 +147,8 @@ export class Main {
             aes: this.aesMessageInput.value,
             des: this.desMessageInput.value,
             tripledes: this.tripleDesMessageInput.value,
-            passphrase: this.aesPassphrase.value
+            passphrase: this.aesPassphrase.value,
+            blowfishMessage: this.blowfishMessageInput.value
         };
         let content = this.msgService.whatsApp(this.currentTab, params);
         this.bitlyService.getShortenLink(`https://conceptree.github.io/msgCipher/?content=${content}`).then(resp => {
@@ -201,6 +218,10 @@ export class Main {
                     this.tripleDesMessageInput.value = atob(myParam).split("tripledes=")[1];
                     let result = CryptoJS.AES.decrypt(this.aesMessageInput.value, this.aesPassphrase.value);
                     this.aesDesMessageInput.value = result.toString();
+                    break;
+                case "blowfishForm":
+                    this.blowfishMessageInput.value = atob(myParam).split("message=")[1];
+                    this.blowfishPassword.setAttribute("placeholder", "You need the password to decrypt it!");
                     break;
             }
 
@@ -276,6 +297,18 @@ export class Main {
             this.aesMessageInput.value = CryptoJS.AES.encrypt(this.aesAndDesEncrypt.value, this.aesPassphrase.value);
             this.desMessageInput.value = CryptoJS.DES.encrypt(this.aesAndDesEncrypt.value, this.aesPassphrase.value);
             this.tripleDesMessageInput.value = CryptoJS.TripleDES.encrypt(this.aesAndDesEncrypt.value, this.aesPassphrase.value);
+        }
+    }
+    ///BLOWFISH
+    runBlowfish(evt){
+        this.blowfish = new Blowfish(this.blowfishPassword.value);
+        if(evt.target.id === "blowfishEncryptButton"){
+            let encrypted = this.blowfish.encrypt(this.blowfishMessageInput.value);
+            this.blowfishMessageInput.value = this.blowfish.base64Encode(encrypted);
+        }else{
+            let base64Code = this.blowfish.base64Decode(this.blowfishMessageInput.value);
+            let decrypted = this.blowfish.decrypt(base64Code);
+            this.blowfishMessageInput.value = this.blowfish.trimZeros(decrypted);
         }
     }
 }
