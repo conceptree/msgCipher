@@ -35,6 +35,7 @@ export class Main {
         this.aesPassphrase = document.querySelector("#aesPassphrase");
         this.sendEmailBtn = document.querySelector("#sendEmailBtn");
         this.encryptButton = document.querySelector("#encryptButton");
+        this.userButton = document.querySelector("#userbtn");
         this.blowfishEncryptButton = document.querySelector("#blowfishEncryptButton");
         this.blowfishDecryptButton = document.querySelector("#blowfishDecryptButton");
         this.decryptButton = document.querySelector("#decryptButton");
@@ -57,11 +58,13 @@ export class Main {
         this.blowfishDecryptButton.addEventListener("click", this.runBlowfish.bind(this));
         this.rsaEncryptButton.addEventListener("click", this.rsaEncryption.bind(this));
         this.rsaDecryptButton.addEventListener("click", this.rsaEncryption.bind(this));
-
+        this.userButton.addEventListener("click", this.openLogin.bind(this));
+        document.getElementById('userLoginModal').addEventListener('shown.bs.modal', () => {
+            myInput.focus();
+          });
         document.querySelectorAll(".nav-item").forEach(item => {
             item.addEventListener("click", this.toggleViews.bind(this));
         });
-
         this.sendWhatsAppBtn.addEventListener("click", this.sendWhatsAppMsg.bind(this), true);
         this.sendEmailBtn.addEventListener("click", this.sendMailMsg.bind(this), true);
         this.aesDesMessageInput.addEventListener("input", this.aesAndDesEncrypt.bind(this), true);
@@ -227,6 +230,10 @@ export class Main {
 
         }
     }
+    ///COPY TO CLIPBOARD
+    copyToClipboard(evt){
+
+    }
     ///TOGGLE VIEWS
     toggleViews(evt) {
         document.querySelectorAll("form").forEach(form => {
@@ -310,6 +317,10 @@ export class Main {
             let decrypted = this.blowfish.decrypt(base64Code);
             this.blowfishMessageInput.value = this.blowfish.trimZeros(decrypted);
         }
+    }
+    ///OPEN USER LOGIN DIALOGUE
+    openLogin(){
+
     }
 }
 

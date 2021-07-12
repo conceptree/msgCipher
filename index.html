@@ -16,6 +16,7 @@
     <script src="https://www.gstatic.com/firebasejs/8.4.2/firebase-database.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
         integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
     <link rel="stylesheet" href="./src/css/styles.css">
     <script type="text/javascript" src="./lib/jsencrypt.min.js"></script>
     <script type="text/javascript" src="./lib/Blowfish.min.js"></script>
@@ -27,6 +28,11 @@
 
 <body class="background-container">
 
+    <div class="header">
+        <i id="userbtn" data-bs-toggle="modal" data-bs-target="#userLoginModal" class="bi bi-person-circle" style="font-size: 1.5rem; color: rgb(255, 255, 255); padding: 10px; cursor: pointer;"></i>
+    </div>
+
+   
     <!-- Select cipher form-->
     <div class="container form-container" id="add-text">
         <ul class="nav nav-tabs bg-dark text-light">
@@ -169,7 +175,8 @@
             <form class="conainer hidden" id="aesForm">
                 <div class="form-group">
                     <label for="inputText">Secret Passphrase</label>
-                    <input type="text" class="form-control" pattern="/^[A-Za-z]+$/" min="8" max="16" id="aesPassphrase" placeholder="Min 8, max 16 chars...">
+                    <input type="text" class="form-control" pattern="/^[A-Za-z]+$/" min="8" max="16" id="aesPassphrase"
+                        placeholder="Min 8, max 16 chars...">
                 </div>
                 <div class="form-group">
                     <label for="inputText">Message</label>
