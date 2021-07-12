@@ -72,5 +72,10 @@
         "name": "Horizontal",
         "object": "HorizontalCipher",
         "key": false
+    },
+    {
+        "name": "Fake First Letter",
+        "object": "FirstFakeLetterCipher",
+        "key": false
     }
 ]
