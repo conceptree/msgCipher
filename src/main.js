@@ -21,6 +21,8 @@ export class Main {
         this.msgService = new MsgService();
         this.key = null;
         this.cipher = null;
+        this.selectedCiphers = [];
+        this.ciphersMultiSelector = document.querySelector("#ciphersMultiSelector");
         this.messageInput = document.querySelector("#messageInput");
         this.msgKeyInput = document.querySelector("#msgKeyInput");
         this.rsaTimer = document.querySelector("#rsaTimer");
@@ -118,16 +120,48 @@ export class Main {
             this.ciphersSelector.insertAdjacentHTML("beforeend", `<option>${cipher.name}</option>`);
         });
         this.ciphersSelector.addEventListener("change", (evt) => {
-            this.cipher = this.ciphers[this.ciphers.findIndex(cipher => cipher.name == evt.target.value)];
-            this.msgKeyInput.parentElement.classList[this.cipher.key ? "remove" : "add"]("hidden");
+            const selectedCipher = this.ciphers[this.ciphers.findIndex(cipher => cipher.name == evt.target.value)]
+            this.selectedCiphers.push(selectedCipher);
+            let cipherItem = document.createElement("span");
+            cipherItem.setAttribute("data", btoa(selectedCipher));
+            cipherItem.setAttribute("id", btoa(selectedCipher.object));
+            cipherItem.addEventListener("click", this.removeSelectedCipher.bind(this));
+            cipherItem.textContent = selectedCipher.name;
+            this.ciphersMultiSelector.appendChild(cipherItem);
+            this.selectedCiphers.forEach(cipher => {
+                if (cipher.key) {
+                    this.msgKeyInput.parentElement.classList.remove("hidden");
+                }
+            });
         });
+    }
+    ///REMOVE SELECTED CIPHER
+    removeSelectedCipher(evt) {
+        this.selectedCiphers = this.selectedCiphers.filter(cipher => cipher.object !== atob(evt.target.id));
+        evt.target.parentNode.removeChild(evt.target);
+        let keyEnable = false;
+        this.selectedCiphers.forEach(cipher => {
+            if(cipher.key){
+                keyEnable = true;
+            }
+        });
+        if(!keyEnable || this.selectedCiphers.length < 0){
+            this.msgKeyInput.parentElement.classList.add("hidden");
+        }
     }
     ///ENCRYPT MESSAGE
     runCipher(event) {
         const action = event.target.id === "encryptButton" ? "encrypt" : "decrypt";
-        const message = this.messageInput.value;
-        const cipherObj = eval(`new ${this.cipher.object}();`);
-        this.messageInput.value = cipherObj[action](message, this.key);
+        const tempList = action === "encryptButton" ? this.selectedCiphers : this.selectedCiphers.reverse();
+        if(this.selectedCiphers.length > 0){
+            this.selectedCiphers.forEach(cipher => {
+                setTimeout(()=>{
+                    const message = this.messageInput.value;
+                    const cipherObj = eval(`new ${cipher.object}();`);
+                    this.messageInput.value = cipherObj[action](message, this.key);
+                },100);
+            });
+        }
     }
     ///SEND THE MESSAGE THROUGH WHATSAPP
     sendWhatsAppMsg() {
