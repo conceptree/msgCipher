@@ -23,6 +23,13 @@ export class Main {
         this.cipher = null;
         this.selectedCiphers = [];
         this.currentTab = "ciphersForm";
+        
+        this.registerButton = document.querySelector("#registerBtn");
+        this.loginButton = document.querySelector("#loginBtn");
+        
+        this.registerTab = document.querySelector("#regTabBtn");
+        this.loginTab = document.querySelector("#loginTabBtn");
+
         this.ciphersMultiSelector = document.querySelector("#ciphersMultiSelector");
         this.messageInput = document.querySelector("#messageInput");
         this.msgKeyInput = document.querySelector("#msgKeyInput");
@@ -63,7 +70,15 @@ export class Main {
         this.rsaEncryptButton.addEventListener("click", this.rsaEncryption.bind(this));
         this.rsaDecryptButton.addEventListener("click", this.rsaEncryption.bind(this));
         this.userButton.addEventListener("click", this.openLogin.bind(this));
-        document.querySelectorAll(".nav-item").forEach(item => {
+        this.registerButton.addEventListener("click", this.register.bind(this));
+        this.loginButton.addEventListener("click", this.login.bind(this));
+        this.loginTab.addEventListener("click", this.toggleLoginTabs.bind(this));
+        this.registerTab.addEventListener("click", this.toggleLoginTabs.bind(this));
+
+        document.querySelector("#regCancelBtn").addEventListener("click", this.closeLogin.bind(this));
+        document.querySelector("#loginCancelBtn").addEventListener("click", this.closeLogin.bind(this));
+        
+        document.querySelectorAll("#mainNav .nav-link").forEach(item => {
             item.addEventListener("click", this.toggleViews.bind(this));
         });
         this.sendWhatsAppBtn.addEventListener("click", this.sendWhatsAppMsg.bind(this), true);
@@ -267,6 +282,14 @@ export class Main {
 
         }
     }
+    ///LOGIN
+    login(evt){
+        
+    }
+    ///REGISTER
+    register(evt){
+        
+    }
     ///COPY TO CLIPBOARD
     copyToClipboard(evt) {
 
@@ -355,18 +378,38 @@ export class Main {
             this.blowfishMessageInput.value = this.blowfish.trimZeros(decrypted);
         }
     }
+    ///CLOSE LOGIN
+    closeLogin() {
+        document.querySelector("#loginDialog").classList.remove("active");
+    }
     ///OPEN USER LOGIN DIALOGUE
     openLogin() {
-
+        document.querySelector("#loginDialog").classList.add("active");
+    }
+    /// TOGGLER LOGIN VIEWS
+    toggleLoginTabs(evt){
+        if(evt.target.id === "loginTabBtn"){
+            document.querySelector("#loginTabBtn").classList.add("active");
+            document.querySelector("#regTabBtn").classList.remove("active");
+            document.querySelector("#loginForm").classList.add("show");
+            document.querySelector("#registerForm").classList.remove("show");
+        }else{
+            document.querySelector("#loginTabBtn").classList.remove("active");
+            document.querySelector("#regTabBtn").classList.add("active");
+            document.querySelector("#loginForm").classList.remove("show");
+            document.querySelector("#registerForm").classList.add("show");
+        }
+        
     }
 }
 
 const main = new Main();
 
-firebase.initializeApp(firebaseConfig);
-
 if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('./sw.js');
+    navigator.serviceWorker.register('./src/sw.js');
 } else {
     console.warn("Your browser does not support service workers!");
 }
+
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);

@@ -1,7 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
+
 html,
 body {
     padding: 0;
     margin: 0;
+    font-family: 'Nunito', sans-serif;
 }
 
 * {
@@ -39,32 +42,36 @@ hr.dotted {
     display: none;
 }
 
-.integration-container{
-    display: flex;
-    align-items: center;
-    gap:10px;
+#loginForm.hidden{
+    display: inherit;
 }
 
-.integration-container>input{
+.integration-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.integration-container>input {
     flex: 1;
 }
 
-.integration-container>button{
+.integration-container>button {
     width: 80px;
 }
 
-.integration-container>img{
+.integration-container>img {
     width: 90px;
 }
 
-.cipher-buttons{
-    gap:10px;
+.cipher-buttons {
+    gap: 10px;
 }
 
-.message{
+.message {
     max-height: 30vh;
     min-height: 10vh;
-    height:40vh;
+    height: 40vh;
 }
 
 .nav-link {
@@ -73,60 +80,60 @@ hr.dotted {
 
 .form-control:disabled {
     opacity: 0.5;
-  }
+}
 
-  .form-container{
-      max-height: 70vh;
-      overflow-y: auto;
-  }
+.form-container {
+    max-height: 70vh;
+    overflow-y: auto;
+}
 
-  .header{
-      position: fixed;
-      top: 0px;
-      left:0px ;
-      width: 100%;
-      height: 30px;
-      display: flex;
-      justify-content: flex-end;
-      color:white;
-  }
+.header {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 30px;
+    display: flex;
+    justify-content: flex-end;
+    color: white;
+}
 
-  .card-body{
-      overflow: hidden;
-  }
+.card-body {
+    overflow: hidden;
+}
 
-  .multi-container{
-      display: flex;
-      justify-content: flex-start;
-      align-items: center;
-      gap:5px;
-      width: 100%;
-      height: 40px;
-      background: white;
-      border-radius: 3px;
-      margin-top: 10px;
-      margin-bottom: 10px;
-      padding:5px;
-  }
+.multi-container {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 5px;
+    width: 100%;
+    height: 40px;
+    background: white;
+    border-radius: 3px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 5px;
+}
 
-  .multi-container>span{
+.multi-container>span {
     width: auto;
     height: 30px;
     padding: 10px;
     display: flex;
     align-items: center;
     text-align: center;
-    color:rgb(53, 53, 53);
+    color: rgb(53, 53, 53);
     border-radius: 30000px;
-    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-  }
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
 
-  .multi-container>span:after{
+.multi-container>span:after {
     content: "x";
     width: 20px;
     height: 20px;
     background: rgb(110, 110, 110);
-    color:white;
+    color: white;
     border-radius: 30000px;
     text-align: center;
     display: flex;
@@ -140,4 +147,34 @@ hr.dotted {
     font-size: 0.8em;
     box-sizing: border-box;
     cursor: pointer;
-  }
+}
+
+.dialogue {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 999999999;
+    background: rgba(0, 0, 0, 0.8);
+    padding: 10vh;
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+.dialogue.active{
+    display:flex;
+}
+
+.dialogue.active .form-container{
+    display: none !important;
+}
+
+.dialogue.active .form-container.show{
+    display: inherit !important;
+}
+
+.nav-link>font{
+    pointer-events: none;
+}
