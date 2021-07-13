@@ -186,3 +186,7 @@ hr.dotted {
 #userbtn.active{
     color:rgb(0, 158, 250) !important;
 }
+
+#logoutBtnCont.hidden{
+    display: none !important;
+}
