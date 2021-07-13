@@ -22,6 +22,7 @@ export class Main {
         this.key = null;
         this.cipher = null;
         this.selectedCiphers = [];
+        this.currentTab = "ciphersForm";
         this.ciphersMultiSelector = document.querySelector("#ciphersMultiSelector");
         this.messageInput = document.querySelector("#messageInput");
         this.msgKeyInput = document.querySelector("#msgKeyInput");
@@ -122,17 +123,21 @@ export class Main {
         this.ciphersSelector.addEventListener("change", (evt) => {
             const selectedCipher = this.ciphers[this.ciphers.findIndex(cipher => cipher.name == evt.target.value)]
             this.selectedCiphers.push(selectedCipher);
-            let cipherItem = document.createElement("span");
-            cipherItem.setAttribute("data", btoa(selectedCipher));
-            cipherItem.setAttribute("id", btoa(selectedCipher.object));
-            cipherItem.addEventListener("click", this.removeSelectedCipher.bind(this));
-            cipherItem.textContent = selectedCipher.name;
-            this.ciphersMultiSelector.appendChild(cipherItem);
-            this.selectedCiphers.forEach(cipher => {
-                if (cipher.key) {
-                    this.msgKeyInput.parentElement.classList.remove("hidden");
-                }
-            });
+            this.addSelectedCipher(selectedCipher);
+        });
+    }
+    ///ADD SELECTED CIPHER
+    addSelectedCipher(selectedCipher) {
+        let cipherItem = document.createElement("span");
+        cipherItem.setAttribute("data", btoa(selectedCipher));
+        cipherItem.setAttribute("id", btoa(selectedCipher.object));
+        cipherItem.addEventListener("click", this.removeSelectedCipher.bind(this));
+        cipherItem.textContent = selectedCipher.name;
+        this.ciphersMultiSelector.appendChild(cipherItem);
+        this.selectedCiphers.forEach(cipher => {
+            if (cipher.key) {
+                this.msgKeyInput.parentElement.classList.remove("hidden");
+            }
         });
     }
     ///REMOVE SELECTED CIPHER
@@ -141,11 +146,11 @@ export class Main {
         evt.target.parentNode.removeChild(evt.target);
         let keyEnable = false;
         this.selectedCiphers.forEach(cipher => {
-            if(cipher.key){
+            if (cipher.key) {
                 keyEnable = true;
             }
         });
-        if(!keyEnable || this.selectedCiphers.length < 0){
+        if (!keyEnable || this.selectedCiphers.length < 0) {
             this.msgKeyInput.parentElement.classList.add("hidden");
         }
     }
@@ -153,13 +158,13 @@ export class Main {
     runCipher(event) {
         const action = event.target.id === "encryptButton" ? "encrypt" : "decrypt";
         const tempList = action === "encryptButton" ? this.selectedCiphers : this.selectedCiphers.reverse();
-        if(this.selectedCiphers.length > 0){
+        if (this.selectedCiphers.length > 0) {
             this.selectedCiphers.forEach(cipher => {
-                setTimeout(()=>{
+                setTimeout(() => {
                     const message = this.messageInput.value;
                     const cipherObj = eval(`new ${cipher.object}();`);
                     this.messageInput.value = cipherObj[action](message, this.key);
-                },100);
+                }, 100);
             });
         }
     }
@@ -167,7 +172,7 @@ export class Main {
     sendWhatsAppMsg() {
         const phone = document.querySelector("#whatsappInput").value;
         const params = {
-            cipher: this.cipher,
+            ciphers: JSON.stringify(this.selectedCiphers),
             key: this.key,
             message: this.messageInput.value,
             rsaMessage: this.rsaMessageInput.value,
@@ -214,14 +219,14 @@ export class Main {
 
             switch (this.currentTab) {
                 case "ciphersForm":
-                    const cipherParam = atob(myParam).split("&cipher=")[1].split("&key")[0];
+                    const ciphersParam = JSON.parse(atob(myParam).split("&ciphers=")[1].split("&key")[0]);
                     const key = atob(myParam).split("key=")[1].split("&message")[0];
                     const message = atob(myParam).split("message=")[1];
-                    const cipherIndex = this.ciphers.findIndex(el => el.name === cipherParam) + 1;
                     this.key = key;
-                    this.cipher = this.ciphers[this.ciphers.findIndex(cipher => cipher.name == cipherParam)];
-                    this.msgKeyInput.parentElement.classList[!key ? "add" : "remove"]("hidden");
-                    this.ciphersSelector.selectedIndex = cipherIndex;
+                    this.selectedCiphers = ciphersParam;
+                    this.selectedCiphers.forEach(cipherInj => {
+                        this.addSelectedCipher(this.ciphers[this.ciphers.findIndex(cipher => cipher.name == cipherInj.name)]);
+                    });
                     this.messageInput.value = String(message);
                     this.msgKeyInput.value = String(this.key);
                     this.decryptButton.click();

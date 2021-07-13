@@ -4,7 +4,7 @@ export class MsgService{
     whatsApp(tab, params){
         switch(tab){
             case "ciphersForm":
-                return btoa(`tab=${tab}&cipher=${params.cipher}&key=${params.key}&message=${params.message}`);
+                return btoa(`tab=${tab}&ciphers=${params.ciphers}&key=${params.key}&message=${params.message}`);
             break;
             case "rsaForm":
                 return btoa(`tab=${tab}&privKey=${params.privateKey}&pubKey=${params.publicKey}&message=${params.rsaMessage}`);
