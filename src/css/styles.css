@@ -42,6 +42,10 @@ hr.dotted {
     display: none;
 }
 
+#loginForms.hidden{
+    display: none !important;
+}
+
 #loginForm.hidden{
     display: inherit;
 }
@@ -177,4 +181,8 @@ hr.dotted {
 
 .nav-link>font{
     pointer-events: none;
+}
+
+#userbtn.active{
+    color:rgb(0, 158, 250) !important;
 }

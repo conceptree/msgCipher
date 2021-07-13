@@ -1,4 +1,4 @@
-import { firebaseConfig } from '../data/firebaseConfig.js';
+import { FirebaseConfig } from '../data/firebaseConfig.js'; 
 import { BitlyService } from '../data/bitlyService.js';
 import { CesarCipher } from '../ciphers/cesarCipher.js';
 import { NumericalAlphabetCipher } from '../ciphers/numericalAlphabet.js';
@@ -15,21 +15,19 @@ import { SmsCipher } from '../ciphers/smsCipher.js';
 import { MsgService } from '../ciphers/util/msgService.js';
 import { FirstFakeLetterCipher } from '../ciphers/firstFakeLetterCipher.js';
 
-export class Main {
+export class Main extends FirebaseConfig {
     constructor() {
+        super();
         this.bitlyService = new BitlyService();
         this.msgService = new MsgService();
         this.key = null;
         this.cipher = null;
         this.selectedCiphers = [];
         this.currentTab = "ciphersForm";
-        
         this.registerButton = document.querySelector("#registerBtn");
         this.loginButton = document.querySelector("#loginBtn");
-        
         this.registerTab = document.querySelector("#regTabBtn");
         this.loginTab = document.querySelector("#loginTabBtn");
-
         this.ciphersMultiSelector = document.querySelector("#ciphersMultiSelector");
         this.messageInput = document.querySelector("#messageInput");
         this.msgKeyInput = document.querySelector("#msgKeyInput");
@@ -77,7 +75,9 @@ export class Main {
 
         document.querySelector("#regCancelBtn").addEventListener("click", this.closeLogin.bind(this));
         document.querySelector("#loginCancelBtn").addEventListener("click", this.closeLogin.bind(this));
-        
+        document.querySelector("#cancelLogout").addEventListener("click", this.closeLogin.bind(this));
+        document.querySelector("#logoutBtn").addEventListener("click", this.logoutUser);
+
         document.querySelectorAll("#mainNav .nav-link").forEach(item => {
             item.addEventListener("click", this.toggleViews.bind(this));
         });
@@ -283,11 +283,32 @@ export class Main {
         }
     }
     ///LOGIN
-    login(evt){
-        
+    login(evt) {
+        const email = document.querySelector("#userEmail").value;
+        const password = document.querySelector("#userPassword").value;
+
+        const emailValid = Boolean(email !== "");
+        const passValid = Boolean(password !== "");
+
+        if(emailValid && passValid){
+            this.loginUser(email, password);
+        }else{
+            alert("Please, check the fields and try again!");
+        }
     }
     ///REGISTER
-    register(evt){
+    register(evt) {
+        const email = document.querySelector("#userEmailReg").value;
+        const password = document.querySelector("#userPasswordReg").value;
+        const passwordRep = document.querySelector("#userRepeatPassword").value;
+        const emailValid = Boolean(email !== "");
+        const passValid = Boolean(password !== "" && password === passwordRep);
+
+        if(emailValid && passValid){
+            this.registerUser(email, password);
+        }else{
+            alert("Please, check the fields and try again!");
+        }
         
     }
     ///COPY TO CLIPBOARD
@@ -387,19 +408,19 @@ export class Main {
         document.querySelector("#loginDialog").classList.add("active");
     }
     /// TOGGLER LOGIN VIEWS
-    toggleLoginTabs(evt){
-        if(evt.target.id === "loginTabBtn"){
+    toggleLoginTabs(evt) {
+        if (evt.target.id === "loginTabBtn") {
             document.querySelector("#loginTabBtn").classList.add("active");
             document.querySelector("#regTabBtn").classList.remove("active");
             document.querySelector("#loginForm").classList.add("show");
             document.querySelector("#registerForm").classList.remove("show");
-        }else{
+        } else {
             document.querySelector("#loginTabBtn").classList.remove("active");
             document.querySelector("#regTabBtn").classList.add("active");
             document.querySelector("#loginForm").classList.remove("show");
             document.querySelector("#registerForm").classList.add("show");
         }
-        
+
     }
 }
 
@@ -411,5 +432,3 @@ if ('serviceWorker' in navigator) {
     console.warn("Your browser does not support service workers!");
 }
 
-  // Initialize Firebase
-  firebase.initializeApp(firebaseConfig);

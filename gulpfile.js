@@ -4,7 +4,7 @@ const browsersync = require('browser-sync').create();
 
 // JavaScript Task
 function jsTask(){
-  return src('./src/main.js', { sourcemaps: true })
+  return src('./src/*.js', { sourcemaps: true })
     .pipe(terser())
     .pipe(dest('dist', { sourcemaps: '.' }));
 }
@@ -27,7 +27,7 @@ function browsersyncReload(cb){
 // Watch Task
 function watchTask(){
   watch('*.html', browsersyncReload);
-  watch(['./src/'], series(jsTask, browsersyncReload));
+  watch(['./src/', './data/', './ciphers/'], series(jsTask, browsersyncReload));
 }
 
 // Default Gulp task
