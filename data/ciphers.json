@@ -77,5 +77,10 @@
         "name": "Fake First Letter",
         "object": "FirstFakeLetterCipher",
         "key": false
+    },
+    {
+        "name": "Transporto alphabet",
+        "object": "TransportoCipher",
+        "key": true
     }
 ]
