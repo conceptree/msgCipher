@@ -1,6 +1,6 @@
 export class NumericalAlphabetCipher {
     constructor() {
-        this.alphabet = ["a", "b", "c", "d", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
+        this.alphabet = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
         this.nums = [];
         this.createNumsArray = (key) => {
             for (let i = key; i < key + 25; i++) {
@@ -13,7 +13,7 @@ export class NumericalAlphabetCipher {
         str = str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
         let result = [];
 
-       this.createNumsArray(Number(key));
+        this.createNumsArray(Number(key));
 
         str.split("").forEach(char => {
             result.push(this.nums[this.alphabet.indexOf(char.toLowerCase())], ",");
@@ -23,7 +23,7 @@ export class NumericalAlphabetCipher {
 
     }
 
-    decrypt(str,key){
+    decrypt(str, key) {
         let result = [];
 
         this.createNumsArray(Number(key));
@@ -36,4 +36,3 @@ export class NumericalAlphabetCipher {
     }
 
 }
-
