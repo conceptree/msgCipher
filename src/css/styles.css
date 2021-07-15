@@ -199,7 +199,8 @@ hr.dotted {
     background-color: white;
     padding: 10px;
     min-height: 150px;
-    max-height: 30%;
+    max-height: 20vh;
+    overflow: auto;
 }
 
 .chat-messages:empty {
@@ -212,14 +213,19 @@ hr.dotted {
 .chat-messages>li {
     font-size: 0.8em;
     padding: 10px;
+    width: auto;
     max-width: 50%;
     list-style: none;
     display: flex;
+    color:white;
+    align-self: flex-start;
+    word-break: break-all;
     background: rgb(0, 158, 250);
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.16), 0 1px 2px rgba(0, 0, 0, 0.23);
 }
 
 .chat-messages>li.sent {
+    color:rgb(82, 82, 82);
     background: white;
     align-self: flex-end;
 }

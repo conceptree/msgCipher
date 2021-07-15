@@ -612,7 +612,8 @@ export class Main extends FirebaseConfig {
                 switch (encryptionMode) {
                     case "Blowfish":
                         const blowfish = new Blowfish(password);
-                        message = blowfish.base64Encode(blowfish.base64Encode(message));
+						result = blowfish.base64Encode(message);
+                        message = blowfish.base64Encode(result);
                         break;
                     case "AES":
                         result = CryptoJS.AES.encrypt(message, password);
@@ -664,19 +665,20 @@ export class Main extends FirebaseConfig {
             switch (encryptionMode) {
                 case "Blowfish":
                     const blowfish = new Blowfish(password);
-                    message = blowfish.trimZeros(blowfish.decrypt(message));
+					result = blowfish.encrypt(message);
+                    message = blowfish.trimZeros(result);
                     break;
                 case "AES":
                     result = CryptoJS.AES.decrypt(message, password);
                     message = result.toString(CryptoJS.enc.Utf8);
                     break;
                 case "DES":
-                    result = CryptoJS.DES.decrypt(result, password);
-                    message = result.toString();
+                    result = CryptoJS.DES.decrypt(message, password);
+                    message = result.toString(CryptoJS.enc.Utf8);
                     break;
                 case "Triple DES":
-                    result = CryptoJS.TripleDES.decrypt(result, password);
-                    message = result.toString();
+                    result = CryptoJS.TripleDES.decrypt(message, password);
+                    message = result.toString(CryptoJS.enc.Utf8);
                     break;
             }
         } else {
