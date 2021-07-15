@@ -190,3 +190,17 @@ hr.dotted {
 #logoutBtnCont.hidden{
     display: none !important;
 }
+
+.chat-messages{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    justify-content: flex-start;
+}
+
+.chat-messages>li{
+    list-style: none;
+    display: flex;
+    background: white;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.16), 0 1px 2px rgba(0, 0, 0, 0.23);
+}

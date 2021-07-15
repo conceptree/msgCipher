@@ -1,6 +1,7 @@
 export class FirebaseConfig {
 
-    constructor() {
+    constructor(chatMsgContainer) {
+        this.chatMsgContainer = chatMsgContainer;
         const config = {
             apiKey: "AIzaSyDhDVf67q6cGIbNxa2B7khJKp5N-jqd9OM",
             authDomain: "msgcipher.firebaseapp.com",
@@ -13,6 +14,7 @@ export class FirebaseConfig {
         firebase.initializeApp(config);
         this.uid = null;
         this.checkLoggedInUser();
+        this.getUsers();
     }
 
     checkLoggedInUser() {
@@ -24,7 +26,8 @@ export class FirebaseConfig {
                 document.querySelector("#loginForms").classList.add("hidden");
                 document.querySelector("#logoutBtnCont").classList.remove("hidden");
                 document.querySelector("#userbtn").classList.add("active");
-                
+                document.querySelector("#chatbtn").classList.add("active");
+
                 // ...
             } else {
                 // User is signed out
@@ -34,43 +37,95 @@ export class FirebaseConfig {
         });
     }
 
-    registerUser(email, password){
+    registerUser(email, password) {
         firebase.auth().createUserWithEmailAndPassword(email, password)
-        .then((userCredential) => {
-          // Signed in
-          var user = userCredential.user;
-          console.log(user);
-          // ...
-        })
-        .catch((error) => {
-          var errorCode = error.code;
-          var errorMessage = error.message;
-          console.error(errorCode+": "+errorMessage);
-          alert(errorMessage);
-          // ..
-        });
+            .then((userCredential) => {
+                // Signed in
+                var user = userCredential.user;
+                console.log(user);
+                firebase.database().ref("users").push().set({
+                    "uid":user.uid
+                });
+                // ...
+            })
+            .catch((error) => {
+                var errorCode = error.code;
+                var errorMessage = error.message;
+                console.error(errorCode + ": " + errorMessage);
+                alert(errorMessage);
+                // ..
+            });
     }
 
-    loginUser(email, password){
+    loginUser(email, password) {
         firebase.auth().signInWithEmailAndPassword(email, password)
-        .then((userCredential) => {
-          // Signed in
-          var user = userCredential.user;
-          console.log(user);
-          // ...
-        })
-        .catch((error) => {
-          var errorCode = error.code;
-          var errorMessage = error.message;
-          console.error(errorCode+": "+errorMessage);
-          alert(errorMessage);
-          // ..
-        });
+            .then((userCredential) => {
+                var user = userCredential.user;
+                document.querySelector("#chatbtn").classList.add("active");
+                this.getUsers();
+            })
+            .catch((error) => {
+                var errorCode = error.code;
+                var errorMessage = error.message;
+                console.error(errorCode + ": " + errorMessage);
+                alert(errorMessage);
+                // ..
+            });
     }
 
-    logoutUser(){
+    logoutUser() {
         firebase.auth().signOut();
         location.reload();
+    }
+
+    sendMessage(message, destinator, encryption) {
+        firebase.database().ref("chats/"+destinator+"/messages").push().set({
+            "sender": this.uid,
+            "encryption": encryption, 
+            "message": message
+        });
+        firebase.database().ref("chats/"+this.uid+"/messages").push().set({
+            "sender": this.uid,
+            "encryption": encryption, 
+            "message": message
+        });
+    }
+
+    getUserMessages() {
+        this.senders = [];
+        firebase.database().ref("chats/"+this.uid+"/messages").on("child_added", (snapshot) => {
+            let sender = snapshot.val().sender;
+            let time = new Date().getHours() + ":" + new Date().getMinutes();
+            let chatItem = document.createElement("li");
+            chatItem.addEventListener("click", this.decryptMsg);
+            chatItem.classList.add("chat-message");
+            chatItem.id = "message-" + snapshot.key;
+            chatItem.setAttribute("result", btoa(snapshot.val().result));
+            chatItem.setAttribute("encryption", btoa(snapshot.val().encryption));
+            chatItem.setAttribute("message", btoa(snapshot.val().message));
+            chatItem.classList.add(sender === this.uid ? "sent" : "received");
+            chatItem.innerText = sender + " @ " + time + "\n" + snapshot.val().message;
+            this.chatMsgContainer.appendChild(chatItem);
+        });
+    }
+
+    getUsers(){
+        const dbRef = firebase.database().ref();
+        dbRef.child("users").get().then((snapshot) => {
+            if (snapshot.exists()) {
+                this.users = Object.values(snapshot.val());
+                this.users.forEach(user => {
+                    let userItem = document.createElement("option");
+                    userItem.id = user.uid;
+                    userItem.innerText = user.uid;
+                    document.querySelector("#userIds").appendChild(userItem);
+                });
+            } else {
+                console.log("No data available");
+            }
+        }).catch((error) => {
+            console.error(error);
+        });
     }
 
 };
