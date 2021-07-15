@@ -20,7 +20,7 @@ export class Main extends FirebaseConfig {
     constructor() {
         super(document.querySelector("#chatMsgContainer"));
         this.bitlyService = new BitlyService();
-        this.msgService = new MsgService();
+        this.msgService = new MsgService(); 
         this.key = null;
         this.cipher = null;
         this.selectedCiphers = [];
