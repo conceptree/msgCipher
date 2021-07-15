@@ -1,5 +1,4 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
-
 html,
 body {
     padding: 0;
@@ -19,12 +18,10 @@ body {
 .background-container {
     background: url("../../assets/bg.jpg") no-repeat;
     background-size: cover;
-
     display: flex;
     justify-content: center;
     align-items: center;
     align-content: center;
-
     height: 100vh;
 }
 
@@ -33,7 +30,9 @@ body {
     opacity: 0.9;
 }
 
+
 /* Dotted border */
+
 hr.dotted {
     border-top: 3px dotted #bbb;
 }
@@ -42,11 +41,11 @@ hr.dotted {
     display: none;
 }
 
-#loginForms.hidden{
+#loginForms.hidden {
     display: none !important;
 }
 
-#loginForm.hidden{
+#loginForm.hidden {
     display: inherit;
 }
 
@@ -167,50 +166,50 @@ hr.dotted {
     align-items: center;
 }
 
-.dialogue.active{
-    display:flex;
+.dialogue.active {
+    display: flex;
 }
 
-.dialogue.active .form-container{
+.dialogue.active .form-container {
     display: none !important;
 }
 
-.dialogue.active .form-container.show{
+.dialogue.active .form-container.show {
     display: inherit !important;
 }
 
-.nav-link>font{
+.nav-link>font {
     pointer-events: none;
 }
 
-#userbtn.active{
-    color:rgb(0, 158, 250) !important;
+#userbtn.active {
+    color: rgb(0, 158, 250) !important;
 }
 
-#logoutBtnCont.hidden{
+#logoutBtnCont.hidden {
     display: none !important;
 }
 
-.chat-messages{
+.chat-messages {
     display: flex;
     flex-direction: column;
     width: 100%;
     justify-content: flex-start;
     gap: 10px;
-    background-color: white ;
+    background-color: white;
     padding: 10px;
     min-height: 150px;
     max-height: 30%;
 }
 
-.chat-messages:empty{
+.chat-messages:empty {
     background-image: url("../../assets/noResults.gif");
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center;
 }
 
-.chat-messages>li{
+.chat-messages>li {
     font-size: 0.8em;
     padding: 10px;
     max-width: 50%;
@@ -220,7 +219,122 @@ hr.dotted {
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.16), 0 1px 2px rgba(0, 0, 0, 0.23);
 }
 
-.chat-messages>li.sent{
+.chat-messages>li.sent {
     background: white;
     align-self: flex-end;
+}
+
+
+/** Angular CSS code **/
+
+.pigpen-wrapper {
+    display: inline-block;
+    background: white;
+    width: 50px;
+    height: 50px;
+    padding: 10px;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.dotted {
+    background: black;
+    -webkit-box-shadow: inset 0px 0px 0px 23px rgba(255, 255, 255, 1);
+    -moz-box-shadow: inset 0px 0px 0px 23px rgba(255, 255, 255, 1);
+    box-shadow: inset -2px 0px 0px 23px rgba(255, 255, 255, 1);
+}
+
+.pigpen {
+    display: inline-block;
+    background: transparent;
+    width: 10px;
+    height: 30px;
+    padding: 10px;
+    box-sizing: border-box;
+    border: 4px solid white;
+}
+
+.a,
+.j {
+    border-color: white black black white;
+}
+
+.b,
+.k {
+    border-color: white black black black;
+}
+
+.c,
+.l {
+    border-color: white white black black;
+}
+
+.d,
+.m {
+    border-color: black black black white;
+}
+
+.e,
+.n {
+    border-color: black black black black;
+}
+
+.f,
+.o {
+    border-color: black white black black;
+}
+
+.g,
+.p {
+    border-color: black black white white;
+}
+
+.h,
+.q {
+    border-color: black black white black;
+}
+
+.i,
+.r {
+    border-color: black white white black;
+}
+
+.s {
+    border-color: white black black white;
+    transform: translate(0px, -6px) rotate(45deg);
+}
+
+.u {
+    border-color: white white black black;
+    transform: translate(6px, 0px) rotate(45deg);
+}
+
+.t {
+    border-color: black black white white;
+    transform: translate(-6px, 0px) rotate(45deg);
+}
+
+.v {
+    border-color: black white white black;
+    transform: translate(0px, 6px) rotate(45deg);
+}
+
+.w {
+    border-color: white black black white;
+    transform: translate(0px, -6px) rotate(45deg);
+}
+
+.y {
+    border-color: white white black black;
+    transform: translate(6px, 0px) rotate(45deg);
+}
+
+.x {
+    border-color: black black white white;
+    transform: translate(-6px, 0px) rotate(45deg);
+}
+
+.z {
+    border-color: black white white black;
+    transform: translate(0px, 6px) rotate(45deg);
 }

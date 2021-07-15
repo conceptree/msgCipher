@@ -82,5 +82,15 @@
         "name": "Transporto alphabet",
         "object": "TransportoCipher",
         "key": true
+    },
+    {
+        "name": "Angular Cipher",
+        "object": "AngularCipher",
+        "key": false
+    },
+    {
+        "name": "Vertical Key Phrase",
+        "object": "VerticalKeyPhraseCipher",
+        "key": true
     }
 ]

@@ -1,26 +1,28 @@
-import { FirebaseConfig } from '../data/firebaseConfig.js';
-import { BitlyService } from '../data/bitlyService.js';
-import { CesarCipher } from '../ciphers/cesarCipher.js';
-import { NumericalAlphabetCipher } from '../ciphers/numericalAlphabet.js';
-import { CrabCipher } from '../ciphers/crabCipher.js';
-import { Passa2MelrosCipher } from '../ciphers/passa2melros.js';
-import { InvertedAlphabetCipher } from '../ciphers/invertedAlphabet.js';
-import { SnailCipher } from '../ciphers/snailCipher.js';
-import { FakeBrailleCipher } from '../ciphers/fakeBraille.js';
-import { Passa1Melro } from '../ciphers/passa1melro.js';
-import { MorseNodes } from '../ciphers/morseNodes.js';
-import { MountainMorse } from '../ciphers/mountainMorse.js';
-import { HorizontalCipher } from '../ciphers/horizontalCipher.js';
-import { SmsCipher } from '../ciphers/smsCipher.js';
-import { MsgService } from '../ciphers/util/msgService.js';
-import { FirstFakeLetterCipher } from '../ciphers/firstFakeLetterCipher.js';
-import { TransportoCipher } from '../ciphers/transportoCipher.js';
+import { FirebaseConfig } from "../data/firebaseConfig.js";
+import { BitlyService } from "../data/bitlyService.js";
+import { CesarCipher } from "../ciphers/cesarCipher.js";
+import { NumericalAlphabetCipher } from "../ciphers/numericalAlphabet.js";
+import { CrabCipher } from "../ciphers/crabCipher.js";
+import { Passa2MelrosCipher } from "../ciphers/passa2melros.js";
+import { InvertedAlphabetCipher } from "../ciphers/invertedAlphabet.js";
+import { SnailCipher } from "../ciphers/snailCipher.js";
+import { FakeBrailleCipher } from "../ciphers/fakeBraille.js";
+import { Passa1Melro } from "../ciphers/passa1melro.js";
+import { MorseNodes } from "../ciphers/morseNodes.js";
+import { MountainMorse } from "../ciphers/mountainMorse.js";
+import { HorizontalCipher } from "../ciphers/horizontalCipher.js";
+import { SmsCipher } from "../ciphers/smsCipher.js";
+import { MsgService } from "../ciphers/util/msgService.js";
+import { FirstFakeLetterCipher } from "../ciphers/firstFakeLetterCipher.js";
+import { TransportoCipher } from "../ciphers/transportoCipher.js";
+import { AngularCipher } from "../ciphers/angularCipher.js";
+import { VerticalKeyPhraseCipher } from "../ciphers/verticalKeyPhrase.js";
 
 export class Main extends FirebaseConfig {
     constructor() {
         super(document.querySelector("#chatMsgContainer"));
         this.bitlyService = new BitlyService();
-        this.msgService = new MsgService(); 
+        this.msgService = new MsgService();
         this.key = null;
         this.cipher = null;
         this.selectedCiphers = [];
@@ -45,13 +47,19 @@ export class Main extends FirebaseConfig {
         this.aesDesMessageInput = document.querySelector("#aesDesMessageInput");
         this.aesMessageInput = document.querySelector("#aesMessageInput");
         this.desMessageInput = document.querySelector("#desMessageInput");
-        this.tripleDesMessageInput = document.querySelector("#tripleDesMessageInput");
+        this.tripleDesMessageInput = document.querySelector(
+            "#tripleDesMessageInput"
+        );
         this.aesPassphrase = document.querySelector("#aesPassphrase");
         this.sendEmailBtn = document.querySelector("#sendEmailBtn");
         this.encryptButton = document.querySelector("#encryptButton");
         this.userButton = document.querySelector("#userbtn");
-        this.blowfishEncryptButton = document.querySelector("#blowfishEncryptButton");
-        this.blowfishDecryptButton = document.querySelector("#blowfishDecryptButton");
+        this.blowfishEncryptButton = document.querySelector(
+            "#blowfishEncryptButton"
+        );
+        this.blowfishDecryptButton = document.querySelector(
+            "#blowfishDecryptButton"
+        );
         this.decryptButton = document.querySelector("#decryptButton");
         this.rsaEncryptButton = document.querySelector("#rsaEncryptButton");
         this.rsaDecryptButton = document.querySelector("#rsaDecryptButton");
@@ -65,13 +73,28 @@ export class Main extends FirebaseConfig {
         this.sha3MessageInput = document.querySelector("#sha3MessageInput");
         this.blowfishMessageInput = document.querySelector("#blowfishMessageInput");
         this.blowfishPassword = document.querySelector("#blowfishPassword");
-        this.generateKeysButton.addEventListener("click", this.generateKeys.bind(this));
+        this.generateKeysButton.addEventListener(
+            "click",
+            this.generateKeys.bind(this)
+        );
         this.encryptButton.addEventListener("click", this.runCipher.bind(this));
         this.decryptButton.addEventListener("click", this.runCipher.bind(this));
-        this.blowfishEncryptButton.addEventListener("click", this.runBlowfish.bind(this));
-        this.blowfishDecryptButton.addEventListener("click", this.runBlowfish.bind(this));
-        this.rsaEncryptButton.addEventListener("click", this.rsaEncryption.bind(this));
-        this.rsaDecryptButton.addEventListener("click", this.rsaEncryption.bind(this));
+        this.blowfishEncryptButton.addEventListener(
+            "click",
+            this.runBlowfish.bind(this)
+        );
+        this.blowfishDecryptButton.addEventListener(
+            "click",
+            this.runBlowfish.bind(this)
+        );
+        this.rsaEncryptButton.addEventListener(
+            "click",
+            this.rsaEncryption.bind(this)
+        );
+        this.rsaDecryptButton.addEventListener(
+            "click",
+            this.rsaEncryption.bind(this)
+        );
         this.userButton.addEventListener("click", this.openLogin.bind(this));
         this.registerButton.addEventListener("click", this.register.bind(this));
         this.loginButton.addEventListener("click", this.login.bind(this));
@@ -83,40 +106,70 @@ export class Main extends FirebaseConfig {
 
         this.userIds.addEventListener("change", this.setUserChatMsg.bind(this));
 
-        document.querySelector("#regCancelBtn").addEventListener("click", this.closeLogin.bind(this));
-        document.querySelector("#loginCancelBtn").addEventListener("click", this.closeLogin.bind(this));
-        document.querySelector("#cancelLogout").addEventListener("click", this.closeLogin.bind(this));
-        document.querySelector("#logoutBtn").addEventListener("click", this.logoutUser);
+        document
+            .querySelector("#regCancelBtn")
+            .addEventListener("click", this.closeLogin.bind(this));
+        document
+            .querySelector("#loginCancelBtn")
+            .addEventListener("click", this.closeLogin.bind(this));
+        document
+            .querySelector("#cancelLogout")
+            .addEventListener("click", this.closeLogin.bind(this));
+        document
+            .querySelector("#logoutBtn")
+            .addEventListener("click", this.logoutUser);
 
-        document.querySelectorAll("#mainNav .nav-link").forEach(item => {
+        document.querySelectorAll("#mainNav .nav-link").forEach((item) => {
             item.addEventListener("click", this.toggleViews.bind(this));
         });
-        this.sendWhatsAppBtn.addEventListener("click", this.sendWhatsAppMsg.bind(this), true);
-        this.sendEmailBtn.addEventListener("click", this.sendMailMsg.bind(this), true);
-        this.aesDesMessageInput.addEventListener("input", this.aesAndDesEncrypt.bind(this), true);
-        this.hashMessageInput.addEventListener("input", this.hashMessage.bind(this), true);
-        document.querySelectorAll("#aesPassphrase, #blowfishPassword").forEach(input => {
-            input.addEventListener("input", (evt) => {
-                let elements = "";
-                switch (evt.target.id) {
-                    case "aesPassphrase":
-                        elements = "#aesMessageInput, #desMessageInput, #tripleDesMessageInput, #aesDesMessageInput";
-                        break;
-                    case "blowfishPassword":
-                        elements = "#blowfishMessageInput, #blowfishEncryptButton, #blowfishDecryptButton";
-                        document.querySelector("#blowfishMessageInput").setAttribute("placeholder", "Message...");
-                        break;
-                }
-                document.querySelectorAll(elements).forEach(el => {
-                    if (evt.target.value !== "") {
-                        el.removeAttribute("disabled");
-                    } else {
-                        el.setAttribute("disabled", true);
-                        el.value = "";
+        this.sendWhatsAppBtn.addEventListener(
+            "click",
+            this.sendWhatsAppMsg.bind(this),
+            true
+        );
+        this.sendEmailBtn.addEventListener(
+            "click",
+            this.sendMailMsg.bind(this),
+            true
+        );
+        this.aesDesMessageInput.addEventListener(
+            "input",
+            this.aesAndDesEncrypt.bind(this),
+            true
+        );
+        this.hashMessageInput.addEventListener(
+            "input",
+            this.hashMessage.bind(this),
+            true
+        );
+        document
+            .querySelectorAll("#aesPassphrase, #blowfishPassword")
+            .forEach((input) => {
+                input.addEventListener("input", (evt) => {
+                    let elements = "";
+                    switch (evt.target.id) {
+                        case "aesPassphrase":
+                            elements =
+                                "#aesMessageInput, #desMessageInput, #tripleDesMessageInput, #aesDesMessageInput";
+                            break;
+                        case "blowfishPassword":
+                            elements =
+                                "#blowfishMessageInput, #blowfishEncryptButton, #blowfishDecryptButton";
+                            document
+                                .querySelector("#blowfishMessageInput")
+                                .setAttribute("placeholder", "Message...");
+                            break;
                     }
+                    document.querySelectorAll(elements).forEach((el) => {
+                        if (evt.target.value !== "") {
+                            el.removeAttribute("disabled");
+                        } else {
+                            el.setAttribute("disabled", true);
+                            el.value = "";
+                        }
+                    });
                 });
             });
-        });
 
         this.msgKeyInput.addEventListener("change", (evt) => {
             this.key = evt.target.value;
@@ -129,24 +182,33 @@ export class Main extends FirebaseConfig {
     /// GET LIST OF AVAILABLE CIPHERS
     getCiphers() {
         fetch("./data/ciphers.json")
-            .then(resp => {
+            .then((resp) => {
                 return resp.json();
             })
-            .then(data => {
+            .then((data) => {
                 this.ciphers = data;
                 this.buildSelector();
                 this.readUrl();
             })
-            .catch(error => console.log(error));
+            .catch((error) => console.log(error));
     }
     ///BUILD CIPHERS SELECTOR
     buildSelector() {
         this.ciphersSelector = document.querySelector("#ciphers");
-        this.ciphers.forEach(cipher => {
-            this.ciphersSelector.insertAdjacentHTML("beforeend", `<option>${cipher.name}</option>`);
+        this.ciphers.forEach((cipher) => {
+            this.ciphersSelector.insertAdjacentHTML(
+                "beforeend",
+                `<option>${cipher.name}</option>`
+            );
         });
         this.ciphersSelector.addEventListener("change", (evt) => {
-            const selectedCipher = this.ciphers[this.ciphers.findIndex(cipher => cipher.name.toLowerCase() == evt.target.value.toLowerCase())];
+            const selectedCipher =
+                this.ciphers[
+                this.ciphers.findIndex(
+                    (cipher) =>
+                        cipher.name.toLowerCase() == evt.target.value.toLowerCase()
+                )
+                ];
             this.selectedCiphers.push(selectedCipher);
             this.addSelectedCipher(selectedCipher);
         });
@@ -159,7 +221,7 @@ export class Main extends FirebaseConfig {
         cipherItem.addEventListener("click", this.removeSelectedCipher.bind(this));
         cipherItem.textContent = selectedCipher.name;
         this.ciphersMultiSelector.appendChild(cipherItem);
-        this.selectedCiphers.forEach(cipher => {
+        this.selectedCiphers.forEach((cipher) => {
             if (cipher.key) {
                 this.msgKeyInput.parentElement.classList.remove("hidden");
             }
@@ -167,10 +229,12 @@ export class Main extends FirebaseConfig {
     }
     ///REMOVE SELECTED CIPHER
     removeSelectedCipher(evt) {
-        this.selectedCiphers = this.selectedCiphers.filter(cipher => cipher.object !== atob(evt.target.id));
+        this.selectedCiphers = this.selectedCiphers.filter(
+            (cipher) => cipher.object !== atob(evt.target.id)
+        );
         evt.target.parentNode.removeChild(evt.target);
         let keyEnable = false;
-        this.selectedCiphers.forEach(cipher => {
+        this.selectedCiphers.forEach((cipher) => {
             if (cipher.key) {
                 keyEnable = true;
             }
@@ -178,13 +242,19 @@ export class Main extends FirebaseConfig {
         if (!keyEnable || this.selectedCiphers.length < 0) {
             this.msgKeyInput.parentElement.classList.add("hidden");
         }
+        if (atob(evt.target.id) === "AngularCipher") {
+            document.querySelector("#imageCipherContainer").textContent = "";
+        }
     }
     ///ENCRYPT MESSAGE
     runCipher(event) {
         const action = event.target.id === "encryptButton" ? "encrypt" : "decrypt";
-        const tempList = action === "encryptButton" ? this.selectedCiphers : this.selectedCiphers.reverse();
+        const tempList =
+            action === "encryptButton"
+                ? this.selectedCiphers
+                : this.selectedCiphers.reverse();
         if (this.selectedCiphers.length > 0) {
-            this.selectedCiphers.forEach(cipher => {
+            this.selectedCiphers.forEach((cipher) => {
                 setTimeout(() => {
                     const message = this.messageInput.value;
                     const cipherObj = eval(`new ${cipher.object}();`);
@@ -213,44 +283,73 @@ export class Main extends FirebaseConfig {
             des: this.desMessageInput.value,
             tripledes: this.tripleDesMessageInput.value,
             passphrase: this.aesPassphrase.value,
-            blowfishMessage: this.blowfishMessageInput.value
+            blowfishMessage: this.blowfishMessageInput.value,
         };
         let content = this.msgService.whatsApp(this.currentTab, params);
-        this.bitlyService.getShortenLink(`https://conceptree.github.io/msgCipher/?content=${content}`).then(resp => {
-            window.open(`https://api.whatsapp.com/send/?phone=${phone}&text=${this.msgService.getText(this.currentTab, params, resp.link)}`);
-        });
+        this.bitlyService
+            .getShortenLink(
+                `https://conceptree.github.io/msgCipher/?content=${content}`
+            )
+            .then((resp) => {
+                window.open(
+                    `https://api.whatsapp.com/send/?phone=${phone}&text=${this.msgService.getText(
+                        this.currentTab,
+                        params,
+                        resp.link
+                    )}`
+                );
+            });
     }
     ///SEND THE MESSAGE THROUGH MAIL
     sendMailMsg() {
         const email = document.querySelector("#emailInput").value;
         let content = this.msgService.whatsApp(this.currentTab, params);
-        this.bitlyService.getShortenLink(`https://conceptree.github.io/msgCipher/?content=${content}`).then(resp => {
-            window.open(`mailto:${email}?subject=MsgCipher Message&body=${this.msgService.getText(this.currentTab, params, resp.link)}`);
-        });
+        this.bitlyService
+            .getShortenLink(
+                `https://conceptree.github.io/msgCipher/?content=${content}`
+            )
+            .then((resp) => {
+                window.open(
+                    `mailto:${email}?subject=MsgCipher Message&body=${this.msgService.getText(
+                        this.currentTab,
+                        params,
+                        resp.link
+                    )}`
+                );
+            });
     }
     ///READ URL
     readUrl() {
         const urlParams = new URLSearchParams(window.location.search);
-        const myParam = urlParams.get('content');
+        const myParam = urlParams.get("content");
         if (myParam !== "" && myParam !== undefined && myParam !== null) {
-
             const tab = atob(myParam).split("tab=")[1].split("&")[0];
 
             if (tab !== "" && tab !== undefined && tab !== null) {
-                this.toggleViews({ target: document.querySelector(`#${tab.split("Form")[0]}btn`) });
+                this.toggleViews({
+                    target: document.querySelector(`#${tab.split("Form")[0]}btn`),
+                });
             } else {
                 return;
             }
 
             switch (this.currentTab) {
                 case "ciphersForm":
-                    const ciphersParam = JSON.parse(atob(myParam).split("&ciphers=")[1].split("&key")[0]);
+                    const ciphersParam = JSON.parse(
+                        atob(myParam).split("&ciphers=")[1].split("&key")[0]
+                    );
                     const key = atob(myParam).split("key=")[1].split("&message")[0];
                     const message = atob(myParam).split("message=")[1];
                     this.key = key;
                     this.selectedCiphers = ciphersParam;
-                    this.selectedCiphers.forEach(cipherInj => {
-                        this.addSelectedCipher(this.ciphers[this.ciphers.findIndex(cipher => cipher.name == cipherInj.name)]);
+                    this.selectedCiphers.forEach((cipherInj) => {
+                        this.addSelectedCipher(
+                            this.ciphers[
+                            this.ciphers.findIndex(
+                                (cipher) => cipher.name == cipherInj.name
+                            )
+                            ]
+                        );
                     });
                     this.messageInput.value = String(message);
                     this.msgKeyInput.value = String(this.key);
@@ -259,37 +358,65 @@ export class Main extends FirebaseConfig {
                 case "rsaForm":
                     this.jsEncrypt = new JSEncrypt();
                     this.rsaMessageContainer.classList.remove("hidden");
-                    this.privateKeyInput.value = atob(myParam).split("privKey=")[1].split("&")[0];
-                    this.publicKeyInput.value = atob(myParam).split("pubKey=")[1].split("&")[0];
+                    this.privateKeyInput.value = atob(myParam)
+                        .split("privKey=")[1]
+                        .split("&")[0];
+                    this.publicKeyInput.value = atob(myParam)
+                        .split("pubKey=")[1]
+                        .split("&")[0];
                     this.rsaMessageInput.value = atob(myParam).split("message=")[1];
                     this.rsaEncryption({ target: { id: "rsaDecryptButton" } });
                     break;
                 case "hashForm":
-                    this.hashMessageInput.value = atob(myParam).split("message=")[1]
-                    this.md5MessageInput.value = atob(myParam).split("md5=")[1].split("&")[0];
-                    this.sha1MessageInput.value = atob(myParam).split("sha1=")[1].split("&")[0];
-                    this.sha256MessageInput.value = atob(myParam).split("sha256=")[1].split("&")[0];
-                    this.sha512MessageInput.value = atob(myParam).split("sha512=")[1].split("&")[0];
-                    this.sha3MessageInput.value = atob(myParam).split("sha3=")[1].split("&message")[0];
+                    this.hashMessageInput.value = atob(myParam).split("message=")[1];
+                    this.md5MessageInput.value = atob(myParam)
+                        .split("md5=")[1]
+                        .split("&")[0];
+                    this.sha1MessageInput.value = atob(myParam)
+                        .split("sha1=")[1]
+                        .split("&")[0];
+                    this.sha256MessageInput.value = atob(myParam)
+                        .split("sha256=")[1]
+                        .split("&")[0];
+                    this.sha512MessageInput.value = atob(myParam)
+                        .split("sha512=")[1]
+                        .split("&")[0];
+                    this.sha3MessageInput.value = atob(myParam)
+                        .split("sha3=")[1]
+                        .split("&message")[0];
                     break;
                 case "aesForm":
-                    this.aesPassphrase.value = atob(myParam).split("passphrase=")[1].split("&")[0];
-                    this.aesPassphrase.dispatchEvent(new Event('input', {
-                        bubbles: true,
-                        cancelable: true,
-                    }));
-                    this.aesMessageInput.value = atob(myParam).split("aes=")[1].split("&")[0];
-                    this.desMessageInput.value = atob(myParam).split("des=")[1].split("&")[0];
-                    this.tripleDesMessageInput.value = atob(myParam).split("tripledes=")[1];
-                    let result = CryptoJS.AES.decrypt(this.aesMessageInput.value, this.aesPassphrase.value);
+                    this.aesPassphrase.value = atob(myParam)
+                        .split("passphrase=")[1]
+                        .split("&")[0];
+                    this.aesPassphrase.dispatchEvent(
+                        new Event("input", {
+                            bubbles: true,
+                            cancelable: true,
+                        })
+                    );
+                    this.aesMessageInput.value = atob(myParam)
+                        .split("aes=")[1]
+                        .split("&")[0];
+                    this.desMessageInput.value = atob(myParam)
+                        .split("des=")[1]
+                        .split("&")[0];
+                    this.tripleDesMessageInput.value =
+                        atob(myParam).split("tripledes=")[1];
+                    let result = CryptoJS.AES.decrypt(
+                        this.aesMessageInput.value,
+                        this.aesPassphrase.value
+                    );
                     this.aesDesMessageInput.value = result.toString();
                     break;
                 case "blowfishForm":
                     this.blowfishMessageInput.value = atob(myParam).split("message=")[1];
-                    this.blowfishPassword.setAttribute("placeholder", "You need the password to decrypt it!");
+                    this.blowfishPassword.setAttribute(
+                        "placeholder",
+                        "You need the password to decrypt it!"
+                    );
                     break;
             }
-
         }
     }
     ///LOGIN
@@ -319,18 +446,15 @@ export class Main extends FirebaseConfig {
         } else {
             alert("Please, check the fields and try again!");
         }
-
     }
     ///COPY TO CLIPBOARD
-    copyToClipboard(evt) {
-
-    }
+    copyToClipboard(evt) { }
     ///TOGGLE VIEWS
     toggleViews(evt) {
-        document.querySelectorAll("form").forEach(form => {
+        document.querySelectorAll("form").forEach((form) => {
             form.classList.add("hidden");
         });
-        document.querySelectorAll(".nav-link").forEach(form => {
+        document.querySelectorAll(".nav-link").forEach((form) => {
             form.classList.remove("active");
         });
         evt.target.classList.add("active");
@@ -343,18 +467,18 @@ export class Main extends FirebaseConfig {
         this.jsEncrypt = new JSEncrypt({ default_key_size: keySize });
         let async = document.querySelector("#asyncCheck").checked;
         let dt = new Date();
-        let time = -(dt.getTime());
+        let time = -dt.getTime();
         if (async) {
-            this.rsaTimer.textContent = '.';
+            this.rsaTimer.textContent = ".";
             let load = setInterval(() => {
                 let text = this.rsaTimer.textContent;
-                this.rsaTimer.textContent = text + '.';
+                this.rsaTimer.textContent = text + ".";
             }, 500);
             this.jsEncrypt.getKey(() => {
                 clearInterval(load);
                 dt = new Date();
-                time += (dt.getTime());
-                this.rsaTimer.textContent = 'Generated in ' + time + ' ms';
+                time += dt.getTime();
+                this.rsaTimer.textContent = "Generated in " + time + " ms";
                 this.privateKeyInput.value = this.jsEncrypt.getPrivateKey();
                 this.publicKeyInput.value = this.jsEncrypt.getPublicKey();
                 this.rsaMessageContainer.classList.remove("hidden");
@@ -363,8 +487,8 @@ export class Main extends FirebaseConfig {
         }
         this.jsEncrypt.getKey();
         dt = new Date();
-        time += (dt.getTime());
-        this.rsaTimer.textContent = 'Generated in ' + time + ' ms';
+        time += dt.getTime();
+        this.rsaTimer.textContent = "Generated in " + time + " ms";
         this.privateKeyInput.value = this.jsEncrypt.getPrivateKey();
         this.publicKeyInput.value = this.jsEncrypt.getPublicKey();
     }
@@ -374,10 +498,14 @@ export class Main extends FirebaseConfig {
         this.jsEncrypt.setPrivateKey(this.privateKeyInput.value);
         switch (evt.target.id) {
             case "rsaEncryptButton":
-                this.rsaMessageInput.value = this.jsEncrypt.encrypt(this.rsaMessageInput.value);
+                this.rsaMessageInput.value = this.jsEncrypt.encrypt(
+                    this.rsaMessageInput.value
+                );
                 break;
             case "rsaDecryptButton":
-                this.rsaMessageInput.value = this.jsEncrypt.decrypt(this.rsaMessageInput.value);
+                this.rsaMessageInput.value = this.jsEncrypt.decrypt(
+                    this.rsaMessageInput.value
+                );
                 break;
         }
     }
@@ -385,16 +513,29 @@ export class Main extends FirebaseConfig {
     hashMessage() {
         this.md5MessageInput.value = CryptoJS.MD5(this.hashMessageInput.value);
         this.sha1MessageInput.value = CryptoJS.SHA1(this.hashMessageInput.value);
-        this.sha256MessageInput.value = CryptoJS.SHA256(this.hashMessageInput.value);
-        this.sha512MessageInput.value = CryptoJS.SHA512(this.hashMessageInput.value);
+        this.sha256MessageInput.value = CryptoJS.SHA256(
+            this.hashMessageInput.value
+        );
+        this.sha512MessageInput.value = CryptoJS.SHA512(
+            this.hashMessageInput.value
+        );
         this.sha3MessageInput.value = CryptoJS.SHA3(this.hashMessageInput.value);
     }
     ///AES & DES
     aesAndDesEncrypt() {
         if (this.aesPassphrase.value !== "") {
-            this.aesMessageInput.value = CryptoJS.AES.encrypt(this.aesAndDesEncrypt.value, this.aesPassphrase.value);
-            this.desMessageInput.value = CryptoJS.DES.encrypt(this.aesAndDesEncrypt.value, this.aesPassphrase.value);
-            this.tripleDesMessageInput.value = CryptoJS.TripleDES.encrypt(this.aesAndDesEncrypt.value, this.aesPassphrase.value);
+            this.aesMessageInput.value = CryptoJS.AES.encrypt(
+                this.aesAndDesEncrypt.value,
+                this.aesPassphrase.value
+            );
+            this.desMessageInput.value = CryptoJS.DES.encrypt(
+                this.aesAndDesEncrypt.value,
+                this.aesPassphrase.value
+            );
+            this.tripleDesMessageInput.value = CryptoJS.TripleDES.encrypt(
+                this.aesAndDesEncrypt.value,
+                this.aesPassphrase.value
+            );
         }
     }
     ///BLOWFISH
@@ -404,7 +545,9 @@ export class Main extends FirebaseConfig {
             let encrypted = this.blowfish.encrypt(this.blowfishMessageInput.value);
             this.blowfishMessageInput.value = this.blowfish.base64Encode(encrypted);
         } else {
-            let base64Code = this.blowfish.base64Decode(this.blowfishMessageInput.value);
+            let base64Code = this.blowfish.base64Decode(
+                this.blowfishMessageInput.value
+            );
             let decrypted = this.blowfish.decrypt(base64Code);
             this.blowfishMessageInput.value = this.blowfish.trimZeros(decrypted);
         }
@@ -430,7 +573,6 @@ export class Main extends FirebaseConfig {
             document.querySelector("#loginForm").classList.remove("show");
             document.querySelector("#registerForm").classList.add("show");
         }
-
     }
     /// CLOSE CHAT DIALOGUE
     closeChat() {
@@ -441,9 +583,7 @@ export class Main extends FirebaseConfig {
         document.querySelector("#chatDialog").classList.add("active");
     }
     ///ON ENCRYPTION MODE CHANGE
-    encryptionModeChange(evt) {
-
-    }
+    encryptionModeChange(evt) { }
     ///SEND CHAT MESSAGE
     sendChatMsg() {
         let message = document.querySelector("#chatMessage").value;
@@ -457,8 +597,18 @@ export class Main extends FirebaseConfig {
             return;
         }
 
-        if (encryptionMode !== "Encryption mode..." && encryptionMode !== "" && encryptionMode !== null && encryptionMode !== undefined) {
-            if (password !== "Encryption mode" && password !== "" && password !== null && password !== undefined) {
+        if (
+            encryptionMode !== "Encryption mode..." &&
+            encryptionMode !== "" &&
+            encryptionMode !== null &&
+            encryptionMode !== undefined
+        ) {
+            if (
+                password !== "Encryption mode" &&
+                password !== "" &&
+                password !== null &&
+                password !== undefined
+            ) {
                 switch (encryptionMode) {
                     case "Blowfish":
                         const blowfish = new Blowfish(password);
@@ -487,7 +637,11 @@ export class Main extends FirebaseConfig {
     }
     ///SET USER CHAT MESSAGES
     setUserChatMsg(evt) {
-        if (evt.target.value !== "" || evt.target.value !== null || evt.target.value !== undefined) {
+        if (
+            evt.target.value !== "" ||
+            evt.target.value !== null ||
+            evt.target.value !== undefined
+        ) {
             this.getUserMessages(evt.target.value);
         }
     }
@@ -497,7 +651,16 @@ export class Main extends FirebaseConfig {
         let encryptionMode = atob(evt.target.getAttribute("encryption"));
         let password = document.querySelector("#chatMessagePassphrase").value;
         let result = null;
-        if (encryptionMode !== "Encryption mode..." && encryptionMode !== "" && encryptionMode !== null && encryptionMode !== undefined && password !== "Encryption mode..." && password !== "" && password !== null && password !== undefined) {
+        if (
+            encryptionMode !== "Encryption mode..." &&
+            encryptionMode !== "" &&
+            encryptionMode !== null &&
+            encryptionMode !== undefined &&
+            password !== "Encryption mode..." &&
+            password !== "" &&
+            password !== null &&
+            password !== undefined
+        ) {
             switch (encryptionMode) {
                 case "Blowfish":
                     const blowfish = new Blowfish(password);
@@ -517,7 +680,9 @@ export class Main extends FirebaseConfig {
                     break;
             }
         } else {
-            alert("In order to decrypt you need to select the used encryption mode and passphrase!");
+            alert(
+                "In order to decrypt you need to select the used encryption mode and passphrase!"
+            );
             return;
         }
 
@@ -527,9 +692,8 @@ export class Main extends FirebaseConfig {
 
 const main = new Main();
 
-if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('./src/sw.js');
+if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("./src/sw.js");
 } else {
     console.warn("Your browser does not support service workers!");
 }
-
