@@ -17,6 +17,11 @@ import { FirstFakeLetterCipher } from "../ciphers/firstFakeLetterCipher.js";
 import { TransportoCipher } from "../ciphers/transportoCipher.js";
 import { AngularCipher } from "../ciphers/angularCipher.js";
 import { VerticalKeyPhraseCipher } from "../ciphers/verticalKeyPhrase.js";
+import { RomanoArabeCipher } from "../ciphers/romanoArabeCipher.js";
+import { HalvesCipher } from "../ciphers/halvesCipher.js";
+import { VerticalCipher } from "../ciphers/verticalCipher.js";
+import { DataCipher } from "../ciphers/dataCipher.js";
+import { HorizontalKeyPhraseCipher } from "../ciphers/horizontalKeyPhrase.js";
 
 export class Main extends FirebaseConfig {
     constructor() {

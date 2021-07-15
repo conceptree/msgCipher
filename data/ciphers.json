@@ -71,7 +71,7 @@
     {
         "name": "Horizontal",
         "object": "HorizontalCipher",
-        "key": false
+        "key": true
     },
     {
         "name": "Fake First Letter",
@@ -79,7 +79,7 @@
         "key": false
     },
     {
-        "name": "Transporto alphabet",
+        "name": "Alphabet Transposto cipher",
         "object": "TransportoCipher",
         "key": true
     },
@@ -91,6 +91,31 @@
     {
         "name": "Vertical Key Phrase",
         "object": "VerticalKeyPhraseCipher",
+        "key": true
+    },
+    {
+        "name": "Romano-Arabe",
+        "object": "RomanoArabeCipher",
+        "key": false
+    },
+    {
+        "name": "Halves Cipher",
+        "object": "HalvesCipher",
+        "key": false
+    },
+    {
+        "name": "Vertical Cipher",
+        "object": "VerticalCipher",
+        "key": true
+    },
+    {
+        "name": "Data Cipher",
+        "object": "DataCipher",
+        "key": true
+    },
+    {
+        "name": "Horizontal Key Phrase",
+        "object": "HorizontalKeyPhraseCipher",
         "key": true
     }
 ]
