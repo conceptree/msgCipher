@@ -1,5 +1,6 @@
-import { FirebaseConfig } from "../data/firebaseConfig.js";
-import { BitlyService } from "../data/bitlyService.js";
+import { FirebaseConfig } from "../services/firebaseService.js";
+import { BitlyService } from "../services/bitlyService.js";
+import { MsgService } from "../services/msgService.js";
 import { CesarCipher } from "../ciphers/cesarCipher.js";
 import { NumericalAlphabetCipher } from "../ciphers/numericalAlphabet.js";
 import { CrabCipher } from "../ciphers/crabCipher.js";
@@ -12,7 +13,6 @@ import { MorseNodes } from "../ciphers/morseNodes.js";
 import { MountainMorse } from "../ciphers/mountainMorse.js";
 import { HorizontalCipher } from "../ciphers/horizontalCipher.js";
 import { SmsCipher } from "../ciphers/smsCipher.js";
-import { MsgService } from "../ciphers/util/msgService.js";
 import { FirstFakeLetterCipher } from "../ciphers/firstFakeLetterCipher.js";
 import { TransportoCipher } from "../ciphers/transportoCipher.js";
 import { AngularCipher } from "../ciphers/angularCipher.js";
@@ -186,7 +186,7 @@ export class Main extends FirebaseConfig {
     }
     /// GET LIST OF AVAILABLE CIPHERS
     getCiphers() {
-        fetch("./data/ciphers.json")
+        fetch("./config/ciphers.json")
             .then((resp) => {
                 return resp.json();
             })
@@ -615,7 +615,7 @@ export class Main extends FirebaseConfig {
                 password !== undefined
             ) {
                 switch (encryptionMode) {
-                    case "Blowfish":
+                    case "BlowFish":
                         const blowfish = new Blowfish(password);
 						result = blowfish.base64Encode(message);
                         message = blowfish.base64Encode(result);
@@ -668,7 +668,7 @@ export class Main extends FirebaseConfig {
             password !== undefined
         ) {
             switch (encryptionMode) {
-                case "Blowfish":
+                case "BlowFish":
                     const blowfish = new Blowfish(password);
 					result = blowfish.encrypt(message);
                     message = blowfish.trimZeros(result);

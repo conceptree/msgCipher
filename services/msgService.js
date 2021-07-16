@@ -1,5 +1,5 @@
 
-export class MsgService{
+export default class MsgService{
 
     whatsApp(tab, params){
         switch(tab){

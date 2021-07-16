@@ -1,4 +1,4 @@
-export class FirebaseConfig {
+export default class FirebaseConfig {
 
     constructor(chatMsgContainer) {
         this.chatMsgContainer = chatMsgContainer;
