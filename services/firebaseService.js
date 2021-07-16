@@ -41,6 +41,7 @@ export class FirebaseConfig {
                 firebase.database().ref("users").push().set({
                     "uid":user.uid
                 });
+                location.reload();
                 // ...
             })
             .catch((error) => {
