@@ -21,6 +21,7 @@ export class FirebaseConfig {
         firebase.auth().onAuthStateChanged((user) => {
             if (user) {
                 this.uid = user.uid;
+                document.querySelector("#userid").innerText = this.uid;
                 document.querySelector("#loginForms").classList.add("hidden");
                 document.querySelector("#logoutBtnCont").classList.remove("hidden");
                 document.querySelector("#userbtn").classList.add("active");
@@ -58,6 +59,7 @@ export class FirebaseConfig {
             .then((userCredential) => {
                 var user = userCredential.user;
                 document.querySelector("#chatbtn").classList.add("active");
+                document.querySelector("#userid").innerText = this.uid;
                 this.getUsers();
             })
             .catch((error) => {
