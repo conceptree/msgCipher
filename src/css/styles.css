@@ -101,6 +101,10 @@ hr.dotted {
     color: white;
 }
 
+#userid{
+    color: white;
+}
+
 .card-body {
     overflow: hidden;
 }

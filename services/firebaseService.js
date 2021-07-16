@@ -26,6 +26,7 @@ export class FirebaseConfig {
                 document.querySelector("#logoutBtnCont").classList.remove("hidden");
                 document.querySelector("#userbtn").classList.add("active");
                 document.querySelector("#chatbtn").classList.add("active");
+                document.querySelector("#userid").innerText = this.uid;
             } else {
                 console.log("No user is logged in!");
                 document.querySelector("#chatbtn").classList.remove("active");
@@ -59,7 +60,6 @@ export class FirebaseConfig {
             .then((userCredential) => {
                 var user = userCredential.user;
                 document.querySelector("#chatbtn").classList.add("active");
-                document.querySelector("#userid").innerText = this.uid;
                 this.getUsers();
             })
             .catch((error) => {
