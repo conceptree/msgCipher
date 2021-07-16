@@ -93,5 +93,25 @@
         "name": "Vertical Key Phrase",
         "object": "VerticalKeyPhraseCipher",
         "key": true
+    },
+    {
+        "name": "Vowels By Dots",
+        "object": "VogaisPorPonto",
+        "key": false
+    },
+    {
+        "name": "Naval Battle",
+        "object": "BatalhaNaval",
+        "key": true
+    },
+    {
+        "name": "Last Letter Fake",
+        "object": "UltimaLetraFalsa",
+        "key": false
+    },
+    {
+        "name": "Chinese Code 2",
+        "object": "CodigoChines2",
+        "key": false
     }
 ]
