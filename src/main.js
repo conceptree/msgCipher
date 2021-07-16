@@ -700,7 +700,7 @@ export class Main extends FirebaseConfig {
 const main = new Main();
 
 if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("./src/sw.js");
+    navigator.serviceWorker.register("/{repository}/src/sw.js", {scope: '/{repository}/'});
 } else {
     console.warn("Your browser does not support service workers!");
 }
