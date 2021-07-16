@@ -20,19 +20,14 @@ export class FirebaseConfig {
     checkLoggedInUser() {
         firebase.auth().onAuthStateChanged((user) => {
             if (user) {
-                // User is signed in, see docs for a list of available properties
-                // https://firebase.google.com/docs/reference/js/firebase.User
                 this.uid = user.uid;
                 document.querySelector("#loginForms").classList.add("hidden");
                 document.querySelector("#logoutBtnCont").classList.remove("hidden");
                 document.querySelector("#userbtn").classList.add("active");
                 document.querySelector("#chatbtn").classList.add("active");
-
-                // ...
             } else {
-                // User is signed out
                 console.log("No user is logged in!");
-                // ...
+                document.querySelector("#chatbtn").classList.remove("active");
             }
         });
     }
@@ -106,6 +101,7 @@ export class FirebaseConfig {
             chatItem.classList.add(sender === this.uid ? "sent" : "received");
             chatItem.innerText = sender + " @ " + time + "\n" + snapshot.val().message;
             this.chatMsgContainer.appendChild(chatItem);
+            this.chatMsgContainer.children[this.chatMsgContainer.children.length - 1].scrollIntoView();
         });
     }
 
@@ -124,7 +120,7 @@ export class FirebaseConfig {
                 console.log("No data available");
             }
         }).catch((error) => {
-            console.error(error);
+            console.warn("No User Logged in! "+error);
         });
     }
 

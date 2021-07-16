@@ -416,7 +416,7 @@ export class Main extends FirebaseConfig {
                         this.aesMessageInput.value,
                         this.aesPassphrase.value
                     );
-                    this.aesDesMessageInput.value = result.toString();
+                    document.querySelector("#aesDesMessageInput").value = result.toString(CryptoJS.enc.Utf8);
                     break;
                 case "blowfishForm":
                     this.blowfishMessageInput.value = atob(myParam).split("message=")[1];
@@ -626,15 +626,15 @@ export class Main extends FirebaseConfig {
                         break;
                     case "AES":
                         result = CryptoJS.AES.encrypt(message, password);
-                        message = result.toString();
+                        message = result.toString(CryptoJS.enc.Utf8);
                         break;
                     case "DES":
                         result = CryptoJS.DES.encrypt(message, password);
-                        message = result.toString();
+                        message = result.toString(CryptoJS.enc.Utf8);
                         break;
                     case "Triple DES":
                         result = CryptoJS.TripleDES.encrypt(message, password);
-                        message = result.toString();
+                        message = result.toString(CryptoJS.enc.Utf8);
                         break;
                 }
             } else {
@@ -661,6 +661,11 @@ export class Main extends FirebaseConfig {
         let encryptionMode = atob(evt.target.getAttribute("encryption"));
         let password = document.querySelector("#chatMessagePassphrase").value;
         let result = null;
+        let validEncMode = Boolean(encryptionMode === document.querySelector("#encryptionMode").value);
+        if(!validEncMode){
+            alert("Wrong encryption mode!");
+            return;
+        }
         if (
             encryptionMode !== "Encryption mode..." &&
             encryptionMode !== "" &&

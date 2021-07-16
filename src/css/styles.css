@@ -230,6 +230,13 @@ hr.dotted {
     align-self: flex-end;
 }
 
+#chatbtn{
+    display: none;
+}
+
+#chatbtn.active{
+    display: inline;
+}
 
 /** Angular CSS code **/
 
