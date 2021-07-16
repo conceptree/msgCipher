@@ -22,6 +22,10 @@ import { HalvesCipher } from "../ciphers/halvesCipher.js";
 import { VerticalCipher } from "../ciphers/verticalCipher.js";
 import { DataCipher } from "../ciphers/dataCipher.js";
 import { HorizontalKeyPhraseCipher } from "../ciphers/horizontalKeyPhrase.js";
+import { VogaisPorPonto } from "../ciphers/vogaisPorPonto.js";
+import { BatalhaNaval } from "../ciphers/batalhaNaval.js";
+import { UltimaLetraFalsa } from "../ciphers/ultimaLetraFalsa.js";
+import { CodigoChines2 } from "../ciphers/codigoChines2.js";
 
 export class Main extends FirebaseConfig {
     constructor() {
