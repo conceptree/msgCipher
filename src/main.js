@@ -112,8 +112,14 @@ export class Main extends FirebaseConfig {
         this.closeChatBtn.addEventListener("click", this.closeChat.bind(this));
         this.chatbtn.addEventListener("click", this.openChat.bind(this));
         this.sendChatMsgBtn.addEventListener("click", this.sendChatMsg.bind(this));
-
         this.userIds.addEventListener("change", this.setUserChatMsg.bind(this));
+
+        document.querySelector("#forgotPass").addEventListener("click", ()=>{
+            let email = prompt("Enter your account email!");
+            if(email !== null || email !== ""){
+                this.passRecover(email);
+            }
+        });
 
         document
             .querySelector("#regCancelBtn")

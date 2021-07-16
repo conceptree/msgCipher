@@ -127,4 +127,9 @@ export class FirebaseConfig {
         });
     }
 
+    passRecover(email){
+        firebase.auth().sendPasswordResetEmail(email);
+        location.reload();
+    }
+
 };

@@ -10,24 +10,30 @@
     <link rel="shortcut icon" href="./assets/chrome/chrome-favicon-16-16.png" type="image/x-icon">
     <link rel="apple-touch-icon" href="./assets/touch-icons/apple-touch-icon-ipad-76x76.png">
     <meta name="theme-color" content="#3367D6">
-    <meta name="description" content="Message encryption and decryption application based on a diverse array of different ciphers and encoders!">
+    <meta name="description"
+        content="Message encryption and decryption application based on a diverse array of different ciphers and encoders!">
     <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-database.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+        integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
     <link rel="stylesheet" href="./src/css/styles.css">
     <script type="text/javascript" src="./lib/jsencrypt.min.js"></script>
     <script type="text/javascript" src="./lib/Blowfish.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js" integrity="sha512-nOQuvD9nKirvxDdvQ9OMqe2dgapbPB7vYAMrzJihw5m+aNcf0dX53m6YxM4LgA9u8e9eg9QX+/+mPu8kCNpV2A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"
+        integrity="sha512-nOQuvD9nKirvxDdvQ9OMqe2dgapbPB7vYAMrzJihw5m+aNcf0dX53m6YxM4LgA9u8e9eg9QX+/+mPu8kCNpV2A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script type="module" src="./src/main.js" async defer></script>
 </head>
 
 <body class="background-container">
 
     <div class="header">
-        <i id="chatbtn" data-bs-toggle="modal" data-bs-target="#chatDialog" class="bi bi-chat-left-text" style="font-size: 1.5rem; color: rgb(255, 255, 255); padding: 10px; cursor: pointer;"></i>
-        <i id="userbtn" data-bs-toggle="modal" data-bs-target="#userLoginModal" class="bi bi-person-circle" style="font-size: 1.5rem; color: rgb(255, 255, 255); padding: 10px; cursor: pointer;"></i>
+        <i id="chatbtn" data-bs-toggle="modal" data-bs-target="#chatDialog" class="bi bi-chat-left-text"
+            style="font-size: 1.5rem; color: rgb(255, 255, 255); padding: 10px; cursor: pointer;"></i>
+        <i id="userbtn" data-bs-toggle="modal" data-bs-target="#userLoginModal" class="bi bi-person-circle"
+            style="font-size: 1.5rem; color: rgb(255, 255, 255); padding: 10px; cursor: pointer;"></i>
     </div>
 
     <!-- Select cipher form-->
@@ -70,7 +76,8 @@
 
                 <div class="form-group">
                     <label for="inputText">Message</label>
-                    <textarea type="text" class="form-control message" id="messageInput" placeholder="Your message..."></textarea>
+                    <textarea type="text" class="form-control message" id="messageInput"
+                        placeholder="Your message..."></textarea>
                 </div>
                 <div id="imageCipherContainer"></div>
 
@@ -105,22 +112,27 @@
                 <div class=" d-flex flex-row">
                     <div class="form-group flex-grow-1 mr-1" id="keySelector">
                         <label for="inputText">Private Key</label>
-                        <textarea type="text" class="form-control message" id="privateKeyInput" placeholder="PRIVATE KEY"></textarea>
+                        <textarea type="text" class="form-control message" id="privateKeyInput"
+                            placeholder="PRIVATE KEY"></textarea>
                     </div>
                     <div class="form-group flex-grow-1 ml-1">
                         <label for="inputText">Public Key</label>
-                        <textarea type="text" class="form-control message" id="publicKeyInput" placeholder="PUBLIC KEY"></textarea>
+                        <textarea type="text" class="form-control message" id="publicKeyInput"
+                            placeholder="PUBLIC KEY"></textarea>
                     </div>
                 </div>
                 <div id="rsaMessageContainer" class="hidden">
                     <hr class="dotted">
                     <div class="form-group">
                         <label for="inputText">Message</label>
-                        <textarea type="text" class="form-control message" id="rsaMessageInput" placeholder="Your message..."></textarea>
+                        <textarea type="text" class="form-control message" id="rsaMessageInput"
+                            placeholder="Your message..."></textarea>
                     </div>
                     <div class="d-flex cipher-buttons">
-                        <button id="rsaEncryptButton" type="button" class="btn btn-danger flex-fill .mt-1">Encrypt</button>
-                        <button id="rsaDecryptButton" type="button" class="btn btn-primary flex-fill .mt-1">Decrypt</button>
+                        <button id="rsaEncryptButton" type="button"
+                            class="btn btn-danger flex-fill .mt-1">Encrypt</button>
+                        <button id="rsaDecryptButton" type="button"
+                            class="btn btn-primary flex-fill .mt-1">Decrypt</button>
                     </div>
                 </div>
 
@@ -130,34 +142,40 @@
 
                 <div class="form-group">
                     <label for="inputText">Message</label>
-                    <textarea type="text" class="form-control message" id="hashMessageInput" placeholder="Your message..."></textarea>
+                    <textarea type="text" class="form-control message" id="hashMessageInput"
+                        placeholder="Your message..."></textarea>
                 </div>
 
                 <hr class="dotted">
 
                 <div class="form-group">
                     <label for="inputText">MD5</label>
-                    <textarea type="text" class="form-control" id="md5MessageInput" placeholder="MD5 result..."></textarea>
+                    <textarea type="text" class="form-control" id="md5MessageInput"
+                        placeholder="MD5 result..."></textarea>
                 </div>
 
                 <div class="form-group">
                     <label for="inputText">SHA-1</label>
-                    <textarea type="text" class="form-control" id="sha1MessageInput" placeholder="SHA-1 result..."></textarea>
+                    <textarea type="text" class="form-control" id="sha1MessageInput"
+                        placeholder="SHA-1 result..."></textarea>
                 </div>
 
                 <div class="form-group">
                     <label for="inputText">SHA-256</label>
-                    <textarea type="text" class="form-control" id="sha256MessageInput" placeholder="SHA-256 result..."></textarea>
+                    <textarea type="text" class="form-control" id="sha256MessageInput"
+                        placeholder="SHA-256 result..."></textarea>
                 </div>
 
                 <div class="form-group">
                     <label for="inputText">SHA-512</label>
-                    <textarea type="text" class="form-control" id="sha512MessageInput" placeholder="SHA-512 result..."></textarea>
+                    <textarea type="text" class="form-control" id="sha512MessageInput"
+                        placeholder="SHA-512 result..."></textarea>
                 </div>
 
                 <div class="form-group">
                     <label for="inputText">SHA-3</label>
-                    <textarea type="text" class="form-control" id="sha3MessageInput" placeholder="SHA-3 result..."></textarea>
+                    <textarea type="text" class="form-control" id="sha3MessageInput"
+                        placeholder="SHA-3 result..."></textarea>
                 </div>
 
             </form>
@@ -165,24 +183,29 @@
             <form class="conainer form-container hidden" id="aesForm">
                 <div class="form-group">
                     <label for="inputText">Secret Passphrase</label>
-                    <input type="text" class="form-control" pattern="/^[A-Za-z]+$/" min="8" max="16" id="aesPassphrase" placeholder="Min 8, max 16 chars...">
+                    <input type="text" class="form-control" pattern="/^[A-Za-z]+$/" min="8" max="16" id="aesPassphrase"
+                        placeholder="Min 8, max 16 chars...">
                 </div>
                 <div class="form-group">
                     <label for="inputText">Message</label>
-                    <textarea disabled type="text" class="form-control message" id="aesDesMessageInput" placeholder="Message..."></textarea>
+                    <textarea disabled type="text" class="form-control message" id="aesDesMessageInput"
+                        placeholder="Message..."></textarea>
                 </div>
                 <hr class="dotted">
                 <div class="form-group">
                     <label for="inputText">AES</label>
-                    <textarea disabled type="text" class="form-control" id="aesMessageInput" placeholder="AES result..."></textarea>
+                    <textarea disabled type="text" class="form-control" id="aesMessageInput"
+                        placeholder="AES result..."></textarea>
                 </div>
                 <div class="form-group">
                     <label for="inputText">DES</label>
-                    <textarea disabled type="text" class="form-control" id="desMessageInput" placeholder="DES result..."></textarea>
+                    <textarea disabled type="text" class="form-control" id="desMessageInput"
+                        placeholder="DES result..."></textarea>
                 </div>
                 <div class="form-group">
                     <label for="inputText">Triple DES</label>
-                    <textarea disabled type="text" class="form-control" id="tripleDesMessageInput" placeholder="Triple DES result..."></textarea>
+                    <textarea disabled type="text" class="form-control" id="tripleDesMessageInput"
+                        placeholder="Triple DES result..."></textarea>
                 </div>
             </form>
             <!--BLOWFISH-->
@@ -193,11 +216,14 @@
                 </div>
                 <div class="form-group">
                     <label for="inputText">Message</label>
-                    <textarea disabled type="text" class="form-control message" id="blowfishMessageInput" placeholder="Password needed..."></textarea>
+                    <textarea disabled type="text" class="form-control message" id="blowfishMessageInput"
+                        placeholder="Password needed..."></textarea>
                 </div>
                 <div class="d-flex cipher-buttons">
-                    <button disabled id="blowfishEncryptButton" type="button" class="btn btn-danger flex-fill .mt-1">Encrypt</button>
-                    <button disabled id="blowfishDecryptButton" type="button" class="btn btn-primary flex-fill .mt-1">Decrypt</button>
+                    <button disabled id="blowfishEncryptButton" type="button"
+                        class="btn btn-danger flex-fill .mt-1">Encrypt</button>
+                    <button disabled id="blowfishDecryptButton" type="button"
+                        class="btn btn-primary flex-fill .mt-1">Decrypt</button>
                 </div>
 
             </form>
@@ -205,12 +231,14 @@
             <hr class="dotted">
             <div class="integration-container" id="whatsAppContainer">
                 <img src="./assets/WhatsApp.png" width="80px" />
-                <input type="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" class="form-control" id="whatsappInput" placeholder="Enter the receiver phone number (e.g 0359100000000)">
+                <input type="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" class="form-control" id="whatsappInput"
+                    placeholder="Enter the receiver phone number (e.g 0359100000000)">
                 <button id="sendWhatsappBtn" type="button" class="btn btn-primary btn-block">Send</button>
             </div>
             <div class="integration-container" id="mailContainer">
                 <img src="./assets/mail.png" width="80px" />
-                <input type="email" id="emailInput" name="myGeeks" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" class="form-control" placeholder="Recipient  email...">
+                <input type="email" id="emailInput" name="myGeeks" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                    class="form-control" placeholder="Recipient  email...">
                 <button id="sendEmailBtn" type="button" class="btn btn-primary btn-block">Send</button>
             </div>
         </div>
@@ -234,6 +262,9 @@
                 <div class="form-group">
                     <label for="inputText">Password</label>
                     <input type="password" class="form-control" id="userPassword">
+                </div>
+                <div class="d-flex cipher-buttons d-flex flex-column justify-content-center">
+                    <button id="forgotPass" type="button" class="btn btn-link text-left">Forgot password?</button>
                 </div>
                 <div class="d-flex cipher-buttons d-flex flex-column">
                     <button id="loginBtn" type="button" class="btn btn-primary flex-fill .mt-1">LOGIN</button>
@@ -287,10 +318,12 @@
                     <input type="text" class="form-control" id="chatMessagePassphrase" placeholder="Passphrase...">
                 </div>
                 <div class="form-group">
-                    <textarea type="text" class="form-control message" id="chatMessage" placeholder="Message..."></textarea>
+                    <textarea type="text" class="form-control message" id="chatMessage"
+                        placeholder="Message..."></textarea>
                 </div>
                 <div class="d-flex cipher-buttons d-flex flex-column hidden">
-                    <button id="encryptSend" type="button" class="btn btn-primary flex-fill .mt-1">ENCRYPT & SEND</button>
+                    <button id="encryptSend" type="button" class="btn btn-primary flex-fill .mt-1">ENCRYPT &
+                        SEND</button>
                     <button id="closeChatBtn" type="button" class="btn btn-danger flex-fill .mt-1">CLOSE</button>
                 </div>
             </div>
