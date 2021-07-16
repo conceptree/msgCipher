@@ -1,4 +1,4 @@
-class CodigoChines2 {
+export class CodigoChines2 {
 	constructor() {
 		this.alphabetEncode = {
 			"a": "I", "b": "I―", "c": "I═",

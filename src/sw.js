@@ -1,2 +1,58 @@
-if(!self.define){const e=e=>{"require"!==e&&(e+=".js");let r=Promise.resolve();return s[e]||(r=new Promise((async r=>{if("document"in self){const s=document.createElement("script");s.src=e,document.head.appendChild(s),s.onload=r}else importScripts(e),r()}))),r.then((()=>{if(!s[e])throw new Error(`Module ${e} didn’t register its module`);return s[e]}))},r=(r,s)=>{Promise.all(r.map(e)).then((e=>s(1===e.length?e[0]:e)))},s={require:Promise.resolve(r)};self.define=(r,t,i)=>{s[r]||(s[r]=Promise.resolve().then((()=>{let s={};const n={uri:location.origin+r.slice(1)};return Promise.all(t.map((r=>{switch(r){case"exports":return s;case"module":return n;default:return e(r)}}))).then((e=>{const r=i(...e);return s.default||(s.default=r),s}))})))}}define("./sw.js",["./workbox-a9938592"],(function(e){"use strict";self.addEventListener("message",(e=>{e.data&&"SKIP_WAITING"===e.data.type&&self.skipWaiting()})),e.precacheAndRoute([{url:"./css/styles.css",revision:"19ff6f40e189623fcc38fa0d7b7f61aa"},{url:"./main.js",revision:"6a81e5f7d56e0cd4cc8fdbaa55e975dd"}],{ignoreURLParametersMatching:[/^utm_/,/^fbclid$/]})}));
-//# sourceMappingURL=sw.js.map
+var APP_PREFIX = 'ApplicationName_'     // Identifier for this app (this needs to be consistent across every cache update)
+var VERSION = 'version_01'              // Version of the off-line cache (change this value everytime you want to update cache)
+var CACHE_NAME = APP_PREFIX + VERSION
+var URLS = [                            // Add URL you want to cache in this list.
+  '/{repository}/',                     // If you have separate JS/CSS files,
+  '/{repository}/index.html'            // add path to those files here
+]
+
+// Respond with cached resources
+self.addEventListener('fetch', function (e) {
+  console.log('fetch request : ' + e.request.url)
+  e.respondWith(
+    caches.match(e.request).then(function (request) {
+      if (request) { // if cache is available, respond with cache
+        console.log('responding with cache : ' + e.request.url)
+        return request
+      } else {       // if there are no cache, try fetching request
+        console.log('file is not cached, fetching : ' + e.request.url)
+        return fetch(e.request)
+      }
+
+      // You can omit if/else for console.log & put one line below like this too.
+      // return request || fetch(e.request)
+    })
+  )
+})
+
+// Cache resources
+self.addEventListener('install', function (e) {
+  e.waitUntil(
+    caches.open(CACHE_NAME).then(function (cache) {
+      console.log('installing cache : ' + CACHE_NAME)
+      return cache.addAll(URLS)
+    })
+  )
+})
+
+// Delete outdated caches
+self.addEventListener('activate', function (e) {
+  e.waitUntil(
+    caches.keys().then(function (keyList) {
+      // `keyList` contains all cache names under your username.github.io
+      // filter out ones that has this app prefix to create white list
+      var cacheWhitelist = keyList.filter(function (key) {
+        return key.indexOf(APP_PREFIX)
+      })
+      // add current cache name to white list
+      cacheWhitelist.push(CACHE_NAME)
+
+      return Promise.all(keyList.map(function (key, i) {
+        if (cacheWhitelist.indexOf(key) === -1) {
+          console.log('deleting cache : ' + keyList[i] )
+          return caches.delete(keyList[i])
+        }
+      }))
+    })
+  )
+})
