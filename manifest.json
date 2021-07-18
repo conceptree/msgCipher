@@ -1,8 +1,8 @@
 {
-    "name": "MsgCiphers",
+    "name": "MsgCipher",
     "display": "standalone",
     "start_url": "/",
-    "short_name": "MsgCiphers",
+    "short_name": "MsgCipher",
     "theme_color": "#E1477E",
     "description": "This is a PWA for the msg cipher app.",
     "orientation": "any",
