@@ -1,5 +1,5 @@
 var APP_PREFIX = 'MsgCipher';
-var VERSION = 'version_01';
+var VERSION = 'version_02';
 var CACHE_NAME = APP_PREFIX + VERSION;
 var URLS = [
   '/',
