@@ -2,17 +2,16 @@ var APP_PREFIX = 'MsgCipher';
 var VERSION = 'version_01';
 var CACHE_NAME = APP_PREFIX + VERSION;
 var URLS = [
-  './',
   './config/ciphers.json',
-  './src/*',
   './services/bitlyService.js',
   './services/firebaseService.js',
   './services/msgService.js',
   './src/css/styles.css',
-  './assets/*',
-  './ciphers/*',
   './src/main.js',
-  './index.html'
+  './index.html',
+  './src/*',
+  './assets/*',
+  './ciphers/*'
 ];
 
 self.addEventListener('fetch', function (e) {
