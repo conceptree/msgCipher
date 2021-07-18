@@ -63,10 +63,6 @@ hr.dotted {
     width: 80px;
 }
 
-.integration-container>img {
-    width: 90px;
-}
-
 .cipher-buttons {
     gap: 10px;
 }
@@ -86,7 +82,7 @@ hr.dotted {
 }
 
 .form-container {
-    max-height: 70vh;
+    max-height: 50vh;
     overflow-y: auto;
 }
 
@@ -355,3 +351,22 @@ hr.dotted {
     border-color: black white white black;
     transform: translate(0px, 6px) rotate(45deg);
 }
+
+@media only screen and (max-width: 600px) {
+    
+    #ciphersbtn.nav-link{
+        display: none;
+    }
+    #rsabtn.nav-link{
+        display: none;
+    }
+    #aesbtn.nav-link{
+        display: none;
+    }
+    #blowfishbtn.nav-link{
+        display: none;
+    }
+    #hashbtn.nav-link{
+        display: none;
+    }
+  }
