@@ -114,9 +114,9 @@ export class Main extends FirebaseConfig {
         this.sendChatMsgBtn.addEventListener("click", this.sendChatMsg.bind(this));
         this.userIds.addEventListener("change", this.setUserChatMsg.bind(this));
 
-        document.querySelector("#forgotPass").addEventListener("click", ()=>{
+        document.querySelector("#forgotPass").addEventListener("click", () => {
             let email = prompt("Enter your account email!");
-            if(email !== null || email !== ""){
+            if (email !== null || email !== "") {
                 this.passRecover(email);
             }
         });
@@ -196,7 +196,7 @@ export class Main extends FirebaseConfig {
     }
     /// GET LIST OF AVAILABLE CIPHERS
     getCiphers() {
-        fetch("./config/ciphers.json")
+        fetch("../config/ciphers.json")
             .then((resp) => {
                 return resp.json();
             })
@@ -627,7 +627,7 @@ export class Main extends FirebaseConfig {
                 switch (encryptionMode) {
                     case "BlowFish":
                         const blowfish = new Blowfish(password);
-						result = blowfish.base64Encode(message);
+                        result = blowfish.base64Encode(message);
                         message = blowfish.base64Encode(result);
                         break;
                     case "AES":
@@ -668,7 +668,7 @@ export class Main extends FirebaseConfig {
         let password = document.querySelector("#chatMessagePassphrase").value;
         let result = null;
         let validEncMode = Boolean(encryptionMode === document.querySelector("#encryptionMode").value);
-        if(!validEncMode){
+        if (!validEncMode) {
             alert("Wrong encryption mode!");
             return;
         }
@@ -685,7 +685,7 @@ export class Main extends FirebaseConfig {
             switch (encryptionMode) {
                 case "BlowFish":
                     const blowfish = new Blowfish(password);
-					result = blowfish.encrypt(message);
+                    result = blowfish.encrypt(message);
                     message = blowfish.trimZeros(result);
                     break;
                 case "AES":
@@ -715,7 +715,7 @@ export class Main extends FirebaseConfig {
 const main = new Main();
 
 if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("./sw.js", {scope: './'});
+    navigator.serviceWorker.register("./sw.js", { scope: './' });
 } else {
     console.warn("Your browser does not support service workers!");
 }
