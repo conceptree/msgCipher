@@ -2,7 +2,6 @@ var APP_PREFIX = 'MsgCipher';
 var VERSION = 'version_01';
 var CACHE_NAME = APP_PREFIX + VERSION;
 var URLS = [
-  '/config/ciphers.json',
   '/services/bitlyService.js',
   '/services/firebaseService.js',
   '/services/msgService.js',
