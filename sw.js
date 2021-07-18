@@ -8,10 +8,7 @@ var URLS = [
   '/services/msgService.js',
   '/src/css/styles.css',
   '/src/main.js',
-  '/index.html',
-  '/src/*',
-  '/assets/*',
-  '/ciphers/*'
+  '/index.html'
 ];
 
 self.addEventListener('fetch', function (e) {
