@@ -1,7 +1,7 @@
 {
     "name": "MsgCipher",
     "display": "standalone",
-    "start_url": "/",
+    "start_url": "https://conceptree.github.io/msgCipher/",
     "short_name": "MsgCipher",
     "theme_color": "#E1477E",
     "description": "This is a PWA for the msg cipher app.",

@@ -2,6 +2,7 @@ var APP_PREFIX = 'MsgCipher';
 var VERSION = 'version_02';
 var CACHE_NAME = APP_PREFIX + VERSION;
 var URLS = [
+  'https://conceptree.github.io/msgCipher/',
   '/',
   '/index.html'
 ];
