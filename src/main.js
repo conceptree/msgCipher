@@ -196,7 +196,7 @@ export class Main extends FirebaseConfig {
     }
     /// GET LIST OF AVAILABLE CIPHERS
     getCiphers() {
-        fetch("../config/ciphers.json")
+        fetch("config/ciphers.json")
             .then((resp) => {
                 return resp.json();
             })
