@@ -27,7 +27,7 @@ function browsersyncReload(cb){
 // Watch Task
 function watchTask(){
   watch('*.html', browsersyncReload);
-  watch(['./src/', './data/', './ciphers/'], series(jsTask, browsersyncReload));
+  watch(['./src/', './config/', './services/', './ciphers/'], series(jsTask, browsersyncReload));
 }
 
 // Default Gulp task
