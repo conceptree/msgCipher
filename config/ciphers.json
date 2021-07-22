@@ -40,11 +40,6 @@
         "key": true
     },
     {
-        "name": "Homographer",
-        "object": "HomographerCipher",
-        "key": true
-    },
-    {
         "name": "Morse Nodes",
         "object": "MorseNodes",
         "key": false

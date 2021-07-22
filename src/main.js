@@ -632,15 +632,15 @@ export class Main extends FirebaseConfig {
                         break;
                     case "AES":
                         result = CryptoJS.AES.encrypt(message, password);
-                        message = result.toString(CryptoJS.enc.Utf8);
+                        message = result.toString();
                         break;
                     case "DES":
                         result = CryptoJS.DES.encrypt(message, password);
-                        message = result.toString(CryptoJS.enc.Utf8);
+                        message = result.toString();
                         break;
                     case "Triple DES":
                         result = CryptoJS.TripleDES.encrypt(message, password);
-                        message = result.toString(CryptoJS.enc.Utf8);
+                        message = result.toString();
                         break;
                 }
             } else {
