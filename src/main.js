@@ -552,18 +552,25 @@ export class Main extends FirebaseConfig {
     ///AES & DES
     aesAndDesEncrypt() {
         if (this.aesPassphrase.value !== "") {
-            this.aesMessageInput.value = CryptoJS.AES.encrypt(
-                this.aesAndDesEncrypt.value,
-                this.aesPassphrase.value
-            );
-            this.desMessageInput.value = CryptoJS.DES.encrypt(
-                this.aesAndDesEncrypt.value,
-                this.aesPassphrase.value
-            );
-            this.tripleDesMessageInput.value = CryptoJS.TripleDES.encrypt(
-                this.aesAndDesEncrypt.value,
-                this.aesPassphrase.value
-            );
+            if(this.aesDesMessageInput.value !== ""){
+                this.aesMessageInput.value = CryptoJS.AES.encrypt(
+                    this.aesDesMessageInput.value,
+                    this.aesPassphrase.value
+                );
+                this.desMessageInput.value = CryptoJS.DES.encrypt(
+                    this.aesDesMessageInput.value,
+                    this.aesPassphrase.value
+                );
+                this.tripleDesMessageInput.value = CryptoJS.TripleDES.encrypt(
+                    this.aesDesMessageInput.value,
+                    this.aesPassphrase.value
+                );
+            }else{
+                this.aesMessageInput.value = "";
+                this.desMessageInput.value = "";
+                this.tripleDesMessageInput.value = "";
+            }
+           
         }
     }
     ///BLOWFISH
