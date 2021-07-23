@@ -539,15 +539,24 @@ export class Main extends FirebaseConfig {
     }
     ///HASHING
     hashMessage() {
-        this.md5MessageInput.value = CryptoJS.MD5(this.hashMessageInput.value);
-        this.sha1MessageInput.value = CryptoJS.SHA1(this.hashMessageInput.value);
-        this.sha256MessageInput.value = CryptoJS.SHA256(
-            this.hashMessageInput.value
-        );
-        this.sha512MessageInput.value = CryptoJS.SHA512(
-            this.hashMessageInput.value
-        );
-        this.sha3MessageInput.value = CryptoJS.SHA3(this.hashMessageInput.value);
+        if(this.hashMessageInput.value !== ""){
+            this.md5MessageInput.value = CryptoJS.MD5(this.hashMessageInput.value);
+            this.sha1MessageInput.value = CryptoJS.SHA1(this.hashMessageInput.value);
+            this.sha256MessageInput.value = CryptoJS.SHA256(
+                this.hashMessageInput.value
+            );
+            this.sha512MessageInput.value = CryptoJS.SHA512(
+                this.hashMessageInput.value
+            );
+            this.sha3MessageInput.value = CryptoJS.SHA3(this.hashMessageInput.value);
+        }else{
+            this.md5MessageInput.value = "";
+            this.sha1MessageInput.value = "";
+            this.sha256MessageInput.value = "";
+            this.sha512MessageInput.value = "";
+            this.sha3MessageInput.value = "";
+        }
+        
     }
     ///AES & DES
     aesAndDesEncrypt() {
