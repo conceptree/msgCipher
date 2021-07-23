@@ -318,19 +318,32 @@ export class Main extends FirebaseConfig {
     ///SEND THE MESSAGE THROUGH MAIL
     sendMailMsg() {
         const email = document.querySelector("#emailInput").value;
+        const params = {
+            ciphers: JSON.stringify(this.selectedCiphers),
+            key: this.key,
+            message: this.messageInput.value,
+            rsaMessage: this.rsaMessageInput.value,
+            privateKey: this.privateKeyInput.value,
+            publicKey: this.publicKeyInput.value,
+            hashMessage: this.hashMessageInput.value,
+            md5: this.md5MessageInput.value,
+            sha1: this.sha1MessageInput.value,
+            sha256: this.sha256MessageInput.value,
+            sha512: this.sha512MessageInput.value,
+            sha3: this.sha3MessageInput.value,
+            aes: this.aesMessageInput.value,
+            des: this.desMessageInput.value,
+            tripledes: this.tripleDesMessageInput.value,
+            passphrase: this.aesPassphrase.value,
+            blowfishMessage: this.blowfishMessageInput.value,
+        };
         let content = this.msgService.whatsApp(this.currentTab, params);
         this.bitlyService
             .getShortenLink(
                 `https://conceptree.github.io/msgCipher/?content=${content}`
             )
             .then((resp) => {
-                window.open(
-                    `mailto:${email}?subject=MsgCipher Message&body=${this.msgService.getText(
-                        this.currentTab,
-                        params,
-                        resp.link
-                    )}`
-                );
+                window.open(`mailto:${email}?subject=MsgCipher Message&body=${this.msgService.getText(this.currentTab, params, resp.link)}`); 
             });
     }
     ///READ URL
